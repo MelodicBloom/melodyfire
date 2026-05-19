@@ -44,7 +44,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
   return (
     <>
       <article
-        className={`group relative bg-[hsl(var(--card))] border border-[hsl(var(--border)/0.5)] rounded-2xl overflow-hidden transition-all duration-500 hover:border-[hsl(var(--primary)/0.4)] hover:shadow-[var(--glow-primary)] ${className}`}
+        className={`group relative bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl overflow-hidden transition-all duration-500 hover:border-[hsl(var(--border))] hover:shadow-[var(--glow-primary)] ${className}`}
       >
         {/* Cover Image */}
         <div className="relative h-56 overflow-hidden">
@@ -69,7 +69,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
 
           {/* Category */}
           <div className="absolute top-3 right-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-[hsl(var(--background)/0.8)] backdrop-blur-sm text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border)/0.5)]">
+            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-[hsl(var(--background))] backdrop-blur-sm text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border))]">
               {project.category}
             </span>
           </div>
@@ -82,7 +82,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             {project.tags.map(tag => (
               <span
                 key={tag}
-                className="px-2 py-0.5 rounded-full text-xs bg-[hsl(var(--primary)/0.1)] text-[hsl(var(--primary))] border border-[hsl(var(--primary)/0.2)]"
+                className="px-2 py-0.5 rounded-full text-xs bg-[hsl(var(--card))] text-[hsl(var(--primary))] border border-[hsl(var(--border))]"
               >
                 {tag}
               </span>
@@ -123,7 +123,7 @@ export function ProjectCard({ project, className = '' }: ProjectCardProps) {
             {project.driveUrl && (
               <button
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-[hsl(var(--accent))] hover:text-[hsl(var(--accent)/0.8)] transition-colors ml-auto"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-[hsl(var(--accent))] hover:text-[hsl(var(--accent))] transition-colors ml-auto"
               >
                 <BookOpen size={14} /> Open Deck
               </button>
@@ -173,7 +173,7 @@ function DeckModal({
               href={driveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[hsl(var(--border))] text-[hsl(var(--foreground)/0.7)] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary)/0.4)] transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--border))] transition-all"
             >
               <ExternalLink size={12} /> Open in Drive
             </a>

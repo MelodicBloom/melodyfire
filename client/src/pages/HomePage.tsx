@@ -174,7 +174,7 @@ export function HomePage() {
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.25)] mb-8"
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--card))] border border-[hsl(var(--border))] mb-8"
             data-reveal>
             <Flame className="w-3.5 h-3.5 text-[hsl(var(--secondary))]" />
             <span className="text-xs font-semibold text-[hsl(var(--primary))] tracking-widest uppercase">
@@ -195,7 +195,7 @@ export function HomePage() {
 
           {/* Blockquote */}
           <blockquote
-            className="mt-8 max-w-2xl text-lg text-[hsl(var(--muted-foreground))] italic leading-relaxed border-l-2 border-[hsl(var(--primary)/0.5)] pl-5"
+            className="mt-8 max-w-2xl text-lg text-[hsl(var(--muted-foreground))] italic leading-relaxed border-l-2 border-[hsl(var(--border))] pl-5"
             data-reveal
           >
             "Where generative systems, regenerative design, and community imagination converge — building futures that restore rather than deplete."
@@ -217,13 +217,13 @@ export function HomePage() {
             </Link>
             <Link
               href="/regenerative"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary)/0.5)] hover:bg-[hsl(var(--primary)/0.05)] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:border-[hsl(var(--border))] hover:bg-[hsl(var(--card))] transition-all"
             >
               The Doctrine
             </Link>
             <Link
               href="/ai-tools"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold text-[hsl(var(--accent))] border border-[hsl(var(--accent)/0.3)] hover:bg-[hsl(var(--accent)/0.06)] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold text-[hsl(var(--accent))] border border-[hsl(var(--border))] hover:bg-[hsl(var(--card))] transition-all"
             >
               <Zap size={15} /> AI Tools
             </Link>
@@ -334,7 +334,7 @@ export function HomePage() {
       <section className="py-20 bg-[hsl(var(--card))]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[hsl(var(--secondary)/0.1)] border border-[hsl(var(--secondary)/0.25)] text-[hsl(var(--secondary))] text-xs font-semibold uppercase tracking-widest mb-4">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[hsl(var(--card))] border border-[hsl(var(--border))] text-[hsl(var(--secondary))] text-xs font-semibold uppercase tracking-widest mb-4">
               ✦ Flagship Project
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-bold" data-reveal>
@@ -357,7 +357,7 @@ export function HomePage() {
             <div className="p-8 lg:p-12 space-y-5">
               <div className="flex flex-wrap gap-2">
                 {['Civic Tech', 'Systems Design', 'Regenerative', 'Flagship'].map(t => (
-                  <span key={t} className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[hsl(var(--primary)/0.1)] text-[hsl(var(--primary))] border border-[hsl(var(--primary)/0.2)]">
+                  <span key={t} className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[hsl(var(--card))] text-[hsl(var(--primary))] border border-[hsl(var(--border))]">
                     {t}
                   </span>
                 ))}
@@ -409,7 +409,7 @@ export function HomePage() {
             </div>
             <Link
               href="/work"
-              className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))] hover:text-[hsl(var(--primary)/0.8)] transition-colors"
+              className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))] transition-colors"
             >
               All Work <ArrowRight size={14} />
             </Link>
@@ -466,7 +466,7 @@ export function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="order-2 lg:order-1 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[hsl(var(--accent)/0.1)] border border-[hsl(var(--accent)/0.25)]" data-reveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[hsl(var(--card))] border border-[hsl(var(--border))]" data-reveal>
                 <Sparkles className="w-3 h-3 text-[hsl(var(--accent))]" />
                 <span className="text-xs font-semibold text-[hsl(var(--accent))] uppercase tracking-widest">Storybook Art</span>
               </div>
@@ -569,7 +569,7 @@ export function HomePage() {
           <div className="text-center mt-10">
             <Link
               href="/regenerative"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))] hover:text-[hsl(var(--primary)/0.8)] transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))] transition-colors"
             >
               Read the full Doctrine <ArrowRight size={14} />
             </Link>
@@ -613,7 +613,7 @@ export function HomePage() {
             </a>
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary)/0.5)] transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--border))] transition-all"
             >
               View Services
             </Link>

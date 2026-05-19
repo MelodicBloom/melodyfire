@@ -44,7 +44,7 @@ export function Nav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-[hsl(var(--background)/0.85)] backdrop-blur-xl border-b border-[hsl(var(--border))] shadow-lg'
+          ? 'bg-[hsl(var(--background))] backdrop-blur-xl border-b border-[hsl(var(--border))] shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -104,7 +104,7 @@ export function Nav() {
                 href={href}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(href)
-                    ? 'bg-[hsl(var(--primary)/0.15)] text-[hsl(var(--primary))]'
+                    ? 'bg-[hsl(var(--card))] text-[hsl(var(--primary))]'
                     : 'text-[hsl(var(--foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--card))]'
                 }`}
               >
@@ -177,7 +177,7 @@ export function Nav() {
                           href={href}
                           className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                             isActive(href)
-                              ? 'bg-[hsl(var(--primary)/0.15)] text-[hsl(var(--primary))]'
+                              ? 'bg-[hsl(var(--card))] text-[hsl(var(--primary))]'
                               : 'text-[hsl(var(--foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--card))]'
                           }`}
                         >

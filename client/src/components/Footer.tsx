@@ -96,14 +96,14 @@ export function Footer() {
 
             <a
               href="mailto:hello@melodyfire.studio"
-              className="inline-flex items-center gap-2 text-sm text-[hsl(var(--accent))] hover:text-[hsl(var(--accent)/0.8)] transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-[hsl(var(--accent))] hover:text-[hsl(var(--accent))] transition-colors"
             >
               <Mail size={14} />
               hello@melodyfire.studio
             </a>
 
             {/* Doctrine mark */}
-            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.2)]">
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[hsl(var(--card))] border border-[hsl(var(--border))]">
               <Flame size={12} className="text-[hsl(var(--secondary))]" />
               <span className="text-xs text-[hsl(var(--primary))] font-medium">Regenerative over Sustainable</span>
             </div>

@@ -214,7 +214,7 @@ export function AboutPage() {
 
             {/* Right — text */}
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.25)]" data-reveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[hsl(var(--card))] border border-[hsl(var(--border))]" data-reveal>
                 <Flame className="w-3.5 h-3.5 text-[hsl(var(--secondary))]" />
                 <span className="text-xs font-semibold text-[hsl(var(--primary))] uppercase tracking-widest">About</span>
               </div>
@@ -389,7 +389,7 @@ export function AboutPage() {
                 {PROCESS_PHASES.map(({ phase, name, desc, color }, i) => (
                   <div
                     key={phase}
-                    className="group relative bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl p-5 overflow-hidden transition-all duration-400 hover:border-[hsl(var(--primary)/0.3)] reveal"
+                    className="group relative bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl p-5 overflow-hidden transition-all duration-400 hover:border-[hsl(var(--border))] reveal"
                     data-reveal
                     style={{ transitionDelay: `${i * 80}ms` }}
                   >
@@ -425,7 +425,7 @@ export function AboutPage() {
             {TOOLS_STACKS.map(({ title, icon, color, tools }, i) => (
               <div
                 key={title}
-                className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl p-6 transition-all duration-400 hover:border-[hsl(var(--primary)/0.3)] hover:-translate-y-1 reveal"
+                className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl p-6 transition-all duration-400 hover:border-[hsl(var(--border))] hover:-translate-y-1 reveal"
                 data-reveal
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
@@ -467,7 +467,7 @@ export function AboutPage() {
                 data-reveal
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-sm bg-[hsl(var(--primary)/0.1)] text-[hsl(var(--primary))] group-hover:bg-[hsl(var(--primary)/0.2)] transition-colors">
+                <div className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-sm bg-[hsl(var(--card))] text-[hsl(var(--primary))] group-hover:bg-[hsl(var(--card))] transition-colors">
                   {String(n).padStart(2, '0')}
                 </div>
                 <p className="text-[hsl(var(--muted-foreground))] leading-relaxed pt-2">{text}</p>
@@ -510,7 +510,7 @@ export function AboutPage() {
             </a>
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary)/0.5)] transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:border-[hsl(var(--border))] transition-all"
             >
               View Services <ArrowRight size={16} />
             </Link>
