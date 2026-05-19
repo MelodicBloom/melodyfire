@@ -1,0 +1,425 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   MELODYFIRE v3 — Design System
+   Three visual modes:
+   1. Main: Psychedelic aurora (violet/coral/cyan/gold)
+   2. Solarpunk Grimoire: Deep indigo + gold foil + organic texture  
+   3. Holographic: Prismatic glass + iridescent refraction
+   ================================================================ */
+
+:root {
+  /* ---- MAIN PALETTE ---- */
+  --primary: 267 84% 57%;          /* #7c3aed violet */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 350 95% 60%;        /* #f43f5e coral */
+  --accent: 192 91% 44%;           /* #06b6d4 cyan */
+  --gold: 38 92% 50%;              /* #f59e0b gold */
+
+  --background: 270 25% 8%;        /* near-black violet */
+  --foreground: 270 25% 95%;
+  --card: 270 20% 11%;
+  --card-foreground: 270 20% 95%;
+  --muted: 270 15% 18%;
+  --muted-foreground: 270 10% 60%;
+  --border: 270 20% 22%;
+  --ring: 267 84% 57%;
+  --input: 270 20% 15%;
+  --popover: 270 20% 11%;
+  --popover-foreground: 270 20% 95%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --radius: 0.75rem;
+
+  /* ---- FONTS ---- */
+  --font-display: 'Clash Display', 'Playfair Display', Georgia, serif;
+  --font-body: 'Satoshi', 'Inter', sans-serif;
+
+  /* ---- GRADIENTS ---- */
+  --gradient-aurora: linear-gradient(135deg, #06b6d4 0%, #7c3aed 40%, #f43f5e 80%, #f59e0b 100%);
+  --gradient-fire: linear-gradient(135deg, #f59e0b 0%, #f43f5e 60%, #7c3aed 100%);
+  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #f43f5e 50%, #f59e0b 100%);
+  --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #7c3aed 100%);
+  --gradient-solarpunk: linear-gradient(160deg, #0d1a0d 0%, #0a1225 40%, #1a0d30 100%);
+  --gradient-holographic: linear-gradient(135deg, rgba(96,165,250,0.15) 0%, rgba(167,139,250,0.15) 30%, rgba(251,113,133,0.15) 60%, rgba(74,222,128,0.15) 100%);
+
+  /* ---- SHADOWS & GLOWS ---- */
+  --glow-primary: 0 0 32px rgba(124, 58, 237, 0.5);
+  --glow-secondary: 0 0 32px rgba(244, 63, 94, 0.45);
+  --glow-accent: 0 0 32px rgba(6, 182, 212, 0.5);
+  --glow-gold: 0 0 24px rgba(245, 158, 11, 0.4);
+
+  /* ---- SOLARPUNK GRIMOIRE TOKENS ---- */
+  --sg-bg: #0a0e1a;
+  --sg-surface: #0f1520;
+  --sg-gold: #c9a84c;
+  --sg-gold-light: #e8cc7a;
+  --sg-green: #2d5a3d;
+  --sg-green-light: #4a8c5c;
+  --sg-text: #e8dfc8;
+  --sg-text-muted: #9b8c6e;
+  --sg-border: rgba(201, 168, 76, 0.3);
+
+  /* ---- HOLOGRAPHIC TOKENS ---- */
+  --holo-bg: #070b14;
+  --holo-glass: rgba(255,255,255,0.04);
+  --holo-border: rgba(255,255,255,0.12);
+  --holo-prism-1: #60a5fa;
+  --holo-prism-2: #a78bfa;
+  --holo-prism-3: #fb7185;
+  --holo-prism-4: #4ade80;
+}
+
+/* Light mode overrides */
+.light {
+  --background: 270 30% 98%;
+  --foreground: 270 30% 8%;
+  --card: 270 20% 100%;
+  --card-foreground: 270 20% 8%;
+  --muted: 270 15% 93%;
+  --muted-foreground: 270 10% 45%;
+  --border: 270 15% 85%;
+  --input: 270 15% 93%;
+}
+
+/* ================================================================
+   BASE RESET
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  min-height: 100dvh;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--primary) / 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.7); }
+
+/* ================================================================
+   TYPOGRAPHY UTILITIES
+   ================================================================ */
+.font-display { font-family: var(--font-display); }
+
+.gradient-text {
+  background: var(--gradient-aurora);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.gradient-text-fire {
+  background: var(--gradient-fire);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-text-primary {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ================================================================
+   SOLARPUNK GRIMOIRE THEME SECTION
+   ================================================================ */
+.solarpunk-section {
+  background: var(--sg-bg);
+  position: relative;
+  overflow: hidden;
+}
+.solarpunk-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='0.5' fill='rgba(201,168,76,0.15)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.sg-border { border: 1px solid var(--sg-border); }
+.sg-text { color: var(--sg-text); }
+.sg-text-muted { color: var(--sg-text-muted); }
+.sg-gold { color: var(--sg-gold); }
+.sg-gradient-text {
+  background: linear-gradient(135deg, var(--sg-gold) 0%, var(--sg-gold-light) 50%, var(--sg-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sg-card {
+  background: var(--sg-surface);
+  border: 1px solid var(--sg-border);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.sg-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sg-gold), transparent);
+}
+.torn-edge {
+  position: relative;
+}
+.torn-edge::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 8px;
+  background: inherit;
+  clip-path: polygon(0% 0%, 2% 100%, 5% 0%, 8% 100%, 11% 0%, 14% 100%, 17% 0%, 20% 100%, 23% 0%, 26% 100%, 29% 0%, 32% 100%, 35% 0%, 38% 100%, 41% 0%, 44% 100%, 47% 0%, 50% 100%, 53% 0%, 56% 100%, 59% 0%, 62% 100%, 65% 0%, 68% 100%, 71% 0%, 74% 100%, 77% 0%, 80% 100%, 83% 0%, 86% 100%, 89% 0%, 92% 100%, 95% 0%, 98% 100%, 100% 0%);
+}
+
+/* ================================================================
+   HOLOGRAPHIC THEME
+   ================================================================ */
+.holographic-section {
+  background: var(--holo-bg);
+  position: relative;
+  overflow: hidden;
+}
+.holographic-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-holographic);
+  pointer-events: none;
+}
+.holo-card {
+  background: var(--holo-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--holo-border);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.holo-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(96,165,250,0.06) 0%,
+    rgba(167,139,250,0.06) 25%,
+    rgba(251,113,133,0.06) 50%,
+    rgba(74,222,128,0.06) 75%,
+    rgba(96,165,250,0.06) 100%
+  );
+  pointer-events: none;
+}
+.holo-glow {
+  box-shadow: 0 0 0 1px rgba(167,139,250,0.2), 0 8px 32px rgba(96,165,250,0.15);
+}
+.prismatic-text {
+  background: linear-gradient(90deg, #60a5fa, #a78bfa, #fb7185, #4ade80, #60a5fa);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* ================================================================
+   BEAUTIFUL IMPERFECTION OVERLAYS
+   ================================================================ */
+.imperfect-border {
+  border-radius: 2px 14px 4px 12px / 12px 4px 14px 2px;
+}
+.handcrafted-shadow {
+  box-shadow: 2px 3px 0px rgba(201,168,76,0.2), -1px -1px 0px rgba(201,168,76,0.1);
+}
+.texture-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ================================================================
+   MANDALA CANVAS UTILITY
+   ================================================================ */
+.mandala-canvas-wrap {
+  position: absolute;
+  pointer-events: none;
+}
+.mandala-canvas-wrap.interactive { pointer-events: auto; cursor: crosshair; }
+.mandala-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+/* ================================================================
+   SCROLL REVEAL
+   ================================================================ */
+/* Reveal: hidden only after JS marks the page as animation-ready */
+.reveal { opacity: 1; transform: none; transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.reveal-left { }
+.reveal-right { }
+.reveal-scale { }
+/* JS adds .js-anim-ready to <html> once observer is set up */
+.js-anim-ready .reveal:not(.revealed) { opacity: 0; transform: translateY(24px); }
+.js-anim-ready .reveal-left:not(.revealed) { transform: translateX(-32px); opacity: 0; }
+.js-anim-ready .reveal-right:not(.revealed) { transform: translateX(32px); opacity: 0; }
+.js-anim-ready .reveal-scale:not(.revealed) { transform: scale(0.94); opacity: 0; }
+.reveal.revealed { opacity: 1 !important; transform: none !important; }
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+.delay-600 { transition-delay: 0.6s; }
+
+/* ================================================================
+   CURSOR GLOW
+   ================================================================ */
+.cursor-glow {
+  position: fixed;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  will-change: transform;
+  transition: opacity 0.3s;
+}
+
+/* ================================================================
+   LOADING ANIMATION (for AI generation)
+   ================================================================ */
+.generation-loader {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.gen-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  animation: gen-bounce 1.4s ease-in-out infinite;
+}
+.gen-dot:nth-child(1) { background: #7c3aed; animation-delay: 0s; }
+.gen-dot:nth-child(2) { background: #f43f5e; animation-delay: 0.2s; }
+.gen-dot:nth-child(3) { background: #06b6d4; animation-delay: 0.4s; }
+.gen-dot:nth-child(4) { background: #f59e0b; animation-delay: 0.6s; }
+@keyframes gen-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+.mandala-loader {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #7c3aed;
+  border-right-color: #f43f5e;
+  border-bottom-color: #06b6d4;
+  border-left-color: #f59e0b;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ================================================================
+   PROJECT CARD MODAL
+   ================================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-content {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 20px;
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .cursor-glow { display: none; }
+}
+
+/* ================================================================
+   MISSING TEMPLATE VARIABLES (required by tailwind.config.ts)
+   ================================================================ */
+:root {
+  --font-sans: 'Satoshi', 'Inter', sans-serif;
+  --font-serif: 'Clash Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --card-border: 270 20% 22%;
+  --popover-border: 270 20% 22%;
+  --primary-border: rgba(124,58,237,0.4);
+  --secondary-border: rgba(244,63,94,0.4);
+  --muted-border: rgba(255,255,255,0.1);
+  --accent-border: rgba(6,182,212,0.4);
+  --destructive-border: rgba(239,68,68,0.4);
+
+  --sidebar: 270 22% 10%;
+  --sidebar-foreground: 270 20% 90%;
+  --sidebar-border: 270 20% 18%;
+  --sidebar-ring: 267 84% 57%;
+  --sidebar-primary: 267 84% 57%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 270 20% 16%;
+  --sidebar-accent-foreground: 270 20% 90%;
+  --sidebar-primary-border: rgba(124,58,237,0.4);
+
+  --chart-1: 267 84% 57%;
+  --chart-2: 350 95% 60%;
+  --chart-3: 192 91% 44%;
+  --chart-4: 38 92% 50%;
+  --chart-5: 142 76% 36%;
+}
+.light {
+  --sidebar: 270 15% 96%;
+  --sidebar-foreground: 270 20% 20%;
+  --sidebar-border: 270 15% 88%;
+}
+
+/* hero-reveal-immediate kept for compat */
+.hero-reveal-immediate { opacity: 1 !important; transform: none !important; }
