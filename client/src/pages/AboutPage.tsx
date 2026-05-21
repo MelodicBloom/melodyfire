@@ -7,6 +7,8 @@ import { MandalaCanvas } from '../components/MandalaCanvas';
 import aboutPng from '../assets/img/mf-portrait-white-companion.png';
 import jenniPng from '../assets/img/about.png';
 import processPng from '../assets/img/process.png';
+import synthMethodImg from '@assets/img/synthesis-method.png';
+import multiPersonaImg from '@assets/img/multi-persona-system.png';
 
 // ---- Aspiration ticker ----
 const ASPIRATIONS_TICKER = [
@@ -405,6 +407,172 @@ export function AboutPage() {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SYNTHESIS METHOD ===== */}
+      <section className="py-20" style={{ background: 'linear-gradient(160deg, #0a0e1a 0%, #0f1520 50%, #0d1225 100%)' }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-12" data-reveal>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#c9a84c' }}>
+              Proprietary Methodology
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              <span className="sg-gradient-text">The Creative Synthesis Method</span>
+            </h2>
+            <p className="text-white/70 max-w-2xl mx-auto leading-relaxed">
+              A 22-node recursive ecosystem for original thinking — developed across years of designing systems that don't just solve problems, but evolve them.
+            </p>
+          </div>
+
+          {/* Synthesis method image */}
+          <div data-reveal className="mb-8">
+            <img
+              src={synthMethodImg}
+              alt="The Creative Synthesis Method — 22-node recursive ecosystem"
+              className="w-full rounded-2xl"
+            />
+          </div>
+
+          {/* Node rows */}
+          <div className="space-y-4" data-reveal>
+            {/* Row 1 — Essence (violet) */}
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#a78bfa' }}>Essence</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { name: 'Extraction', desc: 'Pull raw signal from noisy input' },
+                  { name: 'Definition', desc: 'Name what was found precisely' },
+                  { name: 'Distillation', desc: "Remove what isn't essential" },
+                  { name: 'Recombination', desc: 'Merge elements into new forms' },
+                ].map((node) => (
+                  <div
+                    key={node.name}
+                    className="rounded-xl p-3"
+                    style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(167,139,250,0.25)' }}
+                  >
+                    <p className="font-display font-bold text-sm text-white mb-1">{node.name}</p>
+                    <p className="text-xs text-white/55 leading-snug">{node.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 2 — Transformation (coral) */}
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#f87171' }}>Transformation</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { name: 'Refinement', desc: 'Polish and iterate toward precision' },
+                  { name: 'Disambiguation', desc: 'Separate conflated meanings' },
+                  { name: 'Fusion', desc: 'Bind disparate ideas at root level' },
+                  { name: 'Cross-Examination', desc: 'Pressure-test against edge cases' },
+                ].map((node) => (
+                  <div
+                    key={node.name}
+                    className="rounded-xl p-3"
+                    style={{ background: 'rgba(244,63,94,0.08)', border: '1px solid rgba(248,113,113,0.25)' }}
+                  >
+                    <p className="font-display font-bold text-sm text-white mb-1">{node.name}</p>
+                    <p className="text-xs text-white/55 leading-snug">{node.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 3 — Expansion (cyan) */}
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#67e8f9' }}>Expansion</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                {[
+                  { name: 'Hypothesis', desc: 'Generate testable propositions' },
+                  { name: 'Thesis', desc: 'Commit to a central claim' },
+                  { name: 'Sequencing', desc: 'Order for maximum coherence' },
+                  { name: 'Protocols', desc: 'Encode as repeatable process' },
+                  { name: 'Cross-Application', desc: 'Transfer across domains' },
+                  { name: 'Layering', desc: 'Stack complexity without confusion' },
+                ].map((node) => (
+                  <div
+                    key={node.name}
+                    className="rounded-xl p-3"
+                    style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(103,232,249,0.25)' }}
+                  >
+                    <p className="font-display font-bold text-sm text-white mb-1">{node.name}</p>
+                    <p className="text-xs text-white/55 leading-snug">{node.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Pullquote */}
+          <div
+            className="mt-10 p-6 rounded-2xl sg-card"
+            style={{ border: '1px solid rgba(201,168,76,0.35)' }}
+            data-reveal
+          >
+            <blockquote className="font-display text-lg md:text-xl font-bold text-white leading-relaxed text-center">
+              "I don't just think about problems — I run them through a system that extracts, distills, recombines, and surfaces the real question beneath the stated one. The synthesis is the product."
+            </blockquote>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-8 text-center" data-reveal>
+            <a
+              href="mailto:hello@melodyfire.studio"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(135deg, #c9a84c 0%, #f59e0b 100%)' }}
+            >
+              Hire for Synthesis Consultation <ArrowRight size={14} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== MULTI-PERSONA AI SYSTEM ===== */}
+      <section className="py-20 holographic-section">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-10" data-reveal>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3 prismatic-text">
+              Cognitive Architecture
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-5">
+              The Multi-Persona AI System
+            </h2>
+            <p className="text-white/70 max-w-3xl mx-auto leading-relaxed">
+              A productized 4-layer cognitive schematic for building AI decision-making systems — not marketing archetypes but operational behavioral protocols: Context Layer (operating envelope) → Input Layer (signal taxonomy) → Reasoning Kernel (heuristics, decision trees, mental models) → Output Layer (decisions, behaviors, feedback loops). Available as a consulting service and Gumroad product.
+            </p>
+          </div>
+
+          {/* Image */}
+          <div data-reveal className="mb-8">
+            <img
+              src={multiPersonaImg}
+              alt="Multi-Persona AI System — 4-layer cognitive architecture"
+              className="w-full rounded-2xl"
+            />
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-4 justify-center" data-reveal>
+            <a
+              href="https://gumroad.com/l/multi-persona-system"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)' }}
+            >
+              Get the Framework (Gumroad) <ArrowRight size={14} />
+            </a>
+            <a
+              href="mailto:hello@melodyfire.studio"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold text-white/80 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all"
+            >
+              Commission a System <ArrowRight size={14} />
+            </a>
           </div>
         </div>
       </section>

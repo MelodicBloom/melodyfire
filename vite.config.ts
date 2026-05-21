@@ -4,6 +4,7 @@ import path from "node:path";
 
 export default defineConfig({
   plugins: [react()],
+  assetsInclude: ['**/*.mp4'],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

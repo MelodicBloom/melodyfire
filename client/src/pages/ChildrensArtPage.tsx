@@ -10,6 +10,8 @@ import {
 import childrensArtImg from '@assets/img/mf-childrens-art-service.png';
 import aboutImg from '@assets/img/about.png';
 import whitePortraitImg from '@assets/img/mf-portrait-white-companion.png';
+import storybookVideoSrc from '@assets/storybook-art-demo.mp4';
+import monsterMirrorVideoSrc from '@assets/monster-mirror-demo.mp4';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                                */
@@ -450,6 +452,63 @@ export default function ChildrensArtPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SEE IT IN MOTION — Video players
+          ================================================================ */}
+      <section className="py-20 bg-[hsl(var(--background))]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold tracking-widest uppercase text-amber-400 mb-3 reveal">
+              In Motion
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 reveal delay-100">
+              <span className="gradient-text-fire">Watch the Magic Happen</span>
+            </h2>
+            <p className="text-white/70 max-w-2xl mx-auto leading-relaxed reveal delay-200">
+              These aren't renders — they're living, breathing papercraft worlds. Watch how the layered diorama aesthetic moves.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Video 1 — Storybook */}
+            <div className="reveal reveal-left delay-100">
+              <video
+                className="w-full rounded-2xl"
+                style={{ aspectRatio: '16/9' }}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              >
+                <source src={storybookVideoSrc} type="video/mp4" />
+              </video>
+              <p className="mt-3 text-sm text-white/60 leading-relaxed text-center">
+                Storybook World Comes Alive — papercraft terrain + quilled botanicals + character animation
+              </p>
+            </div>
+
+            {/* Video 2 — Monster Mirror */}
+            <div className="reveal reveal-right delay-200">
+              <video
+                className="w-full rounded-2xl"
+                style={{ aspectRatio: '16/9' }}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              >
+                <source src={monsterMirrorVideoSrc} type="video/mp4" />
+              </video>
+              <p className="mt-3 text-sm text-white/60 leading-relaxed text-center">
+                Monster Mirror Series — emotional resonance through character mirroring
+              </p>
             </div>
           </div>
         </div>

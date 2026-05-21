@@ -205,13 +205,13 @@ function PricingTierCard({ tier, index }: { tier: PricingTier; index: number }) 
 
   return (
     <div
-      className={`rounded-xl p-5 border ${highlights[index] || 'bg-white/5 border-white/10'} flex flex-col`}
+      className={`rounded-xl p-4 border ${highlights[index] || 'bg-white/5 border-white/10'} flex flex-col min-w-0 overflow-hidden`}
     >
-      <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${textColors[index] || 'text-white/50'}`}>
+      <p className={`text-xs font-semibold uppercase tracking-wider mb-1 truncate ${textColors[index] || 'text-white/50'}`}>
         {tier.name}
       </p>
-      <p className="font-display text-2xl font-bold text-white mb-2">{tier.price}</p>
-      <p className="text-white/55 text-sm leading-relaxed">{tier.description}</p>
+      <p className="font-display text-xl font-bold text-white mb-2 break-words">{tier.price}</p>
+      <p className="text-white/70 text-xs leading-relaxed break-words">{tier.description}</p>
     </div>
   );
 }
@@ -283,7 +283,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               <p className="text-xs text-white/40 uppercase tracking-wider font-semibold mb-3">
                 Pricing
               </p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-2 min-w-0">
                 {service.pricing_tiers.map((tier, i) => (
                   <PricingTierCard key={tier.name} tier={tier} index={i} />
                 ))}

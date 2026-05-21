@@ -8,6 +8,9 @@ import {
 } from '../components/ui/sheet';
 
 // ---- Image Imports ----
+// New Sticker Packs
+import botanicaGardenImg from '@assets/img/shop-sticker-botanica-garden.png';
+import nightSkyImg from '@assets/img/shop-sticker-night-sky.png';
 // Sticker Packs
 import cosmicDoodlesImg from '@assets/img/shop-sticker-cosmic-doodles.png';
 import cozyDaysImg from '@assets/img/shop-sticker-cozy-days.png';
@@ -93,6 +96,26 @@ const PRODUCTS: Product[] = [
     image: kawaiClubImg,
     category: 'sticker_packs',
     gumroadUrl: 'https://gumroad.com/l/kawaii-club',
+  },
+  {
+    id: 18,
+    name: 'Botanica Garden Sticker Pack',
+    category: 'sticker_packs',
+    description: '48 botanical illustration stickers: succulents, ferns, mushrooms, pressed flowers, berries, seed pods. PNG + SVG. Scientific illustration meets modern kawaii.',
+    price: 9,
+    badge: 'NEW',
+    image: botanicaGardenImg,
+    gumroadUrl: 'https://gumroad.com/l/botanica-garden',
+  },
+  {
+    id: 19,
+    name: 'Night Sky Dreams Sticker Pack',
+    category: 'sticker_packs',
+    description: '44 dreamy night sky stickers: sleeping moons, constellations, aurora, lanterns, fireflies, shooting stars, night flowers, telescopes. Midnight blue + gold palette.',
+    price: 9,
+    badge: 'NEW',
+    image: nightSkyImg,
+    gumroadUrl: 'https://gumroad.com/l/night-sky-dreams',
   },
   // UI Kits
   {
@@ -1074,7 +1097,7 @@ export function ShopPage() {
           {/* Stats row */}
           <div className="flex gap-8 pt-2">
             {[
-              { num: '17', label: 'Products' },
+              { num: '19', label: 'Products' },
               { num: '2.4k+', label: 'Customers' },
               { num: '4.9', label: '★ Rating' },
             ].map((s) => (

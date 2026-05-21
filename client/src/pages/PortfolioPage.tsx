@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { ExternalLink, Code2 } from 'lucide-react';
 import { SiGithub, SiFigma } from 'react-icons/si';
 
+import shaderGalleryImg from '@assets/img/shadergallery-abalone.png';
 import beatsBoxesImg from '@assets/img/beats-boxes.png';
 import restoryingImg from '@assets/img/restorying.png';
 import heroImg from '@assets/img/hero.png';
@@ -106,14 +107,15 @@ const PROJECTS: Project[] = [
   {
     id: 3,
     title: 'ShaderGallery',
-    description: 'A React + WebGL component system for generative, shader-driven visual experiences in the browser.',
-    longDescription: 'ShaderGallery is a React component library wrapping Three.js and custom GLSL shaders into composable building blocks. Developers drop in gallery components and get aurora-style generative visuals, interactive particle fields, and procedural mandala renderers — all GPU-accelerated.',
+    description: '15 shader families including: Iridescent/Abalone Nacre, Thin-Film Interference, Fresnel Ramp, Bubble Membrane, Prismatic Refraction, Pearlescent Glow, Metallic Anisotropy, and more. Raw GLSL imports via sourceMap.ts, dynamic variant building, family tab filtering.',
+    longDescription: 'ShaderGallery is a React + WebGL component system for generative, shader-driven visual experiences in the browser. 15 shader families: Iridescent/Abalone Nacre, Thin-Film Interference, Fresnel Ramp, Bubble Membrane, Prismatic Refraction, Pearlescent Glow, Metallic Anisotropy, and more. Built with raw GLSL imports via sourceMap.ts, dynamic variant building, and family tab filtering — GPU-accelerated composable building blocks for aurora visuals, interactive particle fields, and procedural mandala renderers.',
     categories: ['web-apps', 'ui-ux'],
     tags: ['WebGL', 'React', 'Generative'],
     disciplines: ['Creative Engineering', 'UI Systems', 'GLSL / Three.js'],
-    image: heroImg,
+    image: shaderGalleryImg,
     year: '2024',
     status: 'Beta',
+    githubUrl: 'https://github.com/qt314wink',
   },
   {
     id: 4,
