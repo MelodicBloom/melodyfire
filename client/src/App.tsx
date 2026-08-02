@@ -13,7 +13,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage').then(m => ({ default: m.PortfolioPage })));
 const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.BlogPage })));
 const ShopPage = lazy(() => import('./pages/ShopPage').then(m => ({ default: m.ShopPage })));
-const ReversePromptPage = lazy(() => import('./pages/ReversePromptPage').then(m => ({ default: m.ReversePromptPage })));
+const ReversePromptPage = lazy(() => import('./pages/ReversePromptPage'));
 
 // Default exports (pre-existing pages)
 const GenerativeArtPage = lazy(() => import('./pages/GenerativeArtPage'));

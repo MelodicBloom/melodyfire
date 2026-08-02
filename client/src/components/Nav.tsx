@@ -124,7 +124,7 @@ export function Nav() {
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <a
-            href="mailto:hello@melodyfire.studio"
+            href="mailto:jennipher@melodicbloom.com"
             className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all duration-300 relative overflow-hidden group"
             style={{ background: 'var(--gradient-fire)' }}
           >
@@ -191,14 +191,14 @@ export function Nav() {
                 {/* CTA */}
                 <div className="px-6 py-5 border-t border-[hsl(var(--border))]">
                   <a
-                    href="mailto:hello@melodyfire.studio"
+                    href="mailto:jennipher@melodicbloom.com"
                     className="block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-white"
                     style={{ background: 'var(--gradient-fire)' }}
                   >
                     Get in Touch
                   </a>
                   <p className="text-center text-xs text-[hsl(var(--muted-foreground))] mt-3">
-                    hello@melodyfire.studio
+                    jennipher@melodicbloom.com
                   </p>
                 </div>
               </div>

@@ -17,6 +17,18 @@ import cosmicDoodlesImg from '@assets/img/shop-sticker-cosmic-doodles.png';
 import cozyDaysImg from '@assets/img/shop-sticker-cozy-days.png';
 import retroVibesImg from '@assets/img/shop-sticker-retro-vibes.png';
 import kawaiClubImg from '@assets/img/shop-sticker-kawaii-club.png';
+// Raiden portrait series
+import raiden0865 from '@assets/img/raiden-IMG_0865.jpg';
+import raiden1115 from '@assets/img/raiden-IMG_1115.jpg';
+import raiden1113 from '@assets/img/raiden-IMG_1113.jpg';
+import raiden1192 from '@assets/img/raiden-IMG_1192.jpg';
+import raiden0796 from '@assets/img/raiden-IMG_0796.jpg';
+import raiden0789 from '@assets/img/raiden-IMG_0789.jpg';
+import raiden0784 from '@assets/img/raiden-IMG_0784.jpg';
+import raiden1107 from '@assets/img/raiden-IMG_1107.jpg';
+import raiden1104 from '@assets/img/raiden-IMG_1104.jpg';
+import raiden1100 from '@assets/img/raiden-IMG_1100.jpg';
+import raiden1082 from '@assets/img/raiden-IMG_1082.jpg';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                                 */
@@ -49,6 +61,18 @@ const ART_ITEMS: ArtItem[] = [
   { id: 14, title: 'Cozy Days — Pack Cover', style: 'papercraft', styleLabel: 'Papercraft Diorama', image: cozyDaysImg, aspectRatio: '3/4' },
   { id: 15, title: 'Retro Vibes — Pack Cover', style: 'neo-brutalist', styleLabel: 'Neo-Brutalist Pop', image: retroVibesImg, aspectRatio: '3/4' },
   { id: 16, title: 'Kawaii Club — Pack Cover', style: 'neo-brutalist', styleLabel: 'Neo-Brutalist Pop', image: kawaiClubImg, aspectRatio: '3/4' },
+  // Raiden portrait series
+  { id: 17, title: 'Raiden — Abalone Lace I', style: 'raiden', styleLabel: 'Raiden Series', image: raiden0865, aspectRatio: '3/4' },
+  { id: 18, title: 'Raiden — Mandala Explosion', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1115, aspectRatio: '3/4' },
+  { id: 19, title: 'Raiden — Lace Butterfly', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1113, aspectRatio: '3/4' },
+  { id: 20, title: 'Raiden — Prism Dance', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1192, aspectRatio: '3/4' },
+  { id: 21, title: 'Raiden — Abalone Quill I', style: 'raiden', styleLabel: 'Raiden Series', image: raiden0796, aspectRatio: '3/4' },
+  { id: 22, title: 'Raiden — Petal Fall', style: 'raiden', styleLabel: 'Raiden Series', image: raiden0789, aspectRatio: '3/4' },
+  { id: 23, title: 'Raiden — Nacre Bloom', style: 'raiden', styleLabel: 'Raiden Series', image: raiden0784, aspectRatio: '3/4' },
+  { id: 24, title: 'Raiden — Abalone Lace II', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1107, aspectRatio: '3/4' },
+  { id: 25, title: 'Raiden — Mosaic Cosmos', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1104, aspectRatio: '3/4' },
+  { id: 26, title: 'Raiden — Shell Mosaic', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1100, aspectRatio: '3/4' },
+  { id: 27, title: 'Raiden — Prismatic Drift', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1082, aspectRatio: '3/4' },
 ];
 
 const STYLE_TABS = [
@@ -59,6 +83,7 @@ const STYLE_TABS = [
   { label: 'Beadwork & Textile', value: 'beadwork' },
   { label: 'Chromatic Noise', value: 'chromatic-noise' },
   { label: 'Quilled Botanicals', value: 'quilled' },
+  { label: 'Raiden Series', value: 'raiden' },
 ];
 
 const STYLE_GUIDE = [
@@ -104,17 +129,21 @@ const STYLE_GUIDE = [
 /*  Art Item component                                                   */
 /* ------------------------------------------------------------------ */
 
-function ArtItemCard({ item }: { item: ArtItem }) {
+function ArtItemCard({ item, onOpen }: { item: ArtItem; onOpen: (item: ArtItem) => void }) {
+  const isPortrait = item.aspectRatio === '3/4';
   return (
     <div
-      className="art-item group relative overflow-hidden rounded-xl cursor-pointer"
+      className="art-item group relative overflow-hidden rounded-xl cursor-zoom-in"
       data-style={item.style}
       style={{ aspectRatio: item.aspectRatio, breakInside: 'avoid', marginBottom: '1.25rem' }}
+      onClick={() => onOpen(item)}
     >
       <img
         src={item.image}
         alt={item.title}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+          isPortrait ? 'object-contain bg-[hsl(var(--card))]' : 'object-cover'
+        }`}
         loading="lazy"
       />
       {/* Hover overlay */}
@@ -146,6 +175,7 @@ function ArtItemCard({ item }: { item: ArtItem }) {
 
 export default function GenerativeArtPage() {
   const [activeStyle, setActiveStyle] = useState('all');
+  const [lightboxImg, setLightboxImg] = useState<{src: string; title: string; style: string} | null>(null);
 
   // Scroll reveal
   useEffect(() => {
@@ -169,7 +199,10 @@ export default function GenerativeArtPage() {
   return (
     <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
       {/* ---- Hero ---- */}
-      <section className="relative pt-28 pb-16 px-6 overflow-hidden">
+      <section
+        className="relative pt-28 pb-16 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(to bottom right, #1a0a2e 0%, #0d1520 60%, #0f0820 100%)' }}
+      >
         {/* Background glow */}
         <div
           className="absolute top-0 left-1/3 w-96 h-96 rounded-full pointer-events-none"
@@ -222,6 +255,32 @@ export default function GenerativeArtPage() {
         </div>
       </section>
 
+      {/* ---- Raiden Series Spotlight ---- */}
+      {activeStyle === 'raiden' && (
+        <section className="px-6 pb-12">
+          <div className="max-w-4xl mx-auto rounded-2xl p-8 md:p-10 reveal" style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.1) 0%, rgba(244,63,94,0.06) 100%)', border: '1px solid rgba(124,58,237,0.2)' }}>
+            <p className="text-sm font-medium tracking-widest uppercase text-violet-400 mb-3">
+              Portrait Series
+            </p>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-[hsl(var(--foreground))] mb-4">
+              The Raiden Series
+            </h2>
+            <p className="text-[hsl(var(--muted-foreground))] leading-relaxed mb-6 max-w-2xl">
+              The Raiden Series — a body of AI-generated fine art exploring the tension between
+              organic biological forms and prismatic light physics. Abalone nacre, quilled lace,
+              iridescent thin-film interference, and sacred geometry converge in each image.
+              Generated with ComfyUI + SDXL + custom LoRA models.
+            </p>
+            <a
+              href="mailto:hello@melodyfire.com?subject=Commission a Raiden-style Portrait"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-violet-400 hover:text-violet-300 underline underline-offset-4 transition-colors"
+            >
+              Commission a custom portrait →
+            </a>
+          </div>
+        </section>
+      )}
+
       {/* ---- Art Gallery (CSS Columns Masonry) ---- */}
       <section className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
@@ -234,7 +293,7 @@ export default function GenerativeArtPage() {
               className="art-gallery [column-count:1] sm:[column-count:2] lg:[column-count:3]"
             >
               {filteredItems.map((item) => (
-                <ArtItemCard key={item.id} item={item} />
+                <ArtItemCard key={item.id} item={item} onOpen={(i) => setLightboxImg({ src: i.image, title: i.title, style: i.styleLabel })} />
               ))}
             </div>
           ) : (
@@ -368,6 +427,31 @@ export default function GenerativeArtPage() {
           </div>
         </div>
       </section>
+
+      {/* ---- Lightbox ---- */}
+      {lightboxImg && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
+          onClick={() => setLightboxImg(null)}
+        >
+          <button
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-all z-50"
+            onClick={() => setLightboxImg(null)}
+            aria-label="Close"
+          >×</button>
+          <div className="absolute bottom-6 left-0 right-0 text-center z-50">
+            <p className="font-display font-bold text-white text-lg">{lightboxImg.title}</p>
+            <span className="text-white/50 text-sm">{lightboxImg.style}</span>
+          </div>
+          <img
+            src={lightboxImg.src}
+            alt={lightboxImg.title}
+            className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
+            style={{ boxShadow: '0 0 80px rgba(124,58,237,0.3)' }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </main>
   );
 }

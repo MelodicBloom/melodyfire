@@ -27,7 +27,7 @@ const SERVICES = [
 ];
 
 const CONNECT_LINKS = [
-  { label: 'hello@melodyfire.studio', href: 'mailto:hello@melodyfire.studio', external: false },
+  { label: 'jennipher@melodicbloom.com', href: 'mailto:jennipher@melodicbloom.com', external: false },
   { label: 'GitHub — qt314wink', href: 'https://github.com/qt314wink', external: true },
   { label: 'Replit — qt314wink', href: 'https://replit.com/@qt314wink', external: true },
   { label: 'Figma', href: 'https://figma.com/@jennipher', external: true },
@@ -95,11 +95,11 @@ export function Footer() {
             </div>
 
             <a
-              href="mailto:hello@melodyfire.studio"
+              href="mailto:jennipher@melodicbloom.com"
               className="inline-flex items-center gap-2 text-sm text-[hsl(var(--accent))] hover:text-[hsl(var(--accent))] transition-colors"
             >
               <Mail size={14} />
-              hello@melodyfire.studio
+              jennipher@melodicbloom.com
             </a>
 
             {/* Doctrine mark */}

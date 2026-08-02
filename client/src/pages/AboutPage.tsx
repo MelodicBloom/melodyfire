@@ -243,7 +243,7 @@ export function AboutPage() {
 
               <div className="flex flex-wrap gap-3 pt-2" data-reveal>
                 <a
-                  href="mailto:hello@melodyfire.studio"
+                  href="mailto:jennipher@melodicbloom.com"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white"
                   style={{ background: 'var(--gradient-primary)' }}
                 >
@@ -521,7 +521,7 @@ export function AboutPage() {
           {/* CTA */}
           <div className="mt-8 text-center" data-reveal>
             <a
-              href="mailto:hello@melodyfire.studio"
+              href="mailto:jennipher@melodicbloom.com"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-bold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
               style={{ background: 'linear-gradient(135deg, #c9a84c 0%, #f59e0b 100%)' }}
             >
@@ -568,7 +568,7 @@ export function AboutPage() {
               Get the Framework (Gumroad) <ArrowRight size={14} />
             </a>
             <a
-              href="mailto:hello@melodyfire.studio"
+              href="mailto:jennipher@melodicbloom.com"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold text-white/80 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all"
             >
               Commission a System <ArrowRight size={14} />
@@ -670,7 +670,7 @@ export function AboutPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4" data-reveal>
             <a
-              href="mailto:hello@melodyfire.studio"
+              href="mailto:jennipher@melodicbloom.com"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-bold text-white shadow-[var(--glow-primary)] hover:-translate-y-0.5 transition-all duration-300"
               style={{ background: 'var(--gradient-primary)' }}
             >

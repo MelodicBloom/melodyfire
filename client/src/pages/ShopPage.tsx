@@ -8,14 +8,13 @@ import {
 } from '../components/ui/sheet';
 
 // ---- Image Imports ----
-// New Sticker Packs
-import botanicaGardenImg from '@assets/img/shop-sticker-botanica-garden.png';
-import nightSkyImg from '@assets/img/shop-sticker-night-sky.png';
-// Sticker Packs
-import cosmicDoodlesImg from '@assets/img/shop-sticker-cosmic-doodles.png';
-import cozyDaysImg from '@assets/img/shop-sticker-cozy-days.png';
-import retroVibesImg from '@assets/img/shop-sticker-retro-vibes.png';
-import kawaiClubImg from '@assets/img/shop-sticker-kawaii-club.png';
+// Real sticker sheet product images
+import productSheetCosmic from '@assets/img/product-sheet-cosmic-doodles.png';
+import productSheetKawaii from '@assets/img/product-sheet-kawaii-club.png';
+import productSheetCozy from '@assets/img/product-sheet-cozy-days.png';
+import productSheetRetro from '@assets/img/product-sheet-retro-vibes.png';
+import productSheetNightSky from '@assets/img/product-sheet-night-sky.png';
+import productSheetBotanica from '@assets/img/product-sheet-botanica.png';
 // UI Kits
 import auroraDashboardImg from '@assets/img/shop-uikit-aurora-dashboard.png';
 import minimalMuseImg from '@assets/img/shop-uikit-minimal-muse.png';
@@ -63,7 +62,7 @@ const PRODUCTS: Product[] = [
     price: 9,
     description: '48 hand-drawn cosmic sticker designs: kawaii planets, rocket ships, moons, stars, UFOs, and cosmic mushrooms. PNG + SVG.',
     badge: 'NEW',
-    image: cosmicDoodlesImg,
+    image: productSheetCosmic,
     category: 'sticker_packs',
     gumroadUrl: 'https://gumroad.com/l/cosmic-doodles',
   },
@@ -73,7 +72,7 @@ const PRODUCTS: Product[] = [
     price: 9,
     description: '40 cozy-life stickers: potted plants, steaming mugs, knit sweaters, candles, book stacks, blanket forts, hedgehogs. PNG.',
     badge: 'NEW',
-    image: cozyDaysImg,
+    image: productSheetCozy,
     category: 'sticker_packs',
     gumroadUrl: 'https://gumroad.com/l/cozy-days',
   },
@@ -83,7 +82,7 @@ const PRODUCTS: Product[] = [
     price: 9,
     description: '38 retro-futuristic stickers: cassette tapes, CRT TVs, floppy disks, boomboxes, pixel hearts, VHS tapes. 80s/90s aesthetic.',
     badge: 'NEW',
-    image: retroVibesImg,
+    image: productSheetRetro,
     category: 'sticker_packs',
     gumroadUrl: 'https://gumroad.com/l/retro-vibes',
   },
@@ -93,7 +92,7 @@ const PRODUCTS: Product[] = [
     price: 9,
     description: '50 ultra-cute kawaii character stickers: bunnies, frogs, strawberries, bears, shiba inus, cats, dumplings, chicks. PNG.',
     badge: 'NEW',
-    image: kawaiClubImg,
+    image: productSheetKawaii,
     category: 'sticker_packs',
     gumroadUrl: 'https://gumroad.com/l/kawaii-club',
   },
@@ -104,7 +103,7 @@ const PRODUCTS: Product[] = [
     description: '48 botanical illustration stickers: succulents, ferns, mushrooms, pressed flowers, berries, seed pods. PNG + SVG. Scientific illustration meets modern kawaii.',
     price: 9,
     badge: 'NEW',
-    image: botanicaGardenImg,
+    image: productSheetBotanica,
     gumroadUrl: 'https://gumroad.com/l/botanica-garden',
   },
   {
@@ -114,7 +113,7 @@ const PRODUCTS: Product[] = [
     description: '44 dreamy night sky stickers: sleeping moons, constellations, aurora, lanterns, fireflies, shooting stars, night flowers, telescopes. Midnight blue + gold palette.',
     price: 9,
     badge: 'NEW',
-    image: nightSkyImg,
+    image: productSheetNightSky,
     gumroadUrl: 'https://gumroad.com/l/night-sky-dreams',
   },
   // UI Kits
@@ -469,7 +468,7 @@ function ProductDetailModal({ product, onClose }: { product: Product; onClose: (
           <div className="flex flex-col gap-2 mt-auto pt-2">
             {isService ? (
               <a
-                href="mailto:hello@melodyfire.studio"
+                href="mailto:jennipher@melodicbloom.com"
                 className="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-[#7c3aed] to-[#f43f5e] text-white hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -1028,7 +1027,10 @@ export function ShopPage() {
     <div className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
 
       {/* ===== HERO ===== */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
+      <section
+        className="relative pt-24 pb-16 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #0d0415 0%, #1a0a2e 50%, #0d1520 100%)' }}
+      >
         {/* Aurora glow orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
@@ -1071,7 +1073,7 @@ export function ShopPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] max-w-xl leading-relaxed hero-reveal-immediate">
+          <p className="text-lg md:text-xl text-white/60 max-w-xl leading-relaxed hero-reveal-immediate">
             Digital goodies to spark your imagination and level up your creative superpowers.
           </p>
 

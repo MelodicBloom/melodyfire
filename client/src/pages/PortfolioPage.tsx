@@ -15,6 +15,7 @@ import processImg from '@assets/img/process.png';
 import stickersImg from '@assets/img/stickers.png';
 import chromafloraImg from '@assets/img/chromaflora-preview.png';
 import neumorphismImg from '@assets/img/neumorphism-preview.png';
+import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
 
 type Project = {
   id: number;
@@ -229,6 +230,45 @@ const PROJECTS: Project[] = [
     status: '2026 · Published',
     driveUrl: 'https://onedrive.live.com/?id=571926ad-edc8-45b1-b797-242f6c131355&cid=82762ade02f391d1',
   },
+  {
+    id: 16,
+    title: 'Pinterest & Instagram Bulk Uploader',
+    description: 'Bulk pin uploader with background removal, per-image AI hashtag generation, and batch scheduling for Pinterest and Instagram.',
+    longDescription: 'A productivity tool for visual creators — batch-upload images to Pinterest and Instagram with automated background removal, per-image AI-generated hashtags, smart scheduling, and board organization. Built for Melodyfire and available as a service to other creators.',
+    categories: ['web-apps', 'systems'],
+    tags: ['React', 'Node.js', 'AI/ML', 'Social API'],
+    disciplines: ['Automation', 'Social API Integration', 'AI/ML'],
+    image: portfolioImg,
+    year: '2026',
+    status: 'In Development',
+    githubUrl: 'https://github.com/qt314wink',
+  },
+  {
+    id: 17,
+    title: 'Ritual Geometry Guide',
+    description: 'An illustrated guide to the mathematics and philosophy of sacred geometry — frequency, symmetry, and pattern as spiritual technology.',
+    longDescription: 'A comprehensive illustrated guide exploring sacred geometry from first principles — frequency ratios, Fibonacci sequences, Platonic solids, mandala construction, and the philosophical frameworks that unite mathematics with ritual practice. Written and illustrated by Jennipher Troup.',
+    categories: ['systems', 'generative-art'],
+    tags: ['Sacred Geometry', 'Illustration', 'Publishing', 'Research'],
+    disciplines: ['Illustration', 'Research', 'Publishing'],
+    image: solarGrimoireImg,
+    year: '2026',
+    status: 'In Progress',
+    driveUrl: 'https://docs.google.com/document/d/ritual-geometry-guide',
+  },
+  {
+    id: 18,
+    title: 'Live SVG / G-Code Mandala Generator',
+    description: 'Real-time mandala generator with live SVG output, G-code export for plotters and laser cutters, built on real mathematical foundations.',
+    longDescription: 'A live parametric mandala generator built on real mathematical foundations — frequency harmonics, Lissajous paths, symmetry groups, turbulence fields, fold geometry. Outputs live SVG for web display and G-code for physical plotters, laser cutters, and CNC machines. Designed for sacred geometry practitioners, artists, and fabricators.',
+    categories: ['web-apps', 'generative-art'],
+    tags: ['WebGL', 'SVG', 'G-Code', 'Plotter', 'Math'],
+    disciplines: ['Generative Systems', 'Math / Geometry', 'Fabrication'],
+    image: heroMandalaImg,
+    year: '2026',
+    status: 'In Development',
+    githubUrl: 'https://github.com/qt314wink',
+  },
 ];
 
 const FILTER_TABS = [
@@ -407,7 +447,10 @@ export default function PortfolioPage() {
     <>
       <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
         {/* Hero */}
-        <section className="relative pt-28 pb-16 px-6 overflow-hidden">
+        <section
+          className="relative pt-28 pb-16 px-6 overflow-hidden"
+          style={{ background: 'linear-gradient(to bottom right, #1a0a2e 0%, #0d1520 60%, #0f0820 100%)' }}
+        >
           <div className="absolute top-16 right-6 md:right-16 opacity-30 pointer-events-none" style={{ width: 200, height: 200 }}>
             <MandalaCanvas size={200} />
           </div>

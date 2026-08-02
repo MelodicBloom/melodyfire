@@ -400,7 +400,10 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
       {/* ---- Hero ---- */}
-      <section className="relative pt-28 pb-20 px-6 overflow-hidden">
+      <section
+        className="relative pt-28 pb-20 px-6 overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #0d0415 0%, #17092a 50%, #0f0520 100%)' }}
+      >
         {/* Background gradient orbs */}
         <div
           className="absolute top-20 right-0 w-96 h-96 rounded-full pointer-events-none"

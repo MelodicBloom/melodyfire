@@ -605,7 +605,7 @@ export function HomePage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4" data-reveal>
             <a
-              href="mailto:hello@melodyfire.studio"
+              href="mailto:jennipher@melodicbloom.com"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-base font-bold text-white shadow-[var(--glow-primary)] hover:shadow-[0_0_48px_rgba(124,58,237,0.8)] hover:-translate-y-0.5 transition-all duration-300"
               style={{ background: 'var(--gradient-primary)' }}
             >
