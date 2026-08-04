@@ -17,6 +17,81 @@ import chromafloraImg from '@assets/img/chromaflora-preview.png';
 import neumorphismImg from '@assets/img/neumorphism-preview.png';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
 
+type Repo = {
+  name: string;
+  language: string;
+  description: string;
+  tags: string[];
+  url: string;
+};
+
+const LANGUAGE_COLORS: Record<string, { bg: string; text: string; border: string; dot: string }> = {
+  TypeScript: { bg: 'rgba(59,130,246,0.12)', text: '#93c5fd', border: 'rgba(59,130,246,0.3)', dot: '#3b82f6' },
+  HTML: { bg: 'rgba(249,115,22,0.12)', text: '#fdba74', border: 'rgba(249,115,22,0.3)', dot: '#f97316' },
+  CSS: { bg: 'rgba(20,184,166,0.12)', text: '#5eead4', border: 'rgba(20,184,166,0.3)', dot: '#14b8a6' },
+  Python: { bg: 'rgba(34,197,94,0.12)', text: '#86efac', border: 'rgba(34,197,94,0.3)', dot: '#22c55e' },
+  '-': { bg: 'rgba(255,255,255,0.06)', text: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.15)', dot: '#9ca3af' },
+};
+
+const REPOS: Repo[] = [
+  {
+    name: 'aether',
+    language: 'TypeScript',
+    description: 'Premium iridescent GLSL shader library for React/Next.js. Freemium gallery with live WebGL previews — thin-film interference, Fresnel ramps, abalone nacre, bubble membranes.',
+    tags: ['WebGL', 'GLSL', 'React'],
+    url: 'https://github.com/qt314wink/aether',
+  },
+  {
+    name: 'omni-loom',
+    language: 'CSS',
+    description: 'The Enterprise Deterministic Fabrication Compiler — transforms design specifications into physical fabrication outputs across materials, tolerances, and machine protocols.',
+    tags: ['Fabrication', 'Compiler', 'Design Systems'],
+    url: 'https://github.com/qt314wink/omni-loom',
+  },
+  {
+    name: 'kozo-dreams',
+    language: 'HTML',
+    description: 'Dark Washi Fantasy Design System — 20 components, 5 sacred dyes, 10 screens. Where Japanese paper craft meets systematic digital design.',
+    tags: ['Design System', 'Washi', 'Fantasy'],
+    url: 'https://github.com/qt314wink/kozo-dreams',
+  },
+  {
+    name: 'svg-filter-lab',
+    language: 'TypeScript',
+    description: 'Production-ready SVG filter library for React/Next.js — risograph grain, posterization, ambient glow, chromatic aberration as CSS primitives.',
+    tags: ['SVG', 'Filters', 'React'],
+    url: 'https://github.com/qt314wink/svg-filter-lab',
+  },
+  {
+    name: 'lumina-tactile',
+    language: 'TypeScript',
+    description: 'Multi-sensory spatial audio design system with Mesh2HRTF — designing sound you can feel as a spatial, embodied design primitive.',
+    tags: ['Spatial Audio', 'Design System', 'HRTF'],
+    url: 'https://github.com/qt314wink/lumina-tactile',
+  },
+  {
+    name: 'woodmorphism',
+    language: 'HTML',
+    description: 'Wood morphic design system — tactile organic material rendered as digital UI language. Live on Vercel.',
+    tags: ['Design System', 'Material', 'UI'],
+    url: 'https://github.com/qt314wink/woodmorphism',
+  },
+  {
+    name: 'epistemic-infrastructure-workflow',
+    language: '-',
+    description: 'A reusable build spec, skill, and prompt workflow for designing traceable, emergent systems with cognitive scaffolding.',
+    tags: ['AI Systems', 'Methodology', 'Infrastructure'],
+    url: 'https://github.com/qt314wink/epistemic-infrastructure-workflow',
+  },
+  {
+    name: 'living-intelligence-architecture',
+    language: '-',
+    description: 'Architectural specification for AI systems that reason ecologically — living intelligence as regenerative infrastructure.',
+    tags: ['AI Architecture', 'Regenerative', 'Systems'],
+    url: 'https://github.com/qt314wink/living-intelligence-architecture',
+  },
+];
+
 type Project = {
   id: number;
   title: string;
@@ -395,6 +470,43 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
+// Repo card
+function RepoCard({ repo }: { repo: Repo }) {
+  const colors = LANGUAGE_COLORS[repo.language] || LANGUAGE_COLORS['-'];
+  return (
+    <a
+      href={repo.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block rounded-2xl p-6 border border-white/10 hover:border-violet-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_rgba(124,58,237,0.18)] holo-card"
+      style={{ background: 'rgba(255,255,255,0.03)', borderTop: `3px solid ${colors.dot}` }}
+    >
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <span className="font-display font-bold text-white text-base truncate">{repo.name}</span>
+        {repo.language !== '-' && (
+          <span
+            className="shrink-0 px-2 py-0.5 text-xs font-medium rounded-full border"
+            style={{ background: colors.bg, color: colors.text, borderColor: colors.border }}
+          >
+            {repo.language}
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-white/60 leading-relaxed mb-4 line-clamp-2">{repo.description}</p>
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {repo.tags.map((tag) => (
+          <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-white/5 text-white/50 border border-white/10">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-400 group-hover:text-violet-300 transition-colors">
+        View Repo <ExternalLink size={10} />
+      </span>
+    </a>
+  );
+}
+
 // Project card
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) {
   return (
@@ -629,6 +741,21 @@ export default function PortfolioPage() {
                   Visit <ExternalLink size={10} />
                 </span>
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Selected Open Source Work */}
+        <section className="px-6 pb-20">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-10 reveal">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">Selected Open Source Work</h2>
+              <p className="text-white/50 text-base">Repositories built on real mathematical, material, and cognitive foundations — not demos, but systems.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {REPOS.map((repo) => (
+                <RepoCard key={repo.name} repo={repo} />
+              ))}
             </div>
           </div>
         </section>

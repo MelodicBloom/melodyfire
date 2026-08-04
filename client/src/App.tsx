@@ -14,6 +14,7 @@ const PortfolioPage = lazy(() => import('./pages/PortfolioPage').then(m => ({ de
 const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.BlogPage })));
 const ShopPage = lazy(() => import('./pages/ShopPage').then(m => ({ default: m.ShopPage })));
 const ReversePromptPage = lazy(() => import('./pages/ReversePromptPage'));
+const KaleidoscopePage = lazy(() => import('./pages/KaleidoscopePage').then(m => ({ default: m.KaleidoscopePage })));
 
 // Default exports (pre-existing pages)
 const GenerativeArtPage = lazy(() => import('./pages/GenerativeArtPage'));
@@ -45,6 +46,7 @@ function AppInner() {
             <Route path="/about" component={AboutPage} />
             <Route path="/work" component={PortfolioPage} />
             <Route path="/art" component={GenerativeArtPage} />
+            <Route path="/kaleidoscope" component={KaleidoscopePage} />
             <Route path="/ai-tools" component={AIToolsPage} />
             <Route path="/regenerative" component={RegenerativePage} />
             <Route path="/services" component={ServicesPage} />

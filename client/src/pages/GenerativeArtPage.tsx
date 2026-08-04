@@ -29,6 +29,9 @@ import raiden1107 from '@assets/img/raiden-IMG_1107.jpg';
 import raiden1104 from '@assets/img/raiden-IMG_1104.jpg';
 import raiden1100 from '@assets/img/raiden-IMG_1100.jpg';
 import raiden1082 from '@assets/img/raiden-IMG_1082.jpg';
+// Kaleidoscope series
+import kaleidoscope1 from '@assets/kaleidoscope-1.gif';
+import kaleidoscope2 from '@assets/kaleidoscope-2.gif';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                                 */
@@ -73,6 +76,9 @@ const ART_ITEMS: ArtItem[] = [
   { id: 25, title: 'Raiden — Mosaic Cosmos', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1104, aspectRatio: '3/4' },
   { id: 26, title: 'Raiden — Shell Mosaic', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1100, aspectRatio: '3/4' },
   { id: 27, title: 'Raiden — Prismatic Drift', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1082, aspectRatio: '3/4' },
+  // Kaleidoscope series
+  { id: 28, title: 'Violet Mandala I', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope1, aspectRatio: '1/1' },
+  { id: 29, title: 'Chromatic Bloom', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope2, aspectRatio: '1/1' },
 ];
 
 const STYLE_TABS = [

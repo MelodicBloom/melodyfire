@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Work', href: '/work' },
   { label: 'Art', href: '/art' },
+  { label: 'Kaleidoscope', href: '/kaleidoscope' },
   { label: 'AI Tools', href: '/ai-tools' },
   { label: 'Regenerative', href: '/regenerative' },
   { label: 'Services', href: '/services' },
