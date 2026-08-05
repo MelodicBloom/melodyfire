@@ -3,6 +3,7 @@ import { Router, Route, Switch } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
+import { Toaster } from './components/ui/toaster';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { useCursorGlow } from './hooks/useCursorGlow';
 
@@ -15,6 +16,9 @@ const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.B
 const ShopPage = lazy(() => import('./pages/ShopPage').then(m => ({ default: m.ShopPage })));
 const ReversePromptPage = lazy(() => import('./pages/ReversePromptPage'));
 const KaleidoscopePage = lazy(() => import('./pages/KaleidoscopePage').then(m => ({ default: m.KaleidoscopePage })));
+const StudioPage = lazy(() => import('./pages/StudioPage').then(m => ({ default: m.StudioPage })));
+const MotionOraclePage = lazy(() => import('./pages/MotionOraclePage').then(m => ({ default: m.MotionOraclePage })));
+const PromptEngineeringPage = lazy(() => import('./pages/PromptEngineeringPage').then(m => ({ default: m.PromptEngineeringPage })));
 
 // Default exports (pre-existing pages)
 const GenerativeArtPage = lazy(() => import('./pages/GenerativeArtPage'));
@@ -47,6 +51,8 @@ function AppInner() {
             <Route path="/work" component={PortfolioPage} />
             <Route path="/art" component={GenerativeArtPage} />
             <Route path="/kaleidoscope" component={KaleidoscopePage} />
+            <Route path="/motion-oracle" component={MotionOraclePage} />
+            <Route path="/prompt-engineering" component={PromptEngineeringPage} />
             <Route path="/ai-tools" component={AIToolsPage} />
             <Route path="/regenerative" component={RegenerativePage} />
             <Route path="/services" component={ServicesPage} />
@@ -54,6 +60,7 @@ function AppInner() {
             <Route path="/reverse-prompt" component={ReversePromptPage} />
             <Route path="/blog" component={BlogPage} />
             <Route path="/shop" component={ShopPage} />
+            <Route path="/studio" component={StudioPage} />
             {/* 404 fallback */}
             <Route>
               <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 gap-6 pt-16">
@@ -71,6 +78,7 @@ function AppInner() {
         </Suspense>
       </main>
       <Footer />
+      <Toaster />
     </div>
   );
 }

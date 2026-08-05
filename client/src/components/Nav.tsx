@@ -10,6 +10,8 @@ const NAV_LINKS = [
   { label: 'Work', href: '/work' },
   { label: 'Art', href: '/art' },
   { label: 'Kaleidoscope', href: '/kaleidoscope' },
+  { label: 'Motion Oracle', href: '/motion-oracle' },
+  { label: 'Prompt Lab', href: '/prompt-engineering' },
   { label: 'AI Tools', href: '/ai-tools' },
   { label: 'Regenerative', href: '/regenerative' },
   { label: 'Services', href: '/services' },
