@@ -1,7 +1,7 @@
 # Melodyfire v3
 
 **Jennipher Troup — AI Systems Designer · Creative Technologist · Regenerative Systems Designer**
-Philadelphia, PA · melodyfire.studio
+Philadelphia, PA · melodyfire.space · [Live on Vercel](https://melodyfire-studio.vercel.app/)
 
 ---
 
@@ -22,7 +22,7 @@ Built with intention, governed by doctrine, and designed to launch itself into i
 - **Database:** Supabase (PostgreSQL) — project: `ikfejoqvwmmqsuszpdhj`
 - **Animation:** Custom Mandala Canvas Engine + CSS scroll-reveal system
 - **Fonts:** Clash Display + Satoshi (Fontshare)
-- **Deployment:** Netlify (static) + Perplexity Computer hosting
+- **Deployment:** Vercel · [melodyfire-studio.vercel.app](https://melodyfire-studio.vercel.app/)
 
 ## Visual Modes
 
