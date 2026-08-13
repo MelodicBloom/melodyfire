@@ -1,0 +1,2 @@
+import { pilotFields } from '../../content/reed-smith/researchProtocol';
+export function PilotContract(){return <section aria-labelledby="pilot"><h3 id="pilot">Pilot contract</h3><p className="rs-copy">A blank specification keeps approval and evidence requirements explicit before action.</p><div className="rs-contract">{pilotFields.map(x=><div key={x}><b>{x}</b><span aria-label={`${x}: to be established`}>To be established with authorized stakeholders</span></div>)}</div></section>}
