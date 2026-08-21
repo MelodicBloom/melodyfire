@@ -1,0 +1,2 @@
+import { phases } from '../../content/reed-smith/researchProtocol';
+export function ResearchProtocol(){return <section aria-labelledby="protocol"><h3 id="protocol">Six-phase research protocol</h3><div className="rs-phase-grid">{phases.map((p,i)=><article className="rs-card" key={p.name}><p className="rs-index">Phase {i+1}</p><h4>{p.name}</h4><ul>{p.items.map(x=><li key={x}>{x}</li>)}</ul>{p.name==='Synthesize'&&<p className="rs-note">Every theme remains traceable to evidence.</p>}</article>)}</div></section>}
