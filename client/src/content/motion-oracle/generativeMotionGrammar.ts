@@ -52,6 +52,16 @@ export type MotionPrimitive =
   | 'temporal.settle'
   | 'temporal.inverse_reassemble';
 
+export type MaterialResponseId = 'wood' | 'paper' | 'opal' | 'labradorite' | 'abalone';
+export type MotionModifierId =
+  | 'ceremonial'
+  | 'percussive'
+  | 'respiratory'
+  | 'mechanical'
+  | 'psychedelic'
+  | 'dreamlike';
+export type EasingProfileId = 'sineInOut' | 'smoothstep' | 'expoOut' | 'linear';
+
 export interface MotionGrammarDefinition {
   id: MotionGrammarId;
   topology: MotionTopology[];
@@ -62,7 +72,7 @@ export interface MotionGrammarDefinition {
 }
 
 export interface MaterialResponse {
-  id: string;
+  id: MaterialResponseId;
   description: string;
   motionResponse: string;
   lightingResponse: string;
@@ -71,7 +81,7 @@ export interface MaterialResponse {
 }
 
 export interface ModifierProfile {
-  id: string;
+  id: MotionModifierId;
   description: string;
   attackRatio: number;
   holdRatio: number;
@@ -82,7 +92,7 @@ export interface ModifierProfile {
 }
 
 export interface EasingProfile {
-  id: string;
+  id: EasingProfileId;
   cssApproximation: string;
   useWhen: string;
   avoidWhen: string;
@@ -309,7 +319,7 @@ export const EASING_PROFILES: EasingProfile[] = [
   },
   {
     id: 'smoothstep',
-    cssApproximation: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    cssApproximation: 'cubic-bezier(0.3333, 0, 0.6667, 1)',
     useWhen: 'bounded folds, mask growth, contact-shadow transitions',
     avoidWhen: 'constant-speed scanning or light sweeps',
   },
@@ -364,8 +374,10 @@ export const SUBSTITUTION_HYPOTHESES = [
     test: 'measure high-frequency temporal variance while edge displacement stays bounded',
   },
   {
-    swap: '48mm / 1.6% dolly → 85mm / 1.6% dolly',
-    expected: 'less perspective change, flatter premium macro read and stronger material emphasis',
-    test: 'compare anchor displacement and apparent depth without changing motion channels',
+    swap: '48mm → 85mm with camera distance increased to preserve the initial framing',
+    expected:
+      'narrower field of view plus increased camera distance reduces perspective exaggeration while preserving subject scale and emphasizing material detail',
+    test:
+      'match the initial subject framing before each run, keep the same 1.6% relative dolly, then compare foreground/background size ratios and anchor displacement',
   },
 ] as const;
