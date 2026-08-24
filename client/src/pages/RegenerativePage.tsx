@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase, getSessionId } from '@/lib/supabase';
+import { SectionJump, consumePendingSectionJump } from '@/components/SectionJump';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
 import processImg from '@assets/img/process.png';
 import restoryingImg from '@assets/img/restorying.png';
@@ -7,6 +8,7 @@ import restoryingImg from '@assets/img/restorying.png';
 // ── Scroll-reveal hook ─────────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
+    consumePendingSectionJump();
     const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('revealed'); } }),
@@ -134,7 +136,7 @@ export default function RegenerativePage() {
           </p>
           {/* CTAs */}
           <div className="reveal delay-400" style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <a href="#systems-map" style={{
+            <SectionJump targetId="systems-map" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               background: 'linear-gradient(135deg, var(--sg-gold) 0%, #e8cc7a 100%)',
               color: '#0a0e1a', padding: '14px 32px', borderRadius: 8,
@@ -145,8 +147,8 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
               Enter the Portal →
-            </a>
-            <a href="#doctrine" style={{
+            </SectionJump>
+            <SectionJump targetId="doctrine" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               border: '1.5px solid var(--sg-gold)', color: 'var(--sg-gold)',
               padding: '14px 32px', borderRadius: 8,
@@ -157,7 +159,7 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
             >
               The Doctrine
-            </a>
+            </SectionJump>
           </div>
         </div>
 

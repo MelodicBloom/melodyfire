@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { SectionJump } from '@/components/SectionJump';
 import {
   Accordion,
   AccordionContent,
@@ -357,13 +358,13 @@ export default function ChildrensArtPage() {
             impasto skies, quilled botanicals.
           </p>
           <div className="flex flex-wrap gap-4 mt-8 reveal delay-300">
-            <a
-              href="#commission"
+            <SectionJump
+              targetId="commission"
               className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%)' }}
             >
               Commission a Scene
-            </a>
+            </SectionJump>
             <a
               href="https://docs.google.com/document/d/1WcRLvegKEkkwGIW2adYWUsxu8VC3Cp-yoNlbTdkI4XI/edit"
               target="_blank"
@@ -646,8 +647,8 @@ export default function ChildrensArtPage() {
                   ))}
                 </ul>
 
-                <a
-                  href="#commission-form"
+                <SectionJump
+                  targetId="commission-form"
                   className="block text-center py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
                   style={
                     tier.highlight
@@ -656,7 +657,7 @@ export default function ChildrensArtPage() {
                   }
                 >
                   Get Started
-                </a>
+                </SectionJump>
               </div>
             ))}
           </div>

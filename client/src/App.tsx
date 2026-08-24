@@ -1,11 +1,12 @@
-import { Suspense, lazy } from 'react';
-import { Router, Route, Switch } from 'wouter';
+import { Suspense, lazy, useEffect } from 'react';
+import { Router, Route, Switch, useLocation } from 'wouter';
 import { useHashLocation } from 'wouter/use-hash-location';
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
 import { Toaster } from './components/ui/toaster';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { useCursorGlow } from './hooks/useCursorGlow';
+import { queueSectionJump } from './components/SectionJump';
 
 // Pages — lazy loaded for code splitting
 // Named exports (files we created in this build)
@@ -36,6 +37,15 @@ function PageLoader() {
   );
 }
 
+function LegacySystemsMapRoute() {
+  const [, navigate] = useLocation();
+  useEffect(() => {
+    queueSectionJump('systems-map');
+    navigate('/regenerative', { replace: true });
+  }, [navigate]);
+  return <PageLoader />;
+}
+
 function AppInner() {
   // Global side-effects
   useScrollReveal();
@@ -56,6 +66,7 @@ function AppInner() {
             <Route path="/prompt-engineering" component={PromptEngineeringPage} />
             <Route path="/ai-tools" component={AIToolsPage} />
             <Route path="/regenerative" component={RegenerativePage} />
+            <Route path="/systems-map" component={LegacySystemsMapRoute} />
             <Route path="/services" component={ServicesPage} />
             <Route path="/children-art" component={ChildrensArtPage} />
             <Route path="/reverse-prompt" component={ReversePromptPage} />
