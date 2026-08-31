@@ -71,13 +71,26 @@ export interface MotionGrammarDefinition {
   guardrail: string;
 }
 
+/**
+ * Provider-neutral material dimensions. Every value is normalized to [0, 1];
+ * adapters own conversion into renderer-specific controls and physical units.
+ */
+export interface NormalizedMaterialBaseline {
+  surfaceRoughness: number;
+  specularResponse: number;
+  emissiveResponse: number;
+  subsurfaceScatter: number;
+  angularFlash: number;
+  microstructureDensity: number;
+}
+
 export interface MaterialResponse {
   id: MaterialResponseId;
   description: string;
   motionResponse: string;
   lightingResponse: string;
   prohibitedShortcut: string;
-  baseline: Record<string, number | string>;
+  baseline: NormalizedMaterialBaseline;
 }
 
 export interface ModifierProfile {
@@ -98,20 +111,17 @@ export interface EasingProfile {
   avoidWhen: string;
 }
 
-export const PROMPT_SECTION_ORDER = [
-  'subject',
-  'structure',
-  'preservation',
-  'motion_grammar',
-  'local_motion_channels',
-  'reveal_mechanism',
-  'material_response',
-  'lighting_behavior',
-  'camera',
-  'timing_and_phase',
-  'final_loop_state',
-  'failure_exclusions',
-] as const;
+/**
+ * Semantic priority tiers, not a serialized prompt order. Sections within a
+ * tier are unordered; the Observation Ad Pipeline compiler owns provider-
+ * specific linearization.
+ */
+export const PROMPT_SECTION_PRECEDENCE = {
+  invariants: ['subject', 'structure', 'preservation', 'failure_exclusions'],
+  motionIntent: ['motion_grammar', 'local_motion_channels', 'reveal_mechanism'],
+  responseContext: ['material_response', 'lighting_behavior', 'camera'],
+  temporalContract: ['timing_and_phase', 'final_loop_state'],
+} as const;
 
 export const GENERATIVE_MOTION_GRAMMARS: MotionGrammarDefinition[] = [
   {
@@ -125,7 +135,7 @@ export const GENERATIVE_MOTION_GRAMMARS: MotionGrammarDefinition[] = [
   },
   {
     id: 'radial.hinged_aperture',
-    topology: ['radial_petaled', 'radial_annular'],
+    topology: ['radial_petaled'],
     description:
       'Repeated petal sectors articulate from explicit hinge roots, exposing underlayers through physical occlusion.',
     preferredPrimitives: ['fold.root_hinge', 'fold.counter', 'reveal.occlusion', 'light.vein_propagate'],
@@ -189,7 +199,7 @@ export const GENERATIVE_MOTION_GRAMMARS: MotionGrammarDefinition[] = [
     topology: ['portrait_anchor'],
     description:
       'Identity and anatomy remain fixed while environment, background planes, focus and light carry the motion.',
-    preferredPrimitives: ['camera.dolly', 'camera.focus_rack', 'light.specular_sweep', 'temporal.settle'],
+    preferredPrimitives: ['camera.focus_rack', 'light.specular_sweep', 'temporal.settle'],
     complexitySource: 'light and environment motion around a stable human anchor',
     guardrail: 'No identity drift, facial morphing or unrequested head/body motion.',
   },
@@ -210,15 +220,30 @@ export const MATERIAL_RESPONSES: MaterialResponse[] = [
     motionResponse: 'rigid; may translate or hinge only at explicit construction boundaries',
     lightingResponse: 'broad warm highlight, low specular response, grain becomes more legible at glancing angles',
     prohibitedShortcut: 'rubbery bending, melting grain, glow',
-    baseline: { roughness: 0.72, specular: 0.12, glow: 0 },
+    baseline: {
+      surfaceRoughness: 0.72,
+      specularResponse: 0.12,
+      emissiveResponse: 0,
+      subsurfaceScatter: 0,
+      angularFlash: 0,
+      microstructureDensity: 0.65,
+    },
   },
   {
     id: 'paper',
     description: 'Dry fibrous cotton/card paper carrying printed stipple, halftone or crosshatch.',
-    motionResponse: 'rigid fold only; printed texture remains attached to the surface',
+    motionResponse:
+      'rigid fold only at explicit construction boundaries; printed texture remains attached to the surface',
     lightingResponse: 'diffuse response with contact-shadow emphasis at lifted edges',
     prohibitedShortcut: 'texture crawling, boiling, liquid deformation',
-    baseline: { roughness: 0.88, microtextureDensity: 0.74, glow: 0 },
+    baseline: {
+      surfaceRoughness: 0.88,
+      specularResponse: 0.06,
+      emissiveResponse: 0,
+      subsurfaceScatter: 0,
+      angularFlash: 0,
+      microstructureDensity: 0.74,
+    },
   },
   {
     id: 'opal',
@@ -226,7 +251,14 @@ export const MATERIAL_RESPONSES: MaterialResponse[] = [
     motionResponse: 'structure remains rigid; perceived motion can come from moving incidence light',
     lightingResponse: 'broad persistent cyan/mint/violet/gold internal scatter',
     prohibitedShortcut: 'flat hue cycling across unrelated materials',
-    baseline: { roughness: 0.24, internalScatter: 0.56, flashStrength: 0.62 },
+    baseline: {
+      surfaceRoughness: 0.24,
+      specularResponse: 0.42,
+      emissiveResponse: 0.08,
+      subsurfaceScatter: 0.56,
+      angularFlash: 0.62,
+      microstructureDensity: 0.38,
+    },
   },
   {
     id: 'labradorite',
@@ -234,7 +266,14 @@ export const MATERIAL_RESPONSES: MaterialResponse[] = [
     motionResponse: 'rigid; visual activation depends on viewing/light angle',
     lightingResponse: 'mostly dark until a directional flash threshold is crossed',
     prohibitedShortcut: 'always-on neon glow',
-    baseline: { roughness: 0.31, flashStrength: 0.82, flashThresholdDeg: 22 },
+    baseline: {
+      surfaceRoughness: 0.31,
+      specularResponse: 0.55,
+      emissiveResponse: 0,
+      subsurfaceScatter: 0.08,
+      angularFlash: 0.82,
+      microstructureDensity: 0.52,
+    },
   },
   {
     id: 'abalone',
@@ -242,7 +281,14 @@ export const MATERIAL_RESPONSES: MaterialResponse[] = [
     motionResponse: 'rigid with fine local shimmer',
     lightingResponse: 'small-scale spectral shifts rather than broad uniform glow',
     prohibitedShortcut: 'large liquid rainbow waves',
-    baseline: { roughness: 0.26, shimmerDensity: 0.68, glow: 0.14 },
+    baseline: {
+      surfaceRoughness: 0.26,
+      specularResponse: 0.48,
+      emissiveResponse: 0.14,
+      subsurfaceScatter: 0.22,
+      angularFlash: 0.68,
+      microstructureDensity: 0.68,
+    },
   },
 ];
 
@@ -367,11 +413,6 @@ export const SUBSTITUTION_HYPOTHESES = [
     swap: 'sineInOut → expoOut',
     expected: 'calm continuous activation becomes a sharper snap/open event',
     test: 'hold amplitude and duration constant; compare peak velocity and settling behavior',
-  },
-  {
-    swap: 'distortion frequency 0.42 → 1.20 at constant strength',
-    expected: 'large-scale warp gives way to finer micro-turbulence with greater texture-boiling risk',
-    test: 'measure high-frequency temporal variance while edge displacement stays bounded',
   },
   {
     swap: '48mm → 85mm with camera distance increased to preserve the initial framing',
