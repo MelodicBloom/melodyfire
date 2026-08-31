@@ -1,3 +1,4 @@
+import { SectionLink } from '@/components/SectionLink';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'wouter';
 import { ExternalLink, Code2 } from 'lucide-react';
@@ -625,9 +626,9 @@ export default function PortfolioPage() {
                       <button onClick={() => handleOpen(featuredProject)} className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}>
                         View Case Study →
                       </button>
-                      <a href="#doctrine" className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white/70 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all">
+                      <SectionLink targetId="doctrine" className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white/70 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all">
                         The Doctrine
-                      </a>
+                      </SectionLink>
                     </div>
                   </div>
                 </div>
