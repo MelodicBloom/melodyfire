@@ -8,9 +8,14 @@ The governing distinction is:
 
 ## Prompt convention
 
-Generative prompts should be assembled in this authority order:
+Generative prompts follow semantic precedence tiers:
 
-`SUBJECT → STRUCTURE → PRESERVATION → MOTION GRAMMAR → LOCAL MOTION CHANNELS → REVEAL MECHANISM → MATERIAL RESPONSE → LIGHTING BEHAVIOR → CAMERA → TIMING / PHASE → FINAL / LOOP STATE → FAILURE EXCLUSIONS`
+1. invariants: subject, structure, preservation, and failure exclusions;
+2. motion intent: motion grammar, local motion channels, and reveal mechanism;
+3. response context: material response, lighting behavior, and camera;
+4. temporal contract: timing / phase and final / loop state.
+
+These tiers define authority and preservation, not a serialized prompt sequence. The Observation Ad Pipeline compiler owns provider-specific linearization.
 
 Aesthetic adjectives are lower authority than structure, target locality, numeric bounds, and preservation rules. "Psychedelic" is not permission to spin the whole image. "Dreamlike" is not permission to ghost or dissolve topology. "Iridescent" is not permission to recolor materials that are not optically iridescent.
 
@@ -33,7 +38,7 @@ Each topology has a bounded motion grammar and preferred primitive vocabulary. T
 
 ## Material semantics
 
-Material terms are behavioral contracts, not palette synonyms.
+Material terms are behavioral contracts, not palette synonyms. Exported baselines use a closed set of provider-neutral dimensions normalized to `[0, 1]`; adapters own renderer-specific controls and physical-unit mappings.
 
 - **wood**: rigid, matte/satin, grain remains attached to structure; no glow or rubbery bending.
 - **paper**: dry, fibrous, foldable only at explicit construction boundaries; printed stipple/crosshatch must not crawl.
@@ -65,8 +70,7 @@ Examples encoded in `SUBSTITUTION_HYPOTHESES` include:
 - phase offset `0.08s → 0.34s`
 - fold strength `0.35 → 0.65`
 - easing `sineInOut → expoOut`
-- distortion frequency `0.42 → 1.20`
-- lens `48mm → 85mm` at the same dolly amount
+- lens `48mm → 85mm` with camera distance increased to preserve initial framing
 - material `opal → labradorite`
 
 The result should be judged against a prediction before the candidate is generated. This turns prompt iteration into an empirical control-surface study rather than post-hoc preference matching.
