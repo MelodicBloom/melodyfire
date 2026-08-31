@@ -3,6 +3,7 @@ import { Flame, MapPin, Mail, ExternalLink } from 'lucide-react';
 
 const EXPLORE_LINKS = [
   { label: 'Portfolio', href: '/work' },
+  { label: 'Hovercraft Evidence', href: '/hovercraft' },
   { label: 'Generative Art', href: '/art' },
   { label: 'AI Tools', href: '/ai-tools' },
   { label: 'Regenerative Portal', href: '/regenerative' },
