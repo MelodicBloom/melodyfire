@@ -54,7 +54,7 @@ type SectionJumpProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' 
 };
 
 export function SectionJump({ targetId, onClick, style, ...props }: SectionJumpProps) {
-  return <button type="button" {...props} style={{ border: 0, cursor: 'pointer', font: 'inherit', ...style }} onClick={(event) => {
+  return <button type="button" {...props} style={{ cursor: 'pointer', ...style }} onClick={(event) => {
     onClick?.(event);
     if (!event.defaultPrevented) scrollToSection(targetId);
   }} />;
