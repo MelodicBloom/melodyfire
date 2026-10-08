@@ -1,6 +1,24 @@
 import type { ButtonHTMLAttributes, MouseEvent } from 'react';
 
 const PENDING_SECTION_KEY = 'melodyfire:pending-section';
+let memoryPendingSection: string | null = null;
+
+function readPendingSection(): string | null {
+  try {
+    return sessionStorage.getItem(PENDING_SECTION_KEY) ?? memoryPendingSection;
+  } catch {
+    return memoryPendingSection;
+  }
+}
+
+function clearPendingSection() {
+  memoryPendingSection = null;
+  try {
+    sessionStorage.removeItem(PENDING_SECTION_KEY);
+  } catch {
+    // Storage may be unavailable in embedded contexts; memory state is sufficient.
+  }
+}
 
 export function scrollToSection(sectionId: string): boolean {
   const target = document.getElementById(sectionId);
@@ -15,13 +33,18 @@ export function scrollToSection(sectionId: string): boolean {
 }
 
 export function queueSectionJump(sectionId: string) {
-  sessionStorage.setItem(PENDING_SECTION_KEY, sectionId);
+  memoryPendingSection = sectionId;
+  try {
+    sessionStorage.setItem(PENDING_SECTION_KEY, sectionId);
+  } catch {
+    // Keep the pending jump in memory when Web Storage is unavailable.
+  }
 }
 
 export function consumePendingSectionJump() {
-  const sectionId = sessionStorage.getItem(PENDING_SECTION_KEY);
+  const sectionId = readPendingSection();
   if (!sectionId) return;
-  sessionStorage.removeItem(PENDING_SECTION_KEY);
+  clearPendingSection();
   requestAnimationFrame(() => scrollToSection(sectionId));
 }
 
