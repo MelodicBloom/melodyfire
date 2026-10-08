@@ -1,3 +1,4 @@
+import { SectionLink } from '@/components/SectionLink';
 import { useEffect, useState, useCallback } from 'react';
 import { supabase, getSessionId, saveReversePromptSession } from '@/lib/supabase';
 import reversePromptImg from '@assets/img/mf-reverse-prompt-hero.png';
@@ -394,8 +395,8 @@ export default function ReversePromptPage() {
             <span style={{ color: '#a78bfa' }}>Subject · Lighting · Composition · Camera · Style · Mood · Color Palette · Technical Details</span>
             {' '}— then builds you a complete, deployable prompt.
           </p>
-          <a
-            href="#rp-tool"
+          <SectionLink
+            targetId="rp-tool"
             className="reveal delay-300"
             style={{
               display: 'inline-block',
@@ -408,7 +409,7 @@ export default function ReversePromptPage() {
             }}
           >
             Start Analyzing →
-          </a>
+          </SectionLink>
         </div>
       </section>
 

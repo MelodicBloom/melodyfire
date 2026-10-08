@@ -72,7 +72,7 @@ const FALLBACK_SERVICES: Service[] = [
     turnaround: '5–14 business days',
     active: true,
     cta_label: 'Commission Now',
-    cta_href: '/childrens-art',
+    cta_href: '/children-art',
   },
   {
     id: '2',
@@ -495,7 +495,7 @@ export default function ServicesPage() {
             >
               Start a Conversation
             </a>
-            <Link href="/portfolio">
+            <Link href="/work">
               <span className="px-6 py-3 rounded-xl font-semibold text-white/70 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all cursor-pointer">
                 See Past Work
               </span>

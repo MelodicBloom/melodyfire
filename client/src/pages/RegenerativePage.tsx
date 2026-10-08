@@ -1,3 +1,4 @@
+import { SectionLink } from '@/components/SectionLink';
 import { useEffect, useState } from 'react';
 import { supabase, getSessionId } from '@/lib/supabase';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
@@ -134,7 +135,7 @@ export default function RegenerativePage() {
           </p>
           {/* CTAs */}
           <div className="reveal delay-400" style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <a href="#systems-map" style={{
+            <SectionLink targetId="systems-map" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               background: 'linear-gradient(135deg, var(--sg-gold) 0%, #e8cc7a 100%)',
               color: '#0a0e1a', padding: '14px 32px', borderRadius: 8,
@@ -145,8 +146,8 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
               Enter the Portal →
-            </a>
-            <a href="#doctrine" style={{
+            </SectionLink>
+            <SectionLink targetId="doctrine" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               border: '1.5px solid var(--sg-gold)', color: 'var(--sg-gold)',
               padding: '14px 32px', borderRadius: 8,
@@ -157,7 +158,7 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
             >
               The Doctrine
-            </a>
+            </SectionLink>
           </div>
         </div>
 

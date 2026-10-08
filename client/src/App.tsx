@@ -20,6 +20,7 @@ const StudioPage = lazy(() => import('./pages/StudioPage').then(m => ({ default:
 const MotionOraclePage = lazy(() => import('./pages/MotionOraclePage').then(m => ({ default: m.MotionOraclePage })));
 const PromptEngineeringPage = lazy(() => import('./pages/PromptEngineeringPage').then(m => ({ default: m.PromptEngineeringPage })));
 const ReedSmithInnovationLabPage = lazy(() => import('./pages/ReedSmithInnovationLabPage'));
+const HovercraftEvidencePage = lazy(() => import('./pages/HovercraftEvidencePage'));
 
 // Default exports (pre-existing pages)
 const GenerativeArtPage = lazy(() => import('./pages/GenerativeArtPage'));
@@ -63,6 +64,7 @@ function AppInner() {
             <Route path="/shop" component={ShopPage} />
             <Route path="/studio" component={StudioPage} />
             <Route path="/case-studies/reed-smith-innovation-lab" component={ReedSmithInnovationLabPage} />
+            <Route path="/hovercraft" component={HovercraftEvidencePage} />
             {/* 404 fallback */}
             <Route>
               <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 gap-6 pt-16">
