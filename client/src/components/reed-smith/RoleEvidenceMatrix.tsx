@@ -9,14 +9,11 @@ export function RoleEvidenceMatrix() {
       <h2 id="matrix">Role-to-proof matrix</h2>
       <p className="rs-copy">Select a signal to inspect the proof and the boundary beside it.</p>
       <div className="rs-matrix">
-        <div className="rs-tablist" role="tablist" aria-label="Role signals">
+        <div className="rs-tablist" role="group" aria-label="Role signals">
           {roleProofs.map((r, i) => (
             <button
-              role="tab"
-              aria-selected={active === i}
-              aria-controls="proof-panel"
-              id={`proof-${i}`}
-              tabIndex={0}
+              type="button"
+              aria-pressed={active === i}
               onClick={() => setActive(i)}
               key={r.signal}
             >
@@ -24,21 +21,23 @@ export function RoleEvidenceMatrix() {
             </button>
           ))}
         </div>
-        <article className="rs-proof" role="tabpanel" id="proof-panel" aria-labelledby={`proof-${active}`}>
+        <article className="rs-proof">
           <h3>{roleProofs[active].signal}</h3>
-          {[
-            ['Existing evidence', 'evidence'],
-            ['Project', 'project'],
-            ['Proof type', 'proofType'],
-            ['Confidence', 'confidence'],
-            ['Transferability', 'transferability'],
-            ['Known gap', 'gap'],
-          ].map(([label, key]) => (
-            <div key={key}>
-              <dt>{label}</dt>
-              <dd>{String(roleProofs[active][key as keyof typeof roleProofs[number]])}</dd>
-            </div>
-          ))}
+          <dl>
+            {[
+              ['Existing evidence', 'evidence'],
+              ['Project', 'project'],
+              ['Proof type', 'proofType'],
+              ['Confidence', 'confidence'],
+              ['Transferability', 'transferability'],
+              ['Known gap', 'gap'],
+            ].map(([label, key]) => (
+              <div key={key}>
+                <dt>{label}</dt>
+                <dd>{String(roleProofs[active][key as keyof typeof roleProofs[number]])}</dd>
+              </div>
+            ))}
+          </dl>
         </article>
       </div>
     </section>
