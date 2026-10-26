@@ -361,7 +361,7 @@ export default function GenerativeArtPage() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   activeStyle === tab.value
                     ? 'text-white shadow-lg shadow-violet-500/25'
-                    : 'bg-[hsl(var(--card))] text-[hsl(var(--foreground))]/70 hover:text-[hsl(var(--foreground))] border border-[hsl(var(--border))] hover:border-violet-400/60'
+                    : 'bg-[hsl(var(--card))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] border border-[hsl(var(--border))] hover:border-violet-400/60'
                 }`}
                 style={
                   activeStyle === tab.value
