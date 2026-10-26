@@ -344,7 +344,7 @@ export default function GenerativeArtPage() {
               Commission or license a piece
             </a>
             <span className="text-sm text-white/50">
-              {ART_ITEMS.length} works on view · {seriesCount} series · original outputs, not stock
+              {ART_ITEMS.length} works on view · {seriesCount} series
             </span>
           </div>
         </div>
@@ -354,14 +354,14 @@ export default function GenerativeArtPage() {
       <section className="px-6 pb-10">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-2">
-            {STYLE_TABS.map((tab) => (
+            {STYLE_TABS.filter((t) => t.value === 'all' || ART_ITEMS.some((i) => i.style === t.value)).map((tab) => (
               <button
                 key={tab.value}
                 onClick={() => setActiveStyle(tab.value)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   activeStyle === tab.value
                     ? 'text-white shadow-lg shadow-violet-500/25'
-                    : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+                    : 'bg-[hsl(var(--card))] text-[hsl(var(--foreground))]/70 hover:text-[hsl(var(--foreground))] border border-[hsl(var(--border))] hover:border-violet-400/60'
                 }`}
                 style={
                   activeStyle === tab.value
