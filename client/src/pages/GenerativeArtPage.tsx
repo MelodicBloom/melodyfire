@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'wouter';
 import { supabase } from '@/lib/supabase';
+import { SectionLink } from '@/components/SectionLink';
+import { GalleryGrid, type GalleryItem } from '@/components/gallery';
 
 import artGalleryImg from '@assets/img/art-gallery.png';
 import beatsBoxesImg from '@assets/img/beats-boxes.png';
@@ -45,6 +47,9 @@ type ArtItem = {
   styleLabel: string;
   image: string;
   aspectRatio: string;
+  kind?: GalleryItem['kind'];
+  poster?: string;
+  fit?: GalleryItem['fit'];
 };
 
 const ART_ITEMS: ArtItem[] = [
@@ -78,8 +83,8 @@ const ART_ITEMS: ArtItem[] = [
   { id: 26, title: 'Raiden — Shell Mosaic', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1100, aspectRatio: '3/4' },
   { id: 27, title: 'Raiden — Prismatic Drift', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1082, aspectRatio: '3/4' },
   // Kaleidoscope series
-  { id: 28, title: 'Violet Mandala I', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope1, aspectRatio: '1/1' },
-  { id: 29, title: 'Chromatic Bloom', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope2, aspectRatio: '1/1' },
+  { id: 28, title: 'Violet Mandala I', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope1, aspectRatio: '5/11', kind: 'gif' },
+  { id: 29, title: 'Chromatic Bloom', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope2, aspectRatio: '5/11', kind: 'gif' },
 ];
 
 const STYLE_TABS = [
@@ -132,70 +137,17 @@ const STYLE_GUIDE = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Art Item component                                                   */
-/* ------------------------------------------------------------------ */
-
-function ArtItemCard({ item, onOpen, onCommission }: { item: ArtItem; onOpen: (item: ArtItem) => void; onCommission: (item: ArtItem) => void }) {
-  const isPortrait = item.aspectRatio === '3/4';
-  const ref = useRef<HTMLDivElement>(null);
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
-    el.style.setProperty('--mx', `${((x + 0.5) * 100).toFixed(1)}%`);
-    el.style.setProperty('--my', `${((y + 0.5) * 100).toFixed(1)}%`);
-  };
-  const onLeave = () => { if (ref.current) ref.current.style.transform = ''; };
-  return (
-    <div
-      ref={ref}
-      role="button"
-      tabIndex={0}
-      aria-label={`Open ${item.title}`}
-      className="art-item mf-tilt group relative overflow-hidden rounded-xl cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
-      data-style={item.style}
-      style={{ aspectRatio: item.aspectRatio, breakInside: 'avoid', marginBottom: '1.25rem', transition: 'transform 200ms ease-out, box-shadow 300ms' }}
-      onClick={() => onOpen(item)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(item); } }}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-    >
-      <img
-        src={item.image}
-        alt={item.title}
-        className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-          isPortrait ? 'object-contain bg-[hsl(var(--card))]' : 'object-cover'
-        }`}
-        loading="lazy"
-      />
-      {/* Iridescent sheen that follows the cursor */}
-      <div aria-hidden className="mf-sheen absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      {/* Hover overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-300"
-           style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)' }}>
-        <p className="font-display font-semibold text-white text-base mb-1 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-          {item.title}
-        </p>
-        <div className="flex items-center justify-between translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-          <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/30 text-violet-200 border border-violet-500/30">
-            {item.styleLabel}
-          </span>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); onCommission(item); }}
-            className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
-          >
-            Commission Similar →
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+/** Portrait cards keep the full figure (contain on card fill); everything else crops (cover). */
+const toGalleryItem = (item: ArtItem): GalleryItem => ({
+  id: item.id,
+  title: item.title,
+  label: item.styleLabel,
+  kind: item.kind ?? 'image',
+  src: item.image,
+  poster: item.poster,
+  aspectRatio: item.aspectRatio,
+  fit: item.fit ?? (item.aspectRatio === '3/4' ? 'contain' : 'cover'),
+});
 
 /* ------------------------------------------------------------------ */
 /*  Lead capture → in-repo CRM (Supabase `inquiries`, triaged in /studio) */
@@ -269,12 +221,12 @@ function GalleryLeadForm({ reference }: { reference: string }) {
 
 export default function GenerativeArtPage() {
   const [activeStyle, setActiveStyle] = useState('all');
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [leadRef, setLeadRef] = useState('');
-  const openCommission = (item: ArtItem) => {
-    setLeadRef(item.title);
-    setLightboxIdx(null);
-    document.getElementById('inquire')?.scrollIntoView({ behavior: 'smooth' });
+  const openCommission = (title: string) => {
+    setLeadRef(title);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Wait a frame so the theater dialog has closed before scrolling the page.
+    requestAnimationFrame(() => document.getElementById('inquire')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }));
   };
 
   // Scroll reveal
@@ -291,23 +243,12 @@ export default function GenerativeArtPage() {
     return () => observer.disconnect();
   }, []);
 
-  const filteredItems =
-    activeStyle === 'all'
-      ? ART_ITEMS
-      : ART_ITEMS.filter((item) => item.style === activeStyle);
-  const lightboxItem = lightboxIdx !== null ? filteredItems[lightboxIdx] : null;
+  const filteredItems = useMemo(
+    () => (activeStyle === 'all' ? ART_ITEMS : ART_ITEMS.filter((item) => item.style === activeStyle)),
+    [activeStyle],
+  );
   const seriesCount = new Set(ART_ITEMS.map((i) => i.style)).size;
-
-  useEffect(() => {
-    if (lightboxIdx === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightboxIdx(null);
-      if (e.key === 'ArrowRight') setLightboxIdx((i) => (i === null ? i : (i + 1) % filteredItems.length));
-      if (e.key === 'ArrowLeft') setLightboxIdx((i) => (i === null ? i : (i - 1 + filteredItems.length) % filteredItems.length));
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [lightboxIdx, filteredItems.length]);
+  const galleryItems = useMemo(() => filteredItems.map(toGalleryItem), [filteredItems]);
 
   return (
     <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
@@ -340,9 +281,9 @@ export default function GenerativeArtPage() {
             architecture and visual intuition.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3 reveal delay-300">
-            <a href="#inquire" className="px-5 py-2.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}>
+            <SectionLink targetId="inquire" className="px-5 py-2.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}>
               Commission or license a piece
-            </a>
+            </SectionLink>
             <span className="text-sm text-white/50">
               {ART_ITEMS.length} works on view · {seriesCount} series
             </span>
@@ -402,27 +343,39 @@ export default function GenerativeArtPage() {
         </section>
       )}
 
-      {/* ---- Art Gallery (CSS Columns Masonry) ---- */}
+      {/* ---- Art Gallery (shared GalleryGrid: densify + focus theater) ---- */}
       <section className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
-          {filteredItems.length > 0 ? (
-            <div
-              style={{
-                columnCount: 1,
-                columnGap: '1.25rem',
-              }}
-              className="art-gallery [column-count:1] sm:[column-count:2] lg:[column-count:3]"
-            >
-              {filteredItems.map((item) => (
-                <ArtItemCard key={item.id} item={item} onOpen={(i) => setLightboxIdx(filteredItems.indexOf(i))} onCommission={openCommission} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24 text-white/40">
-              <p className="text-4xl mb-4">🎨</p>
-              <p>No artworks in this style yet — check back soon.</p>
-            </div>
-          )}
+          <GalleryGrid
+            key={activeStyle}
+            items={galleryItems}
+            label={`Generative art — ${STYLE_TABS.find((t) => t.value === activeStyle)?.label ?? 'All'}`}
+            renderTileAction={(item) => (
+              <button
+                type="button"
+                tabIndex={-1}
+                onClick={() => openCommission(item.title)}
+                className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
+              >
+                Commission Similar →
+              </button>
+            )}
+            renderTheaterActions={(item, close) => (
+              <button
+                type="button"
+                onClick={() => { close(); openCommission(item.title); }}
+                className="text-sm text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
+              >
+                Commission something like this →
+              </button>
+            )}
+            emptyState={
+              <div className="text-center py-24 text-white/40">
+                <p className="text-4xl mb-4">🎨</p>
+                <p>No artworks in this style yet — check back soon.</p>
+              </div>
+            }
+          />
         </div>
       </section>
 
@@ -542,33 +495,6 @@ export default function GenerativeArtPage() {
         </div>
       </section>
 
-      {/* ---- Lightbox ---- */}
-      {lightboxItem && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-label={lightboxItem.title}
-          onClick={() => setLightboxIdx(null)}
-        >
-          <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl z-50" onClick={() => setLightboxIdx(null)} aria-label="Close">×</button>
-          <button className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl z-50" onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx! - 1 + filteredItems.length) % filteredItems.length); }} aria-label="Previous">‹</button>
-          <button className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl z-50" onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx! + 1) % filteredItems.length); }} aria-label="Next">›</button>
-          <div className="absolute bottom-6 left-0 right-0 text-center z-50 flex flex-col items-center gap-2" onClick={(e) => e.stopPropagation()}>
-            <p className="font-display font-bold text-white text-lg">{lightboxItem.title}</p>
-            <span className="text-white/50 text-sm">{lightboxItem.styleLabel} · {lightboxIdx! + 1} / {filteredItems.length}</span>
-            <button onClick={() => openCommission(lightboxItem)} className="mt-1 text-sm text-cyan-300 hover:text-cyan-200 underline underline-offset-4">Commission something like this →</button>
-          </div>
-          <img
-            key={lightboxItem.id}
-            src={lightboxItem.image}
-            alt={lightboxItem.title}
-            className="max-h-[80vh] max-w-[86vw] object-contain rounded-lg mf-fade-in"
-            style={{ boxShadow: '0 0 80px rgba(124,58,237,0.3)' }}
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
     </main>
   );
 }

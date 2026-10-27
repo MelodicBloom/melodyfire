@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'wouter';
+import { GalleryGrid, type GalleryItem } from '@/components/gallery';
 
 import k1 from '@assets/kaleidoscope-1.gif';
 import k2 from '@assets/kaleidoscope-2.gif';
@@ -12,23 +13,16 @@ import k6 from '@assets/kaleidoscope-6.mp4';
 /*  Data                                                                 */
 /* ------------------------------------------------------------------ */
 
-type MediaType = 'gif' | 'video';
+// All sources are 320×704 / 640×1408 → declare the true ~9:20 ratio so nothing is cropped.
+const KALEIDO_RATIO = '5/11';
 
-type KaleidoItem = {
-  id: number;
-  title: string;
-  label: string;
-  type: MediaType;
-  src: string;
-};
-
-const KALEIDO_ITEMS: KaleidoItem[] = [
-  { id: 1, title: 'Violet Mandala I', label: 'Sacred Geometry', type: 'gif', src: k1 },
-  { id: 2, title: 'Chromatic Bloom', label: 'Sacred Geometry', type: 'gif', src: k2 },
-  { id: 3, title: 'Kaleidoscope III', label: 'Motion Study', type: 'video', src: k3 },
-  { id: 4, title: 'Kaleidoscope IV', label: 'Motion Study', type: 'video', src: k4 },
-  { id: 5, title: 'Kaleidoscope V', label: 'Motion Study', type: 'video', src: k5 },
-  { id: 6, title: 'Kaleidoscope VI', label: 'Motion Study', type: 'video', src: k6 },
+const KALEIDO_ITEMS: GalleryItem[] = [
+  { id: 1, title: 'Violet Mandala I', label: 'Sacred Geometry', kind: 'gif', src: k1, aspectRatio: KALEIDO_RATIO },
+  { id: 2, title: 'Chromatic Bloom', label: 'Sacred Geometry', kind: 'gif', src: k2, aspectRatio: KALEIDO_RATIO },
+  { id: 3, title: 'Kaleidoscope III', label: 'Motion Study', kind: 'video', src: k3, aspectRatio: KALEIDO_RATIO },
+  { id: 4, title: 'Kaleidoscope IV', label: 'Motion Study', kind: 'video', src: k4, aspectRatio: KALEIDO_RATIO },
+  { id: 5, title: 'Kaleidoscope V', label: 'Motion Study', kind: 'video', src: k5, aspectRatio: KALEIDO_RATIO },
+  { id: 6, title: 'Kaleidoscope VI', label: 'Motion Study', kind: 'video', src: k6, aspectRatio: KALEIDO_RATIO },
 ];
 
 const TAXONOMY = [
@@ -47,55 +41,10 @@ const TAXONOMY = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Gallery item                                                         */
-/* ------------------------------------------------------------------ */
-
-function KaleidoItemCard({ item, onOpen }: { item: KaleidoItem; onOpen: (item: KaleidoItem) => void }) {
-  return (
-    <div
-      className="group relative rounded-2xl border border-[hsl(var(--border))] overflow-hidden cursor-zoom-in"
-      style={{ aspectRatio: '1/1' }}
-      onClick={() => onOpen(item)}
-    >
-      {item.type === 'gif' ? (
-        <img
-          src={item.src}
-          alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-      ) : (
-        <video
-          src={item.src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      )}
-      <div
-        className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
-        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)' }}
-      >
-        <p className="font-display font-semibold text-white text-base mb-1 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-          {item.title}
-        </p>
-        <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/30 text-violet-200 border border-violet-500/30 w-fit translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-          {item.label}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Main Page                                                            */
 /* ------------------------------------------------------------------ */
 
 export function KaleidoscopePage() {
-  const [lightboxItem, setLightboxItem] = useState<KaleidoItem | null>(null);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -108,18 +57,6 @@ export function KaleidoscopePage() {
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    const h = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightboxItem(null);
-    };
-    document.addEventListener('keydown', h);
-    document.body.style.overflow = lightboxItem ? 'hidden' : '';
-    return () => {
-      document.removeEventListener('keydown', h);
-      document.body.style.overflow = '';
-    };
-  }, [lightboxItem]);
 
   return (
     <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
@@ -159,11 +96,7 @@ export function KaleidoscopePage() {
       {/* ---- Gallery ---- */}
       <section className="px-6 py-20">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {KALEIDO_ITEMS.map((item) => (
-              <KaleidoItemCard key={item.id} item={item} onOpen={setLightboxItem} />
-            ))}
-          </div>
+          <GalleryGrid items={KALEIDO_ITEMS} label="Kaleidoscope series — gifs and motion studies" />
         </div>
       </section>
 
@@ -249,46 +182,6 @@ export function KaleidoscopePage() {
         </div>
       </section>
 
-      {/* ---- Lightbox ---- */}
-      {lightboxItem && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
-          onClick={() => setLightboxItem(null)}
-        >
-          <button
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-all z-50"
-            onClick={() => setLightboxItem(null)}
-            aria-label="Close"
-          >
-            ×
-          </button>
-          <div className="absolute bottom-6 left-0 right-0 text-center z-50">
-            <p className="font-display font-bold text-white text-lg">{lightboxItem.title}</p>
-            <span className="text-white/50 text-sm">{lightboxItem.label}</span>
-          </div>
-          {lightboxItem.type === 'gif' ? (
-            <img
-              src={lightboxItem.src}
-              alt={lightboxItem.title}
-              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
-              style={{ boxShadow: '0 0 80px rgba(124,58,237,0.3)' }}
-              onClick={(e) => e.stopPropagation()}
-            />
-          ) : (
-            <video
-              src={lightboxItem.src}
-              controls
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
-              style={{ boxShadow: '0 0 80px rgba(124,58,237,0.3)' }}
-              onClick={(e) => e.stopPropagation()}
-            />
-          )}
-        </div>
-      )}
     </main>
   );
 }
