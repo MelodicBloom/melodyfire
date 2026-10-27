@@ -69,9 +69,8 @@ export async function saveReversePromptSession(sessionId: string, record: Record
 export async function submitInquiry(inquiry: Record<string, any>) {
   const { data, error } = await supabase
     .from('inquiries')
-    .insert(inquiry)
-    .select()
-    .single();
+    .insert(inquiry);
+  // No .select(): anon has no SELECT on inquiries (RLS). Insert-only by design.
   return { data, error };
 }
 
