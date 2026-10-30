@@ -1,5 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'wouter';
+import { supabase } from '@/lib/supabase';
+import { SectionLink } from '@/components/SectionLink';
+import { GalleryGrid, type GalleryItem } from '@/components/gallery';
 
 import artGalleryImg from '@assets/img/art-gallery.png';
 import beatsBoxesImg from '@assets/img/beats-boxes.png';
@@ -44,6 +47,9 @@ type ArtItem = {
   styleLabel: string;
   image: string;
   aspectRatio: string;
+  kind?: GalleryItem['kind'];
+  poster?: string;
+  fit?: GalleryItem['fit'];
 };
 
 const ART_ITEMS: ArtItem[] = [
@@ -77,8 +83,8 @@ const ART_ITEMS: ArtItem[] = [
   { id: 26, title: 'Raiden — Shell Mosaic', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1100, aspectRatio: '3/4' },
   { id: 27, title: 'Raiden — Prismatic Drift', style: 'raiden', styleLabel: 'Raiden Series', image: raiden1082, aspectRatio: '3/4' },
   // Kaleidoscope series
-  { id: 28, title: 'Violet Mandala I', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope1, aspectRatio: '1/1' },
-  { id: 29, title: 'Chromatic Bloom', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope2, aspectRatio: '1/1' },
+  { id: 28, title: 'Violet Mandala I', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope1, aspectRatio: '5/11', kind: 'gif' },
+  { id: 29, title: 'Chromatic Bloom', style: 'mandala', styleLabel: 'Mandala & Sacred Geometry', image: kaleidoscope2, aspectRatio: '5/11', kind: 'gif' },
 ];
 
 const STYLE_TABS = [
@@ -131,47 +137,81 @@ const STYLE_GUIDE = [
   },
 ];
 
+/** Portrait cards keep the full figure (contain on card fill); everything else crops (cover). */
+const toGalleryItem = (item: ArtItem): GalleryItem => ({
+  id: item.id,
+  title: item.title,
+  label: item.styleLabel,
+  kind: item.kind ?? 'image',
+  src: item.image,
+  poster: item.poster,
+  aspectRatio: item.aspectRatio,
+  fit: item.fit ?? (item.aspectRatio === '3/4' ? 'contain' : 'cover'),
+});
+
 /* ------------------------------------------------------------------ */
-/*  Art Item component                                                   */
+/*  Lead capture → in-repo CRM (Supabase `inquiries`, triaged in /studio) */
 /* ------------------------------------------------------------------ */
 
-function ArtItemCard({ item, onOpen }: { item: ArtItem; onOpen: (item: ArtItem) => void }) {
-  const isPortrait = item.aspectRatio === '3/4';
-  return (
-    <div
-      className="art-item group relative overflow-hidden rounded-xl cursor-zoom-in"
-      data-style={item.style}
-      style={{ aspectRatio: item.aspectRatio, breakInside: 'avoid', marginBottom: '1.25rem' }}
-      onClick={() => onOpen(item)}
-    >
-      <img
-        src={item.image}
-        alt={item.title}
-        className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-          isPortrait ? 'object-contain bg-[hsl(var(--card))]' : 'object-cover'
-        }`}
-        loading="lazy"
-      />
-      {/* Hover overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
-           style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)' }}>
-        <p className="font-display font-semibold text-white text-base mb-1 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-          {item.title}
-        </p>
-        <div className="flex items-center justify-between translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-          <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/30 text-violet-200 border border-violet-500/30">
-            {item.styleLabel}
-          </span>
-          <a
-            href="mailto:hello@melodyfire.com?subject=Commission Similar to: ${item.title}"
-            onClick={(e) => e.stopPropagation()}
-            className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
-          >
-            Commission Similar →
-          </a>
-        </div>
+type LeadStatus = 'idle' | 'loading' | 'success' | 'error';
+
+function GalleryLeadForm({ reference }: { reference: string }) {
+  const [form, setForm] = useState({ name: '', email: '', intent: 'commission', description: '' });
+  const [status, setStatus] = useState<LeadStatus>('idle');
+  useEffect(() => {
+    if (reference) setForm((f) => ({ ...f, description: f.description || `Something in the spirit of "${reference}" — ` }));
+  }, [reference]);
+  const mailto = `mailto:hello@melodyfire.com?subject=${encodeURIComponent(`Art ${form.intent} inquiry${reference ? `: ${reference}` : ''}`)}&body=${encodeURIComponent(form.description)}`;
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const { error } = await supabase.from('inquiries').insert({
+        name: form.name,
+        email: form.email,
+        // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
+        message: `Intent: ${form.intent}\n\n${form.description}`,
+        inquiry_type: 'gallery_art',
+        created_at: new Date().toISOString(),
+      });
+      if (error) throw error;
+      setStatus('success');
+    } catch (err) {
+      console.error('Gallery inquiry failed:', err);
+      setStatus('error');
+    }
+  };
+  if (status === 'success') {
+    return (
+      <div className="text-center py-10" role="status">
+        <p className="font-display text-2xl font-bold text-white mb-2">Inquiry received.</p>
+        <p className="text-white/60">It lands in the studio inbox; expect a reply by email.</p>
       </div>
-    </div>
+    );
+  }
+  const field = 'w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white placeholder-white/35 focus:outline-none focus:border-violet-400';
+  return (
+    <form onSubmit={submit} className="grid gap-3 text-left" aria-label="Commission or licensing inquiry">
+      <div className="grid sm:grid-cols-2 gap-3">
+        <input required name="name" placeholder="Your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} aria-label="Name" />
+        <input required type="email" name="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} aria-label="Email" />
+      </div>
+      <select value={form.intent} onChange={(e) => setForm({ ...form, intent: e.target.value })} className={field} aria-label="Inquiry type">
+        <option value="commission">Commission a piece</option>
+        <option value="license">License existing work</option>
+        <option value="collaborate">Collaborate on a generative system</option>
+      </select>
+      <textarea required rows={4} placeholder="What are you imagining? Size, use, timeline." value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={field} aria-label="Project description" />
+      <div className="flex flex-wrap items-center gap-4">
+        <button type="submit" disabled={status === 'loading'} className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02] disabled:opacity-60" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}>
+          {status === 'loading' ? 'Sending…' : 'Send inquiry'}
+        </button>
+        <a href={mailto} className="text-sm text-white/55 hover:text-white underline underline-offset-4">or email directly</a>
+      </div>
+      {status === 'error' && (
+        <p className="text-sm text-rose-300" role="alert">Couldn't save that just now — please use the email link above so nothing gets lost.</p>
+      )}
+    </form>
   );
 }
 
@@ -181,7 +221,13 @@ function ArtItemCard({ item, onOpen }: { item: ArtItem; onOpen: (item: ArtItem) 
 
 export default function GenerativeArtPage() {
   const [activeStyle, setActiveStyle] = useState('all');
-  const [lightboxImg, setLightboxImg] = useState<{src: string; title: string; style: string} | null>(null);
+  const [leadRef, setLeadRef] = useState('');
+  const openCommission = (title: string) => {
+    setLeadRef(title);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Wait a frame so the theater dialog has closed before scrolling the page.
+    requestAnimationFrame(() => document.getElementById('inquire')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }));
+  };
 
   // Scroll reveal
   useEffect(() => {
@@ -197,10 +243,12 @@ export default function GenerativeArtPage() {
     return () => observer.disconnect();
   }, []);
 
-  const filteredItems =
-    activeStyle === 'all'
-      ? ART_ITEMS
-      : ART_ITEMS.filter((item) => item.style === activeStyle);
+  const filteredItems = useMemo(
+    () => (activeStyle === 'all' ? ART_ITEMS : ART_ITEMS.filter((item) => item.style === activeStyle)),
+    [activeStyle],
+  );
+  const seriesCount = new Set(ART_ITEMS.map((i) => i.style)).size;
+  const galleryItems = useMemo(() => filteredItems.map(toGalleryItem), [filteredItems]);
 
   return (
     <main className="min-h-screen" style={{ background: 'hsl(var(--background))' }}>
@@ -232,6 +280,14 @@ export default function GenerativeArtPage() {
             handcrafted reference sets. Each series is an iterative conversation between prompt
             architecture and visual intuition.
           </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3 reveal delay-300">
+            <SectionLink targetId="inquire" className="px-5 py-2.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}>
+              Commission or license a piece
+            </SectionLink>
+            <span className="text-sm text-white/50">
+              {ART_ITEMS.length} works on view · {seriesCount} series
+            </span>
+          </div>
         </div>
       </section>
 
@@ -239,14 +295,14 @@ export default function GenerativeArtPage() {
       <section className="px-6 pb-10">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-2">
-            {STYLE_TABS.map((tab) => (
+            {STYLE_TABS.filter((t) => t.value === 'all' || ART_ITEMS.some((i) => i.style === t.value)).map((tab) => (
               <button
                 key={tab.value}
                 onClick={() => setActiveStyle(tab.value)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   activeStyle === tab.value
                     ? 'text-white shadow-lg shadow-violet-500/25'
-                    : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+                    : 'bg-[hsl(var(--card))] text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] border border-[hsl(var(--border))] hover:border-violet-400/60'
                 }`}
                 style={
                   activeStyle === tab.value
@@ -287,27 +343,39 @@ export default function GenerativeArtPage() {
         </section>
       )}
 
-      {/* ---- Art Gallery (CSS Columns Masonry) ---- */}
+      {/* ---- Art Gallery (shared GalleryGrid: densify + focus theater) ---- */}
       <section className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
-          {filteredItems.length > 0 ? (
-            <div
-              style={{
-                columnCount: 1,
-                columnGap: '1.25rem',
-              }}
-              className="art-gallery [column-count:1] sm:[column-count:2] lg:[column-count:3]"
-            >
-              {filteredItems.map((item) => (
-                <ArtItemCard key={item.id} item={item} onOpen={(i) => setLightboxImg({ src: i.image, title: i.title, style: i.styleLabel })} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24 text-white/40">
-              <p className="text-4xl mb-4">🎨</p>
-              <p>No artworks in this style yet — check back soon.</p>
-            </div>
-          )}
+          <GalleryGrid
+            key={activeStyle}
+            items={galleryItems}
+            label={`Generative art — ${STYLE_TABS.find((t) => t.value === activeStyle)?.label ?? 'All'}`}
+            renderTileAction={(item) => (
+              <button
+                type="button"
+                tabIndex={-1}
+                onClick={() => openCommission(item.title)}
+                className="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
+              >
+                Commission Similar →
+              </button>
+            )}
+            renderTheaterActions={(item, close) => (
+              <button
+                type="button"
+                onClick={() => { close(); openCommission(item.title); }}
+                className="text-sm text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
+              >
+                Commission something like this →
+              </button>
+            )}
+            emptyState={
+              <div className="text-center py-24 text-white/40">
+                <p className="text-4xl mb-4">🎨</p>
+                <p>No artworks in this style yet — check back soon.</p>
+              </div>
+            }
+          />
         </div>
       </section>
 
@@ -404,7 +472,7 @@ export default function GenerativeArtPage() {
       </section>
 
       {/* ---- CTA ---- */}
-      <section className="px-6 py-16 holographic-section">
+      <section id="inquire" className="px-6 py-16 holographic-section scroll-mt-24">
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 reveal">
             Commission · License · Collaborate
@@ -417,47 +485,16 @@ export default function GenerativeArtPage() {
           <p className="prismatic-text font-semibold mb-8 reveal delay-200">
             Every inquiry starts with a conversation.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center reveal delay-300">
-            <a
-              href="mailto:hello@melodyfire.com?subject=Art Commission Inquiry"
-              className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #f43f5e 100%)' }}
-            >
-              Commission a Piece
-            </a>
-            <Link href="/services">
-              <span className="px-6 py-3 rounded-xl font-semibold text-white/70 border border-white/20 hover:border-violet-500/50 hover:text-white transition-all cursor-pointer">
-                View Services
-              </span>
-            </Link>
+          <div className="max-w-xl mx-auto">
+            <GalleryLeadForm reference={leadRef} />
           </div>
+          <p className="mt-6 text-sm text-white/45">
+            Prefer the full menu?{' '}
+            <Link href="/services"><span className="underline underline-offset-4 cursor-pointer hover:text-white">View services</span></Link>
+          </p>
         </div>
       </section>
 
-      {/* ---- Lightbox ---- */}
-      {lightboxImg && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
-          onClick={() => setLightboxImg(null)}
-        >
-          <button
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-all z-50"
-            onClick={() => setLightboxImg(null)}
-            aria-label="Close"
-          >×</button>
-          <div className="absolute bottom-6 left-0 right-0 text-center z-50">
-            <p className="font-display font-bold text-white text-lg">{lightboxImg.title}</p>
-            <span className="text-white/50 text-sm">{lightboxImg.style}</span>
-          </div>
-          <img
-            src={lightboxImg.src}
-            alt={lightboxImg.title}
-            className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
-            style={{ boxShadow: '0 0 80px rgba(124,58,237,0.3)' }}
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
     </main>
   );
 }

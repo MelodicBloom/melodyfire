@@ -1,0 +1,88 @@
+/* GalleryGrid — density + focus theater. Tokens: Melodyfire violet #7c3aed / cyan #22d3ee, --background. */
+.gg-shell {
+  --gg-cols: 3;
+  --gg-gap: clamp(0.5rem, 2.2vw / var(--gg-cols) * 3, 1.25rem);
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 0;
+  transition: background-color 420ms ease, padding 420ms cubic-bezier(.2,.8,.2,1), box-shadow 420ms ease;
+  touch-action: pan-x pan-y; /* one-finger scroll stays native; two-finger pinch is ours */
+}
+/* Void backdrop once densified past the base stop. */
+.gg-shell[data-dense] {
+  background-color: hsl(var(--background));
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgba(124, 58, 237, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.75) 100%);
+  background-color: #05030a;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.18), 0 30px 80px -30px rgba(0, 0, 0, 0.9);
+}
+
+.gg-toolbar {
+  display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.gg-hint { font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); margin-right: auto; }
+
+.gg-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 9999px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background 160ms, border-color 160ms, transform 160ms;
+}
+.gg-btn:hover:not(:disabled) { background: rgba(124, 58, 237, 0.28); border-color: rgba(167, 139, 250, 0.55); }
+.gg-btn:active:not(:disabled) { transform: scale(0.94); }
+.gg-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.gg-btn:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }
+
+.gg-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gg-cols), minmax(0, 1fr));
+  gap: var(--gg-gap);
+  align-items: start;
+  list-style: none; margin: 0; padding: 0;
+  transform-origin: 50% 30%;
+}
+.gg-cell { position: relative; min-width: 0; transition: transform 380ms cubic-bezier(.2,.8,.2,1), filter 380ms ease, opacity 380ms ease; }
+.gg-media { display: block; user-select: none; -webkit-user-drag: none; }
+
+/* Focus theater: siblings recede in place behind the transparent dialog backdrop. */
+.gg-shell[data-focused] .gg-cell:not([data-active]) {
+  transform: scale(0.9);
+  filter: blur(6px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.gg-theater {
+  position: fixed; inset: 0;
+  width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0;
+  background: transparent; color: #fff;
+  overscroll-behavior: contain;
+  overflow: hidden;
+}
+.gg-theater::backdrop { background: rgba(5, 3, 10, 0.62); }
+.gg-theater-inner { position: absolute; inset: 0; }
+.gg-stage {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 4.5rem 4rem 7.5rem;
+  touch-action: none;
+}
+.gg-stage-media {
+  max-width: 86vw; max-height: 80vh;
+  border-radius: 0.75rem; overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 80px rgba(124, 58, 237, 0.32), 0 0 0 1px rgba(34, 211, 238, 0.12);
+}
+html:has(.gg-theater[open]) { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-shell, .gg-cell, .gg-btn { transition: none; }
+  .gg-shell[data-focused] .gg-cell:not([data-active]) { transform: none; filter: none; }
+  .gg-tile { transform: none !important; }
+}
