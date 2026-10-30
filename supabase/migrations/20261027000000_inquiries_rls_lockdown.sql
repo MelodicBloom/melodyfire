@@ -1,6 +1,7 @@
--- Lock down public.inquiries (lead PII). Apply BEFORE or WITH PR #8.
--- Paste into Supabase SQL editor (project ikfejoqvwmmqsuszpdhj) if migrations aren't wired.
--- Idempotent.
+-- Lock down public.inquiries (lead PII). Adapted for LIVE schema 2026-10-29.
+-- Live columns: id, name, email, subject, inquiry_type, message, budget_range, timeline, status, created_at
+-- PR #10 referenced `description`; prod uses `message`. Idempotent.
+-- Project: ikfejoqvwmmqsuszpdhj
 
 -- 1. Allowlist of studio operators (Supabase Auth users). Signing up alone grants nothing.
 create table if not exists public.studio_admins (
@@ -21,7 +22,7 @@ $$;
 revoke all on function public.is_studio_admin() from public;
 grant execute on function public.is_studio_admin() to authenticated;
 
--- 2. inquiries: RLS on, drop every existing policy (unknown legacy "allow all" ones included).
+-- 2. inquiries: RLS on, drop every existing policy (incl. "Public insert inquiries").
 alter table public.inquiries enable row level security;
 alter table public.inquiries force row level security;
 do $$ declare p record; begin
@@ -30,23 +31,22 @@ do $$ declare p record; begin
   end loop;
 end $$;
 
--- Table privileges. (Table-level insert grant because column set differs per form:
--- gallery/children send name,email,description,tier,inquiry_type; regenerative sends session_id,type,email.)
 revoke all on public.inquiries from anon, authenticated;
 grant insert on public.inquiries to anon, authenticated;
 grant select, update on public.inquiries to authenticated;
 
--- Lead form: anyone may insert; cannot pre-set triage status; basic size limits.
+-- Lead form: anyone may insert; cannot pre-set triage status; size limits on live columns.
 create policy inquiries_public_insert on public.inquiries
   for insert to anon, authenticated
   with check (
     (status is null or status = 'unread')
     and char_length(coalesce(name,'')) <= 200
     and char_length(coalesce(email,'')) between 3 and 320
-    and char_length(coalesce(description,'')) <= 5000
+    and char_length(coalesce(message,'')) <= 5000
+    and char_length(coalesce(subject,'')) <= 500
   );
 
--- Read/triage: allowlisted studio admins only. No anon SELECT/UPDATE/DELETE policy exists => denied.
+-- Read/triage: allowlisted studio admins only.
 create policy inquiries_admin_select on public.inquiries
   for select to authenticated using (public.is_studio_admin());
 create policy inquiries_admin_update on public.inquiries
