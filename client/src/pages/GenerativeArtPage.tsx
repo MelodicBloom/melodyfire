@@ -217,8 +217,8 @@ function GalleryLeadForm({ reference }: { reference: string }) {
       const { error } = await supabase.from('inquiries').insert({
         name: form.name,
         email: form.email,
-        description: form.description,
-        tier: form.intent,
+        // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
+        message: `Intent: ${form.intent}\n\n${form.description}`,
         inquiry_type: 'gallery_art',
         created_at: new Date().toISOString(),
       });
