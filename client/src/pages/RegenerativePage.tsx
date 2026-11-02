@@ -76,9 +76,10 @@ export default function RegenerativePage() {
     setEmailLoading(true);
     const sessionId = getSessionId();
     await supabase.from('inquiries').insert({
-      session_id: sessionId,
-      type: 'regenerative_join',
+      name: 'Regenerative waitlist',
       email,
+      message: `session_id: ${sessionId}`,
+      inquiry_type: 'regenerative_join',
       created_at: new Date().toISOString(),
     });
     setEmailLoading(false);
