@@ -296,7 +296,7 @@ const SIDEBAR_ITEMS: { key: PanelKey; label: string; icon: typeof FolderKanban }
 // MAIN PAGE
 // ============================================================================
 
-export function StudioPage() {
+function StudioDashboard() {
   const { toast } = useToast();
   const [activePanel, setActivePanel] = useState<PanelKey>('projects');
   const [unreadInquiries, setUnreadInquiries] = useState(0);
@@ -1624,3 +1624,98 @@ function DeleteConfirmDialog({
 }
 
 export default StudioPage;
+
+// ============================================================================
+// AUTH GATE (fail closed)
+// Studio data (incl. inquiries PII) is only fetched after a Supabase Auth
+// session exists AND the user is in public.studio_admins. RLS enforces the same
+// rule server-side (supabase/migrations/20261027000000_inquiries_rls_lockdown.sql),
+// so this gate is UX; the database is the real boundary.
+// ============================================================================
+
+type GateState = 'checking' | 'signed_out' | 'not_admin' | 'ok';
+
+async function checkStudioAdmin(): Promise<GateState> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return 'signed_out';
+  const { data, error } = await supabase.rpc('is_studio_admin');
+  if (error || data !== true) return 'not_admin';
+  return 'ok';
+}
+
+function LockedState({ title, children }: { title: string; children?: React.ReactNode }) {
+  return (
+    <div className="min-h-screen pt-24 pb-16 px-4 flex items-start justify-center">
+      <div className="w-full max-w-sm rounded-lg border p-6 space-y-4" data-testid="studio-locked">
+        <h1 className="text-xl font-semibold">{title}</h1>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function StudioPage() {
+  const [gate, setGate] = useState<GateState>('checking');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    checkStudioAdmin().then((g) => !cancelled && setGate(g)).catch(() => !cancelled && setGate('signed_out'));
+    const { data: sub } = supabase.auth.onAuthStateChange(() => {
+      checkStudioAdmin().then((g) => !cancelled && setGate(g)).catch(() => !cancelled && setGate('signed_out'));
+    });
+    return () => {
+      cancelled = true;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
+  const signIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    setErr(null);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (error) setErr(error.message);
+    else setGate(await checkStudioAdmin());
+  };
+
+  if (gate === 'ok') {
+    return (
+      <>
+        <div className="fixed top-20 right-4 z-40">
+          <Button variant="outline" size="sm" onClick={() => supabase.auth.signOut()}>Sign out</Button>
+        </div>
+        <StudioDashboard />
+      </>
+    );
+  }
+  if (gate === 'checking') return <LockedState title="Studio">Checking access…</LockedState>;
+  if (gate === 'not_admin') {
+    return (
+      <LockedState title="Studio locked">
+        <p className="text-sm text-muted-foreground">This account is not a studio admin.</p>
+        <Button variant="outline" onClick={() => supabase.auth.signOut()}>Sign out</Button>
+      </LockedState>
+    );
+  }
+  return (
+    <LockedState title="Studio sign-in">
+      <form onSubmit={signIn} className="space-y-3">
+        <div className="space-y-1">
+          <Label htmlFor="studio-email">Email</Label>
+          <Input id="studio-email" type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </div>
+        <div className="space-y-1">
+          <Label htmlFor="studio-password">Password</Label>
+          <Input id="studio-password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </div>
+        {err && <p className="text-sm text-destructive">{err}</p>}
+        <Button type="submit" disabled={busy} className="w-full">{busy ? 'Signing in…' : 'Sign in'}</Button>
+      </form>
+    </LockedState>
+  );
+}
