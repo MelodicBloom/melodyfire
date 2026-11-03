@@ -2,7 +2,7 @@
 // Asserts the public anon key cannot read/update public.inquiries.
 // Usage: node script/check-inquiries-rls.mjs   (uses the public anon key from client/src/lib/supabase.ts)
 // Exit 0 = locked down, 1 = LEAK, 2 = could not verify (network error or unexpected response).
-// Fail-closed: only explicit permission-denied responses or a validated empty result count as "ok".
+// Fail-closed: SELECT ok = 401/403 or validated empty result; UPDATE ok = 401/403 ONLY.
 import { readFileSync } from 'node:fs';
 const src = readFileSync(new URL('../client/src/lib/supabase.ts', import.meta.url), 'utf8');
 const url = process.env.SUPABASE_URL || src.match(/SUPABASE_URL = '([^']+)'/)?.[1];
@@ -28,16 +28,21 @@ try {
   } else { verdict = `UNVERIFIED (unexpected HTTP ${r.status})`; unverified = true; }
   console.log(`anon SELECT: HTTP ${r.status}, content-range=${range || '-'} -> ${verdict}`);
 
-  // UPDATE: locked down = 401/403, or 204/200 affecting 0 rows. Filter matches no real row; never writes.
+  // UPDATE: ONLY an explicit 401/403 counts as locked down.
+  // The filter targets the zero UUID so the probe never writes a real row. Because of that, a 2xx with
+  // 0 rows affected is AMBIGUOUS: PostgREST returns the same response whether RLS filtered the row
+  // out (denied) or the UPDATE was permitted but simply matched nothing. Such results are UNVERIFIED
+  // (exit 2), never green. 2xx with rows affected is a LEAK (exit 1).
   const u = await fetch(`${url}/rest/v1/inquiries?id=eq.00000000-0000-0000-0000-000000000000`, {
     method: 'PATCH', headers: { ...h, 'Content-Type': 'application/json', Prefer: 'return=minimal,count=exact' }, body: '{"status":"read"}',
   });
   const uRange = u.headers.get('content-range') || '';
-  const uCount = Number((uRange.split('/')[1] ?? uRange.split('-')[1]) || 0);
+  const uTotal = uRange.split('/')[1];
+  const uCount = uTotal === undefined || uTotal === '*' ? NaN : Number(uTotal);
   let uVerdict;
   if (DENIED.has(u.status)) uVerdict = 'ok (denied)';
-  else if ((u.status === 204 || u.status === 200) && !(uCount > 0)) uVerdict = 'ok (0 rows affected)';
-  else if (u.status === 204 || u.status === 200) { uVerdict = 'LEAK (rows affected)'; leak = true; }
+  else if (u.status >= 200 && u.status < 300 && uCount > 0) { uVerdict = 'LEAK (rows affected)'; leak = true; }
+  else if (u.status >= 200 && u.status < 300) { uVerdict = 'UNVERIFIED (2xx with 0/unknown rows: cannot distinguish RLS denial from empty match)'; unverified = true; }
   else { uVerdict = `UNVERIFIED (unexpected HTTP ${u.status})`; unverified = true; }
   console.log(`anon UPDATE probe: HTTP ${u.status}, content-range=${uRange || '-'} -> ${uVerdict}`);
 } catch (e) {
