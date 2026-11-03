@@ -32,8 +32,7 @@ const CONNECT_LINKS = [
   { label: 'GitHub — qt314wink', href: 'https://github.com/qt314wink', external: true },
   { label: 'Replit — qt314wink', href: 'https://replit.com/@qt314wink', external: true },
   { label: 'Figma', href: 'https://figma.com/@jennipher', external: true },
-  { label: 'Instagram', href: 'https://instagram.com', external: true },
-  { label: 'Are.na', href: 'https://are.na', external: true },
+  { label: 'Instagram — @jennipher.laura', href: 'https://www.instagram.com/jennipher.laura/', external: true },
 ];
 
 export function Footer() {
