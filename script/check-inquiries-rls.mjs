@@ -21,7 +21,7 @@ try {
   else if (r.status === 200) {
     const body = await r.json().catch(() => null);
     const totalStr = range.split('/')[1];
-    const total = totalStr === undefined || totalStr === '*' ? NaN : Number(totalStr);
+    const total = /^[0-9]+$/.test(totalStr ?? '') ? Number(totalStr) : NaN;
     if (!Array.isArray(body) || Number.isNaN(total)) { verdict = 'UNVERIFIED (unexpected body/content-range)'; unverified = true; }
     else if (body.length > 0 || total > 0) { verdict = 'LEAK'; leak = true; }
     else verdict = 'ok (0 rows visible)';
@@ -38,7 +38,7 @@ try {
   });
   const uRange = u.headers.get('content-range') || '';
   const uTotal = uRange.split('/')[1];
-  const uCount = uTotal === undefined || uTotal === '*' ? NaN : Number(uTotal);
+  const uCount = /^[0-9]+$/.test(uTotal ?? '') ? Number(uTotal) : NaN;
   let uVerdict;
   if (DENIED.has(u.status)) uVerdict = 'ok (denied)';
   else if (u.status >= 200 && u.status < 300 && uCount > 0) { uVerdict = 'LEAK (rows affected)'; leak = true; }
