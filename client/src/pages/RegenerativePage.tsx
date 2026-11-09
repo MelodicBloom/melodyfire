@@ -69,20 +69,26 @@ export default function RegenerativePage() {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const [emailLoading, setEmailLoading] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setEmailLoading(true);
+    setEmailError(false);
     const sessionId = getSessionId();
-    await supabase.from('inquiries').insert({
+    const { error } = await supabase.from('inquiries').insert({
       name: 'Regenerative waitlist',
       email,
       message: `session_id: ${sessionId}`,
       inquiry_type: 'collaboration',
-      created_at: new Date().toISOString(),
     });
     setEmailLoading(false);
+    if (error) {
+      console.error('Regenerative waitlist insert failed:', error);
+      setEmailError(true);
+      return;
+    }
     setEmailSent(true);
     setEmail('');
   };
@@ -501,6 +507,11 @@ export default function RegenerativePage() {
               >
                 {emailLoading ? '…' : 'Join →'}
               </button>
+              {emailError && (
+                <p role="alert" style={{ flexBasis: '100%', color: 'var(--sg-gold)', fontSize: '0.9rem' }}>
+                  That didn't go through. Please try again, or email hello@melodyfire.com.
+                </p>
+              )}
             </form>
           )}
 

@@ -8,9 +8,11 @@ drop policy if exists inquiries_public_insert on public.inquiries;
 create policy inquiries_public_insert on public.inquiries
   for insert to anon, authenticated
   with check (
-    coalesce(status, 'new') = 'new'
+    status = 'new'
     and char_length(coalesce(name,'')) <= 200
     and char_length(coalesce(email,'')) between 3 and 320
     and char_length(coalesce(message,'')) <= 5000
     and char_length(coalesce(subject,'')) <= 500
+    and char_length(coalesce(budget_range,'')) <= 200
+    and char_length(coalesce(timeline,'')) <= 200
   );

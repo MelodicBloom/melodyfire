@@ -159,7 +159,6 @@ function CommissionForm() {
         // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
         message: `Tier: ${form.tier}\n\n${form.description}`,
         inquiry_type: 'children_art',
-        created_at: new Date().toISOString(),
       });
 
       if (error) throw error;

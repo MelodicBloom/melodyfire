@@ -162,6 +162,8 @@ function GalleryLeadForm({ reference }: { reference: string }) {
     if (reference) setForm((f) => ({ ...f, description: f.description || `Something in the spirit of "${reference}" — ` }));
   }, [reference]);
   const mailto = `mailto:hello@melodyfire.com?subject=${encodeURIComponent(`Art ${form.intent} inquiry${reference ? `: ${reference}` : ''}`)}&body=${encodeURIComponent(form.description)}`;
+  // inquiries.inquiry_type CHECK: collaboration, commission, consulting, children_art, workshop, co_founder, general
+  const INTENT_TO_TYPE: Record<string, string> = { commission: 'commission', collaborate: 'collaboration', license: 'general' };
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
@@ -171,8 +173,7 @@ function GalleryLeadForm({ reference }: { reference: string }) {
         email: form.email,
         // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
         message: `Intent: ${form.intent}\n\n${form.description}`,
-        inquiry_type: 'commission',
-        created_at: new Date().toISOString(),
+        inquiry_type: INTENT_TO_TYPE[form.intent] ?? 'general',
       });
       if (error) throw error;
       setStatus('success');
