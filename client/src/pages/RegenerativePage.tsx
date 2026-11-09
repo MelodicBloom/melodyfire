@@ -79,7 +79,7 @@ export default function RegenerativePage() {
       name: 'Regenerative waitlist',
       email,
       message: `session_id: ${sessionId}`,
-      inquiry_type: 'regenerative_join',
+      inquiry_type: 'collaboration',
       created_at: new Date().toISOString(),
     });
     setEmailLoading(false);

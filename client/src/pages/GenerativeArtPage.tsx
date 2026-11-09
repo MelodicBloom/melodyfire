@@ -171,7 +171,7 @@ function GalleryLeadForm({ reference }: { reference: string }) {
         email: form.email,
         // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
         message: `Intent: ${form.intent}\n\n${form.description}`,
-        inquiry_type: 'gallery_art',
+        inquiry_type: 'commission',
         created_at: new Date().toISOString(),
       });
       if (error) throw error;
