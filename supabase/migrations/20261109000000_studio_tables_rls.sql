@@ -10,8 +10,8 @@
 --   blog_posts, products -> no public reader; Studio only, so admin-only read.
 -- BEFORE APPLYING: paste the live pg_policies dump for these four tables into the PR,
 -- because the loop below drops every existing policy on them.
--- Open decision for owner: projects with status NULL stay public (treated as legacy-published)
--- so the live portfolio does not go empty; flip to strict 'published' after a data check.
+-- Live policies before this migration (Obsad 2026-11-09): artworks published=true; blog_posts
+-- status='published'; products active=true; projects using(true). RLS enabled, not forced.
 
 do $$
 declare t text; p record;
@@ -35,14 +35,18 @@ begin
 end $$;
 
 -- Public read: published rows only.
+-- Live projects.status defaults to 'active' (Obsad prod read 2026-11-09); Studio writes 'draft'/'published'.
 create policy projects_public_read on public.projects
-  for select to anon, authenticated using (coalesce(status, 'published') = 'published');
+  for select to anon, authenticated using (coalesce(status, 'active') in ('active', 'published'));
 create policy artworks_public_read on public.artworks
   for select to anon, authenticated using (published is true);
--- blog_posts, products: no public read policy (admin-only) until a public page reads them.
+-- products: keep the live public read (active = true); prod has 20 active products.
+create policy products_public_read on public.products
+  for select to anon, authenticated using (active is true);
+-- blog_posts: admin-only read until a public page reads it (live had status='published'; 0 rows today).
 
 -- Verification (run as anon key after applying; expected results in the PR body):
---   select on each table returns only published rows (blog_posts, products: empty)
+--   select on each table returns only published rows (projects: active/published only; products: active only; blog_posts: empty)
 --   insert/update/delete as anon -> 401/42501
 --   update as non-admin authenticated user -> 0 rows affected (UNVERIFIED, not a pass)
 --   admin session -> CRUD works in /studio
