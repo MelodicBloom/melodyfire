@@ -7,7 +7,9 @@
 -- Public readers in the app today:
 --   projects  -> lib/supabase.ts getProjects() (no status filter in the query)
 --   artworks  -> lib/supabase.ts getArtworks() (.eq('published', true))
---   blog_posts, products -> no public reader; Studio only.
+--   blog_posts, products -> no public reader; Studio only, so admin-only read.
+-- BEFORE APPLYING: paste the live pg_policies dump for these four tables into the PR,
+-- because the loop below drops every existing policy on them.
 -- Open decision for owner: projects with status NULL stay public (treated as legacy-published)
 -- so the live portfolio does not go empty; flip to strict 'published' after a data check.
 
@@ -37,12 +39,10 @@ create policy projects_public_read on public.projects
   for select to anon, authenticated using (coalesce(status, 'published') = 'published');
 create policy artworks_public_read on public.artworks
   for select to anon, authenticated using (published is true);
-create policy blog_posts_public_read on public.blog_posts
-  for select to anon, authenticated using (status = 'published');
--- products: no public read policy (admin-only) until the Shop reads from Supabase.
+-- blog_posts, products: no public read policy (admin-only) until a public page reads them.
 
 -- Verification (run as anon key after applying; expected results in the PR body):
---   select on each table returns only published rows (products: 0 rows / empty)
+--   select on each table returns only published rows (blog_posts, products: empty)
 --   insert/update/delete as anon -> 401/42501
 --   update as non-admin authenticated user -> 0 rows affected (UNVERIFIED, not a pass)
 --   admin session -> CRUD works in /studio
