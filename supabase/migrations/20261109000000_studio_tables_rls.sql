@@ -7,7 +7,8 @@
 -- Public readers in the app today:
 --   projects  -> lib/supabase.ts getProjects() (no status filter in the query)
 --   artworks  -> lib/supabase.ts getArtworks() (.eq('published', true))
---   blog_posts, products -> no public reader; Studio only, so admin-only read.
+--   products  -> live public read active = true kept (20 active rows in prod)
+--   blog_posts -> no public reader; Studio only, so admin-only read (owner call).
 -- BEFORE APPLYING: paste the live pg_policies dump for these four tables into the PR,
 -- because the loop below drops every existing policy on them.
 -- Live policies before this migration (Obsad 2026-11-09): artworks published=true; blog_posts
@@ -37,7 +38,7 @@ end $$;
 -- Public read: published rows only.
 -- Live projects.status defaults to 'active' (Obsad prod read 2026-11-09); Studio writes 'draft'/'published'.
 create policy projects_public_read on public.projects
-  for select to anon, authenticated using (coalesce(status, 'active') in ('active', 'published'));
+  for select to anon, authenticated using (status in ('active', 'published'));
 create policy artworks_public_read on public.artworks
   for select to anon, authenticated using (published is true);
 -- products: keep the live public read (active = true); prod has 20 active products.
