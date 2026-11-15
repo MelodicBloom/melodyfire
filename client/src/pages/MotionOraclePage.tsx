@@ -305,10 +305,10 @@ export function MotionOraclePage() {
               Explore the System
             </button>
             <a
-              href="mailto:jennipher@melodicbloom.com"
+              href="mailto:jennipher@melodicbloom.com?subject=Motion%20Oracle%20Framework%20Request"
               className="px-8 py-4 rounded-xl font-bold text-sm border border-white/20 text-white hover:bg-white/10 transition-all"
             >
-              Download Framework
+              Request the Framework
             </a>
           </div>
         </div>
