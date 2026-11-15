@@ -12,12 +12,34 @@ const h = { apikey: key, Authorization: `Bearer ${key}`, Prefer: 'count=exact' }
 const DENIED = new Set([401, 403]);
 let leak = false;
 let unverified = false;
+
+async function jsonBody(response) {
+  try { return await response.clone().json(); } catch { return null; }
+}
+
+function permissionDeniedBody(body) {
+  return body?.code === '42501' || body?.error?.code === '42501';
+}
+
+function authFailureBody(body) {
+  const code = body?.code || body?.error?.code;
+  return typeof code === 'string' && /^PGRST30[123]$/.test(code);
+}
+
+function deniedVerdict(status, body) {
+  if (!DENIED.has(status)) return null;
+  if (permissionDeniedBody(body)) return 'ok (permission denied)';
+  if (authFailureBody(body)) return 'UNVERIFIED (PostgREST authentication failure)';
+  return 'UNVERIFIED (HTTP denial without permission-denied evidence)';
+}
 try {
   // SELECT: locked down = 401/403, or 200 with a JSON array of 0 rows and total 0.
   const r = await fetch(`${url}/rest/v1/inquiries?select=id&limit=1`, { headers: h });
   const range = r.headers.get('content-range') || '';
   let verdict;
-  if (DENIED.has(r.status)) verdict = 'ok (denied)';
+  const selectBody = await jsonBody(r);
+  const denied = deniedVerdict(r.status, selectBody);
+  if (denied) verdict = denied;
   else if (r.status === 200) {
     const body = await r.json().catch(() => null);
     const totalStr = range.split('/')[1];
@@ -26,7 +48,7 @@ try {
     else if (body.length > 0 || total > 0) { verdict = 'LEAK'; leak = true; }
     else verdict = 'ok (0 rows visible)';
   } else { verdict = `UNVERIFIED (unexpected HTTP ${r.status})`; unverified = true; }
-  console.log(`anon SELECT: HTTP ${r.status}, content-range=${range || '-'} -> ${verdict}`);
+  console.log(`anon SELECT: HTTP ${r.status}, content-range=${range || '-'} -> ${verdict}${selectBody?.code ? `, code=${selectBody.code}` : ''}`);
 
   // UPDATE: ONLY an explicit 401/403 counts as locked down.
   // The filter targets the zero UUID so the probe never writes a real row. Because of that, a 2xx with
@@ -40,11 +62,13 @@ try {
   const uTotal = uRange.split('/')[1];
   const uCount = /^[0-9]+$/.test(uTotal ?? '') ? Number(uTotal) : NaN;
   let uVerdict;
-  if (DENIED.has(u.status)) uVerdict = 'ok (denied)';
+  const updateBody = await jsonBody(u);
+  const deniedUpdate = deniedVerdict(u.status, updateBody);
+  if (deniedUpdate) uVerdict = deniedUpdate;
   else if (u.status >= 200 && u.status < 300 && uCount > 0) { uVerdict = 'LEAK (rows affected)'; leak = true; }
   else if (u.status >= 200 && u.status < 300) { uVerdict = 'UNVERIFIED (2xx with 0/unknown rows: cannot distinguish RLS denial from empty match)'; unverified = true; }
   else { uVerdict = `UNVERIFIED (unexpected HTTP ${u.status})`; unverified = true; }
-  console.log(`anon UPDATE probe: HTTP ${u.status}, content-range=${uRange || '-'} -> ${uVerdict}`);
+  console.log(`anon UPDATE probe: HTTP ${u.status}, content-range=${uRange || '-'} -> ${uVerdict}${updateBody?.code ? `, code=${updateBody.code}` : ''}`);
 } catch (e) {
   console.error('Could not reach Supabase:', e.message);
   process.exit(2);
