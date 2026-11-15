@@ -12,6 +12,26 @@ const h = { apikey: key, Authorization: `Bearer ${key}`, Prefer: 'count=exact' }
 const DENIED = new Set([401, 403]);
 let leak = false;
 let unverified = false;
+
+async function jsonBody(response) {
+  try { return await response.clone().json(); } catch { return null; }
+}
+
+function permissionDeniedBody(body) {
+  return body?.code === '42501' || body?.error?.code === '42501';
+}
+
+function authFailureBody(body) {
+  const code = body?.code || body?.error?.code;
+  return typeof code === 'string' && /^PGRST30[123]$/.test(code);
+}
+
+function deniedVerdict(status, body) {
+  if (!DENIED.has(status)) return null;
+  if (permissionDeniedBody(body)) return 'ok (permission denied)';
+  if (authFailureBody(body)) return 'UNVERIFIED (PostgREST authentication failure)';
+  return 'UNVERIFIED (HTTP denial without permission-denied evidence)';
+}
 try {
   // SELECT: locked down = 401/403, or 200 with a JSON array of 0 rows and total 0.
   const r = await fetch(`${url}/rest/v1/inquiries?select=id&limit=1`, { headers: h });
