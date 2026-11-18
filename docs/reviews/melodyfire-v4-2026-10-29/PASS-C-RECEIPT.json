@@ -1,0 +1,75 @@
+{
+  "runId": "melodyfire-reconcile-bubble-2026-10-29",
+  "timestamp": "2026-10-29T15:52:00-04:00",
+  "mode": "read-only analysis and review execution",
+  "sourceArchives": [],
+  "melodyfire": {
+    "v4ManifestDeclaredFiles": 65,
+    "v4ManifestEntries": 65,
+    "v4ManifestMissing": 0,
+    "v4ManifestSizeMismatches": 0,
+    "v4ManifestHashMismatches": 0,
+    "reviewDeliverablesRequired": 15,
+    "reviewDeliverablesPresent": 15,
+    "baselineWeightedScore": 2.63,
+    "baselineIntervals": {
+      "5s": 3,
+      "20s": 3,
+      "90s": 2,
+      "5min": 2
+    },
+    "spatialDecision": "OPTIONAL_CONDITIONALLY_APPROVED_FOR_PROTOTYPE_ONLY",
+    "implementationStatus": "AUTHORITY_BLOCKED_READ_ONLY",
+    "unresolvedGates": [
+      "fresh authority ledger",
+      "A/B/C comparable concepts",
+      "production deployment/Supabase audit",
+      "fresh baseline performance/accessibility evidence"
+    ]
+  },
+  "bubble": {
+    "fileCount": 16,
+    "mapResolution": [
+      384,
+      384
+    ],
+    "referenceResolution": [
+      320,
+      320
+    ],
+    "diagnosticResolution": [
+      200,
+      200
+    ],
+    "integrity": "PASS",
+    "ormPacking": "PASS",
+    "iridescencePacking": "PASS",
+    "referenceMaskAlphaParity": "PASS",
+    "flatMaps": [
+      "height",
+      "normal",
+      "cavity",
+      "ambient_occlusion",
+      "metalness",
+      "basecolor"
+    ],
+    "variableMaps": [
+      "roughness",
+      "iridescence_mask",
+      "iridescence_thickness_normalized"
+    ],
+    "renderValidation": "NOT_RUN",
+    "promotionDecision": "DEFER_UNTIL_REAL_RENDER_AND_PERFORMANCE_EVIDENCE"
+  },
+  "sourceSha256": {
+    "MelodyfireManusHandoffFileDetails.zip": "4cfe74b8cb52cc1ba57a0c28358aba151597d301e7969f23fa0f74959ad48643",
+    "melodyfire_manus_handoff_v4_2026-08-18(1).zip": "d05d18f0ea49b5be8834612742fda77759bad01efbd65776759bc3692305f1d6",
+    "iridlab_bubble_membrane_v0_1.zip": "8f8554056c4ef3de8437bbbdcfd16d4ac3453b445aaf090025080214d7ab94f4"
+  },
+  "artifacts": {
+    "reconciliation": "MELODYFIRE_RECONCILIATION.md",
+    "bubbleAnalysis": "IRIDLAB_BUBBLE_ANALYSIS.md",
+    "executedReviewBundle": "melodyfire_review/"
+  },
+  "verdict": "RECONCILED_REVIEW_COMPLETE_IMPLEMENTATION_BLOCKED_BUBBLE_MATERIAL_REQUIRES_RENDER_VALIDATION"
+}
