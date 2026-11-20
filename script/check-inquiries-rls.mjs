@@ -10,11 +10,28 @@ const key = process.env.SUPABASE_ANON_KEY || src.match(/SUPABASE_ANON_KEY = '([^
 if (!url || !key) { console.error('Missing SUPABASE_URL / SUPABASE_ANON_KEY'); process.exit(2); }
 const h = { apikey: key, Authorization: `Bearer ${key}`, Prefer: 'count=exact' };
 const DENIED = new Set([401, 403]);
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function fetchWithRetry(resource, init) {
+  const attempts = 3;
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await fetch(resource, { ...init, signal: AbortSignal.timeout(10_000) });
+    } catch (error) {
+      lastError = error;
+      if (attempt === attempts) break;
+      const delayMs = 1_000 * 2 ** (attempt - 1);
+      console.error(`Supabase probe attempt ${attempt}/${attempts} failed: ${error.message}; retrying in ${delayMs}ms`);
+      await sleep(delayMs);
+    }
+  }
+  throw lastError;
+}
 let leak = false;
 let unverified = false;
 try {
   // SELECT: locked down = 401/403, or 200 with a JSON array of 0 rows and total 0.
-  const r = await fetch(`${url}/rest/v1/inquiries?select=id&limit=1`, { headers: h });
+  const r = await fetchWithRetry(`${url}/rest/v1/inquiries?select=id&limit=1`, { headers: h });
   const range = r.headers.get('content-range') || '';
   let verdict;
   if (DENIED.has(r.status)) verdict = 'ok (denied)';
@@ -33,7 +50,7 @@ try {
   // 0 rows affected is AMBIGUOUS: PostgREST returns the same response whether RLS filtered the row
   // out (denied) or the UPDATE was permitted but simply matched nothing. Such results are UNVERIFIED
   // (exit 2), never green. 2xx with rows affected is a LEAK (exit 1).
-  const u = await fetch(`${url}/rest/v1/inquiries?id=eq.00000000-0000-0000-0000-000000000000`, {
+  const u = await fetchWithRetry(`${url}/rest/v1/inquiries?id=eq.00000000-0000-0000-0000-000000000000`, {
     method: 'PATCH', headers: { ...h, 'Content-Type': 'application/json', Prefer: 'return=minimal,count=exact' }, body: '{"status":"read"}',
   });
   const uRange = u.headers.get('content-range') || '';

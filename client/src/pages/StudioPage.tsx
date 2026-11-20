@@ -307,7 +307,7 @@ function StudioDashboard() {
       const { count } = await supabase
         .from('inquiries')
         .select('id', { count: 'exact', head: true })
-        .eq('status', 'unread');
+        .eq('status', 'new');
       if (!cancelled) setUnreadInquiries(count ?? 0);
     })();
     return () => {
@@ -1453,7 +1453,7 @@ function InquiriesPanel({
     } else {
       const list = (data as InquiryRow[]) || [];
       setRows(list);
-      onCountChange(list.filter((r) => r.status === 'unread' || !r.status).length);
+      onCountChange(list.filter((r) => r.status === 'new' || !r.status).length);
     }
     setLoading(false);
   }, [onCountChange]);
@@ -1472,7 +1472,7 @@ function InquiriesPanel({
     }
     setRows((prev) => {
       const next = prev.map((r) => (r.id === id ? { ...r, status } : r));
-      onCountChange(next.filter((r) => r.status === 'unread' || !r.status).length);
+      onCountChange(next.filter((r) => r.status === 'new' || !r.status).length);
       return next;
     });
     toast({ title: status === 'read' ? 'Marked as read' : 'Archived' });
@@ -1521,7 +1521,7 @@ function InquiriesPanel({
                   <TableCell className="whitespace-nowrap">{row.inquiry_type || '—'}</TableCell>
                   <TableCell className="max-w-xs">{truncate(row.message, 80)}</TableCell>
                   <TableCell>
-                    <Badge variant={statusVariant(row.status)}>{row.status || 'unread'}</Badge>
+                    <Badge variant={statusVariant(row.status)}>{row.status || 'new'}</Badge>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">{formatDate(row.created_at)}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
