@@ -1,4 +1,5 @@
 import { ExternalLink } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 /**
  * Three distinct portfolio surfaces. The source ChatGPT Site has not exposed
@@ -9,7 +10,7 @@ const GALLERY_URL = 'https://melodicbloom.github.io/shader-gallery/docs/';
 const GALLERY_SOURCE = 'https://github.com/MelodicBloom/shader-gallery';
 const ABALONE_SOURCE = 'https://github.com/MelodicBloom/shader-gallery/tree/main/portfolio-runtime';
 
-function ExternalAction({ href, children }: { href: string; children: React.ReactNode }) {
+function ExternalAction({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer"
       className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-violet-400/30 px-3 py-2 text-sm font-semibold text-violet-200 hover:bg-violet-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300">
