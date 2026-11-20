@@ -25,7 +25,7 @@ This PR cannot edit the in-app Sites project. Its per-material card/link behavio
 - [ ] Inspect site source and compare a before/after map of destinations; no missing/renamed targets.
 - [ ] Test keyboard, pointer, touch (physical device or recorded acceptance), reduced motion, back/reload, and broken-link behavior.
 - [ ] Run `npm run check`, `npm run build`, and `npm run test:routes` for the Melodyfire branch.
-- [ ] Browser-review responsive `/#/work#material-project-map` and public gallery from separate clean sessions.
+- [ ] Browser-review the `material-project-map` section of `/#/work` and the public gallery from separate clean sessions.
 - [ ] Obtain approval for any merge or deployment; this branch itself publishes nothing.
 
 This change is additive to the public portfolio. It deliberately does not alter the source site or shader runtime.
