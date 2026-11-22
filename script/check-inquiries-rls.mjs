@@ -2,7 +2,8 @@
 // Asserts the public anon key cannot read/update public.inquiries.
 // Usage: node script/check-inquiries-rls.mjs   (uses the public anon key from client/src/lib/supabase.ts)
 // Exit 0 = locked down, 1 = LEAK, 2 = could not verify (network error or unexpected response).
-// Fail-closed: SELECT ok = 401/403 or validated empty result; UPDATE ok = 401/403 ONLY.
+// Fail-closed: SELECT ok = 42501 denial or a validated empty result; UPDATE ok = 42501 ONLY.
+// PGRST301-303 and HTTP denials without a permission code are UNVERIFIED (exit 2).
 import { readFileSync } from 'node:fs';
 const src = readFileSync(new URL('../client/src/lib/supabase.ts', import.meta.url), 'utf8');
 const url = process.env.SUPABASE_URL || src.match(/SUPABASE_URL = '([^']+)'/)?.[1];
@@ -39,7 +40,10 @@ try {
   let verdict;
   const selectBody = await jsonBody(r);
   const denied = deniedVerdict(r.status, selectBody);
-  if (denied) verdict = denied;
+  if (denied) {
+    verdict = denied;
+    if (denied.startsWith('UNVERIFIED')) unverified = true;
+  }
   else if (r.status === 200) {
     const body = await r.json().catch(() => null);
     const totalStr = range.split('/')[1];
@@ -64,7 +68,10 @@ try {
   let uVerdict;
   const updateBody = await jsonBody(u);
   const deniedUpdate = deniedVerdict(u.status, updateBody);
-  if (deniedUpdate) uVerdict = deniedUpdate;
+  if (deniedUpdate) {
+    uVerdict = deniedUpdate;
+    if (deniedUpdate.startsWith('UNVERIFIED')) unverified = true;
+  }
   else if (u.status >= 200 && u.status < 300 && uCount > 0) { uVerdict = 'LEAK (rows affected)'; leak = true; }
   else if (u.status >= 200 && u.status < 300) { uVerdict = 'UNVERIFIED (2xx with 0/unknown rows: cannot distinguish RLS denial from empty match)'; unverified = true; }
   else { uVerdict = `UNVERIFIED (unexpected HTTP ${u.status})`; unverified = true; }
