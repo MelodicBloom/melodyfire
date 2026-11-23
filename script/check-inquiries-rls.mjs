@@ -22,7 +22,7 @@ async function fetchWithRetry(resource, init) {
       lastError = error;
       if (attempt === attempts) break;
       const delayMs = 1_000 * 2 ** (attempt - 1);
-      console.error(`Supabase probe attempt ${attempt}/${attempts} failed: ${error.message}; retrying in ${delayMs}ms`);
+      console.error(`UNVERIFIED attempt ${attempt}/${attempts} (hosted test unavailable, not a pass): ${error.message}; ${networkFailureDetails(error)}; retrying in ${delayMs}ms`);
       await sleep(delayMs);
     }
   }
