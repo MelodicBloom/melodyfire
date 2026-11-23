@@ -50,6 +50,14 @@ function deniedVerdict(status, body) {
   if (authFailureBody(body)) return 'UNVERIFIED (PostgREST authentication failure)';
   return 'UNVERIFIED (HTTP denial without permission-denied evidence)';
 }
+
+function networkFailureDetails(error) {
+  const cause = error && typeof error === 'object' ? error.cause : undefined;
+  const code = (cause && cause.code) || error?.code || 'none';
+  const errno = cause && cause.errno != null ? cause.errno : (error?.errno != null ? error.errno : 'none');
+  const syscall = (cause && cause.syscall) || error?.syscall || 'none';
+  return `cause_code=${code} errno=${errno} syscall=${syscall}`;
+}
 try {
   // SELECT: locked down = 401/403, or 200 with a JSON array of 0 rows and total 0.
   const r = await fetchWithRetry(`${url}/rest/v1/inquiries?select=id&limit=1`, { headers: h });
@@ -94,7 +102,7 @@ try {
   else { uVerdict = `UNVERIFIED (unexpected HTTP ${u.status})`; unverified = true; }
   console.log(`anon UPDATE probe: HTTP ${u.status}, content-range=${uRange || '-'} -> ${uVerdict}${updateBody?.code ? `, code=${updateBody.code}` : ''}`);
 } catch (e) {
-  console.error('Could not reach Supabase:', e.message);
+  console.error(`UNVERIFIED (hosted test unavailable, not a pass): ${e.message}; ${networkFailureDetails(e)}`);
   process.exit(2);
 }
 process.exit(leak ? 1 : unverified ? 2 : 0);

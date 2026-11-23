@@ -29,7 +29,7 @@ jobs:
       - run: npm run build
 
   inquiries-rls:
-    # Exit 0 = pass (locked down); 1 = leak; 2 = unverified. Both non-zero fail the check.
+    # Exit 0 = pass (locked down); 1 = leak; 2 = unverified, including hosted test unavailable. Non-zero is not a pass.
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

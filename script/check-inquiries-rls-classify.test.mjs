@@ -101,6 +101,18 @@ const cases = [
   },
 ];
 
+const unreachable = await runProbe('http://nx-probe-does-not-exist-ce09.invalid');
+const unreachableOk = unreachable.code === 2
+  && unreachable.out.includes('UNVERIFIED (hosted test unavailable, not a pass)')
+  && unreachable.out.includes('cause_code=ENOTFOUND');
+if (unreachableOk) {
+  console.log('PASS unreachable host is unverified, not a pass (exit 2, ENOTFOUND)');
+} else {
+  console.log(`FAIL unreachable host expected exit 2 and ENOTFOUND, got exit ${unreachable.code}`);
+  console.log(unreachable.out.trim());
+  process.exit(1);
+}
+
 const server = await listen();
 const { port } = server.address();
 const baseUrl = `http://127.0.0.1:${port}`;
@@ -130,5 +142,7 @@ try {
   server.close();
   await once(server, 'close');
 }
-console.log(`RESULT: ${passed} passed, ${failed} failed, ${cases.length} total`);
+const totalPassed = passed + 1;
+const total = cases.length + 1;
+console.log(`RESULT: ${totalPassed} passed, ${failed} failed, ${total} total`);
 process.exit(failed === 0 ? 0 : 1);
