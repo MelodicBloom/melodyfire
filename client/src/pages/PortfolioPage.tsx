@@ -17,6 +17,7 @@ import stickersImg from '@assets/img/stickers.png';
 import chromafloraImg from '@assets/img/chromaflora-preview.png';
 import neumorphismImg from '@assets/img/neumorphism-preview.png';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
+import hyperKaleidoscopeCover from '@assets/img/hyper-kaleidoscope-cover.jpg';
 
 type Repo = {
   name: string;
@@ -134,8 +135,8 @@ const PROJECTS: Project[] = [
     categories: ['web-apps', 'generative-art'],
     tags: ['WebGL', 'GLSL', 'Audio Reactive', 'Interactive'],
     disciplines: ['Shader Programming', 'Interaction Design', 'Web Audio API'],
-    image: heroMandalaImg,
-    imageAlt: 'Illustrative mandala artwork accompanying the Hyper-Kaleidoscope instrument',
+    image: hyperKaleidoscopeCover,
+    imageAlt: 'Rendered still from the Hyper-Kaleidoscope live GLSL instrument',
     year: '2026',
     status: 'Live demo',
     demoUrl: 'https://hyper-kaleidoscope-vj.vercel.app/',
