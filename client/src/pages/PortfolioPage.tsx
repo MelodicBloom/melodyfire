@@ -106,6 +106,8 @@ type Project = {
   status: string;
   driveUrl?: string | null;
   githubUrl?: string;
+  demoUrl?: string;
+  imageAlt?: string;
   ctas?: { label: string; href: string }[];
 };
 
@@ -123,6 +125,21 @@ const PROJECTS: Project[] = [
     status: 'Live',
     driveUrl: null,
     githubUrl: 'https://github.com/qt314wink/chromaflora-sitezip',
+  },
+  {
+    id: 19,
+    title: 'Hyper-Kaleidoscope — Live VJ Instrument',
+    description: 'A playable WebGL and GLSL tunnel study with fractal folding, radial symmetry, chromatic palettes, a beat synth, and three-band audio response. Open the live controls and shape the visual in real time.',
+    longDescription: 'A standalone browser-based VJ prototype. The fragment shader raymarches a repeated crystalline tunnel; controls expose symmetry, motion, fold, prism split, and palette. A built-in 128 BPM synth, microphone capture, and browser tab audio where supported drive bass, mid, and high-frequency responses. Mobile uses capped resolution and a lighter chromatic pass. This is a live prototype, with no MIDI, recording, DAW sync, or projection calibration.',
+    categories: ['web-apps', 'generative-art'],
+    tags: ['WebGL', 'GLSL', 'Audio Reactive', 'Interactive'],
+    disciplines: ['Shader Programming', 'Interaction Design', 'Web Audio API'],
+    image: heroMandalaImg,
+    imageAlt: 'Illustrative mandala artwork accompanying the Hyper-Kaleidoscope instrument',
+    year: '2026',
+    status: 'Live demo',
+    demoUrl: 'https://hyper-kaleidoscope-vj.vercel.app/',
+    githubUrl: 'https://github.com/qt314wink/Kaleidoscope/tree/master/hyper-kaleidoscope-vj',
   },
   {
     id: 11,
@@ -446,11 +463,17 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           </div>
         ) : (
-          <img src={project.image} alt={project.title} className="w-full rounded-xl mb-6 object-cover" style={{ aspectRatio: '4/3', maxHeight: 340 }} />
+          <img src={project.image} alt={project.imageAlt ?? project.title} className="w-full rounded-xl mb-6 object-cover" style={{ aspectRatio: '4/3', maxHeight: 340 }} />
         )}
         <div className="flex items-center justify-between text-sm text-white/40 pt-4 border-t border-white/10">
           <span>{project.year}</span>
           <div className="flex items-center gap-3">
+            {project.demoUrl && (
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-cyan-300 hover:text-cyan-200 transition-colors">
+                <ExternalLink size={12} /> Launch live demo
+              </a>
+            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -461,7 +484,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <SiGithub size={12} /> GitHub
               </a>
             )}
-            <span className={`px-2 py-0.5 rounded-full text-xs ${['Ongoing','Active','V3 Active','Beta','Live','Vercel','Live on Netlify'].includes(project.status) ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white/40'}`}>
+            <span className={`px-2 py-0.5 rounded-full text-xs ${['Ongoing','Active','V3 Active','Beta','Live','Vercel','Live on Netlify','Live demo'].includes(project.status) ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white/40'}`}>
               {project.status}
             </span>
           </div>
@@ -513,7 +536,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
   return (
     <div className="group sg-card hover:border-violet-500/40 transition-all duration-300 cursor-pointer overflow-hidden" onClick={() => onOpen(project)}>
       <div className="relative overflow-hidden" style={{ height: 200 }}>
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <img src={project.image} alt={project.imageAlt ?? project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <div className="p-5">
@@ -529,7 +552,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: (p: Projec
         <div className="flex items-center gap-2">
           <span>{project.year}</span>
           <span className="w-1 h-1 rounded-full bg-white/20" />
-          <span className={`px-1.5 py-0.5 rounded-full ${['Ongoing','Active','V3 Active','Beta','Live','Vercel','Live on Netlify'].includes(project.status) ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white/40'}`}>
+          <span className={`px-1.5 py-0.5 rounded-full ${['Ongoing','Active','V3 Active','Beta','Live','Vercel','Live on Netlify','Live demo'].includes(project.status) ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-white/40'}`}>
             {project.status}
           </span>
         </div>
