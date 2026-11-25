@@ -45,10 +45,10 @@
       200,
       200
     ],
-    "integrity": "PASS",
-    "ormPacking": "PASS",
-    "iridescencePacking": "PASS",
-    "referenceMaskAlphaParity": "PASS",
+    "integrity": "UNVERIFIED_IN_PUBLISHED_BUNDLE",
+    "ormPacking": "UNVERIFIED_IN_PUBLISHED_BUNDLE",
+    "iridescencePacking": "UNVERIFIED_IN_PUBLISHED_BUNDLE",
+    "referenceMaskAlphaParity": "UNVERIFIED_IN_PUBLISHED_BUNDLE",
     "flatMaps": [
       "height",
       "normal",
