@@ -42,6 +42,6 @@ No standalone, current Codex v4 specification or A/B/C design files were supplie
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/14_RECOMMENDED_CHANGES_TO_CODEX_SPEC_PROTOCOL.md "Codex spec patch protocol"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "User-supplied v4 planning source"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Codex spec patch protocol — unpublished archive member: 14_RECOMMENDED_CHANGES_TO_CODEX_SPEC_PROTOCOL.md"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "User-supplied v4 planning source — unpublished archive member: references_portfolio_priorities.txt"
 [3]: ../EVIDENCE_LOG.md "Verified review evidence"

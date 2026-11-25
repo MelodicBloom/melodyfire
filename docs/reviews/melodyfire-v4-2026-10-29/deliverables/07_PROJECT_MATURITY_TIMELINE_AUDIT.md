@@ -60,6 +60,6 @@ The proposed Project State Compiler can assist with **candidate phase drafting**
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/06_PROJECT_REFRAMING_MATURITY_TIMELINE_PROTOCOL.md "Project maturity and timeline protocol"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Project maturity and timeline protocol — unpublished archive member: 06_PROJECT_REFRAMING_MATURITY_TIMELINE_PROTOCOL.md"
 [2]: https://melodyfire-studio.vercel.app/#/work "Observed project labels on current Work route"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md "Current repository and authority context"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Current repository and authority context — unpublished archive member: references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md"

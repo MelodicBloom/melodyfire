@@ -6,7 +6,7 @@
 
 ## Decision summary
 
-The verified v3 baseline is visually distinctive and technically buildable, but its professional value is obscured by an over-dense information architecture, duplicated project registries, unshareable project-detail patterns, and unresolved evidence authority. The current site succeeds at identity and atmosphere; it does not yet consistently let a prospective client or hiring manager answer **what Jennipher does, which work proves it, what is currently real, and how to engage**. [1] [2]
+The verified v3 baseline is visually distinctive, with an inspectable technical implementation, but its professional value is obscured by an over-dense information architecture, duplicated project registries, unshareable project-detail patterns, and unresolved evidence authority. The current site succeeds at identity and atmosphere; it does not yet consistently let a prospective client or hiring manager answer **what Jennipher does, which work proves it, what is currently real, and how to engage**. [1] [2]
 
 The supplied planning source describes a credible direction: a semantic public portfolio shell, a constrained Studio CMS, a canonical project registry, and an optional spatial exploration layer. The right strategic direction is therefore **editorial-first public evidence with optional spatial exploration**. The spatial field should **not** be approved as the primary Work browser at this stage. It may become a valuable secondary “Explore” mode only after project records, semantic detail routes, mobile controls, accessibility, and evidence contracts are proven. [3]
 
@@ -15,11 +15,11 @@ The supplied planning source describes a credible direction: a semantic public p
 | Priority | Finding | Source class | Consequence |
 |---|---|---|---|
 | P0 | The v3 Work page displays a Beats & Boxes image and alt text beside ChromaFlora metadata, and presents project details in a modal rather than a shareable route. | **OBSERVED / PROJECT_SPECIFIC** | Do not add a spatial layer or SEO work on top of unstable project identity. |
-| P0 | At a 390×844 mobile capture, Work has no visible hamburger control; only the “All” filter is initially visible. | **OBSERVED** | Fix mobile navigation and filtering before judging v4 mobile ergonomics. |
+| P0 | In the historical 390×844 live Work capture, no hamburger control is visible and only the “All” filter is initially visible; the deployment commit was not recorded. | **OBSERVED** | Fix mobile navigation and filtering before judging v4 mobile ergonomics. |
 | P0 | No verified A/B/C design outputs, fresh authority ledger, deployment audit, or production-Supabase audit were supplied. | **PROJECT_SPECIFIC** | Current design can be scored; v4 alternatives cannot be approved or ranked. |
 | P1 | The live site has 13 primary destinations, and project content is duplicated across Home, Work, cards, and Studio-adjacent models. | **OBSERVED / PROJECT_SPECIFIC** | Establish one typed `ProjectRecord` and simplify top-level intent. |
 | P1 | Public project pages, per-route metadata, sitemap, and canonical non-hash URLs are absent from the inspected implementation. | **PROJECT_SPECIFIC** | Treat public semantic routes as a prerequisite to spatial browsing and discoverability claims. |
-| P2 | The v3 build and type check completed successfully, yet initial page identity uses large media and lazy-screen fallbacks. | **PROJECT_SPECIFIC** | Preserve the existing stack for the first delivery, while introducing performance budgets and fallback tests. |
+| P2 | The v3 source uses large media and lazy-screen fallbacks; historical build and type-check success lacks retained command evidence. | **PROJECT_SPECIFIC** | Preserve the existing stack for the first delivery, while introducing performance budgets and fallback tests. |
 
 ## Major recommendations
 
@@ -76,7 +76,7 @@ The supplied planning source describes a credible direction: a semantic public p
 | Field | Decision |
 |---|---|
 | **Source class** | OBSERVED / PROJECT_SPECIFIC / NEW_INFERENCE. |
-| **Problem** | The Work mobile capture lacks a visible menu control, reveals only one filter initially, and the current Work cards are implemented as click-handled `div` elements. |
+| **Problem** | The historical live Work mobile capture lacks a visible menu control and reveals only one filter initially; the deployment revision is unknown. Reviewed source includes a mobile menu trigger, and Work cards were observed as click-handled `div` elements. |
 | **Recommendation** | Add a mobile route test suite and correct the v3 baseline: a visible 44px menu control, accessible category-filter overflow/wrap behavior, semantic links/buttons for each card, keyboard progression, and a reduced-motion equivalent. |
 | **Alternative** | Defer baseline defects until the spatial field is implemented. |
 | **Chosen against** | Treating a mobile experience as a compressed desktop or expecting the spatial layer to absorb navigation failures. |
@@ -117,12 +117,12 @@ The following inputs are absent and therefore block approval of the target desig
 
 ## Verification performed
 
-The public repository was cloned without modification. `npm ci --no-audit --no-fund`, `npm run check`, and `npm run build` completed successfully on the reviewed `master` snapshot; this only verifies local type/build health, not production correctness, performance, accessibility, or data authority. [2]
+The August 20, 2026 evidence log identifies historical source revision [`2b3dba8fecb425fb83637518bb304ab7b208c16a`](https://github.com/MelodicBloom/melodyfire/commit/2b3dba8fecb425fb83637518bb304ab7b208c16a). Historical installation, type-check and build success was reported, but no revision-bound command logs or exit records are retained in this package; the results are unverified. The October 29 reconciliation was documentation-only. No application build, production correctness, performance, accessibility or data authority is claimed. [3]
 
 ## References
 
 [1]: https://melodyfire-studio.vercel.app/ "Melodyfire live deployment"
 [2]: https://github.com/MelodicBloom/melodyfire "MelodicBloom/melodyfire repository"
 [3]: ../EVIDENCE_LOG.md "Review evidence log"
-[4]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "User-supplied portfolio priorities"
-[5]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/00_MANUS_MASTER_HANDOFF.md "Master handoff"
+[4]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "User-supplied portfolio priorities — unpublished archive member: references_portfolio_priorities.txt"
+[5]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Master handoff — unpublished archive member: 00_MANUS_MASTER_HANDOFF.md"

@@ -59,10 +59,10 @@ The guide may retrieve only an approved public context record containing: canoni
 
 ## Release gate
 
-Do not build the guide until G1–G4 from the executive findings are passed: evidence record approved, public project route live, sources publicly safe, environment identity confirmed, and server-side inference boundary designed.
+Do not build the guide until G1–G4 in [Executive Findings](01_EXECUTIVE_FINDINGS.md#required-decision-gates) are passed: fresh baseline evidence (G1), approved A/B/C design comparison (G2), a reviewed canonical public-safe project/source ledger (G3), and signed deployment/Supabase authority including RLS, auth, storage and rollback (G4). Separate AI-specific pilot release conditions: an approved public project route is live, sources are publicly safe, and the server-side inference boundary is designed.
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/09_AI_GUIDE_CRITIQUE_PROTOCOL.md "AI Guide Critique Protocol"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "Proposed public AI context and security boundaries"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md "Authority constraints"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "AI Guide Critique Protocol — unpublished archive member: 09_AI_GUIDE_CRITIQUE_PROTOCOL.md"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Proposed public AI context and security boundaries — unpublished archive member: references_portfolio_priorities.txt"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Authority constraints — unpublished archive member: references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md"

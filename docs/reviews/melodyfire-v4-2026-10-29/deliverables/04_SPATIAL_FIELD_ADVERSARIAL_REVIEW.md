@@ -6,9 +6,9 @@
 
 The field should not be the primary Work browser in V1. The verified current baseline already has difficulty with project identity, evidence retrieval, durable detail destinations, and mobile wayfinding. A spatial interface cannot repair those defects and may deepen them if it becomes the sole index. The appropriate role is an optional **Explore Work** or collection-specific mode alongside a semantic editorial index and direct project routes. [1] [2]
 
-## Falsification result
+## Falsification status (not tested)
 
-The working question was: *Can a visitor find a known project faster than with a grid, identify its contribution and evidence, and return to the same context without friction?* No Melodyfire spatial prototype, task data, or interaction captures were supplied. Therefore the field does **not** survive falsification as a primary navigator; it survives only as a conditional exploration hypothesis.
+The working question was: *Can a visitor find a known project faster than with a grid, identify its contribution and evidence, and return to the same context without friction?* No Melodyfire spatial prototype, task data, or interaction captures were supplied. Therefore the field remains **unproven and not approved as a primary navigator**; it remains a conditional exploration hypothesis. Missing evidence is not a failed falsification test.
 
 | Criterion | What the spatial proposal must prove | Present evidence | Review result |
 |---|---|---|---|
@@ -96,6 +96,6 @@ Reject the primary field if any of the following occurs: known-project retrieval
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/04_SPATIAL_FIELD_ADVERSARIAL_REVIEW_PROTOCOL.md "Spatial Field Adversarial Review Protocol"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Spatial Field Adversarial Review Protocol — unpublished archive member: 04_SPATIAL_FIELD_ADVERSARIAL_REVIEW_PROTOCOL.md"
 [2]: ../EVIDENCE_LOG.md "Verified baseline evidence"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "V4 planning source and spatial profile"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "V4 planning source and spatial profile — unpublished archive member: references_portfolio_priorities.txt"

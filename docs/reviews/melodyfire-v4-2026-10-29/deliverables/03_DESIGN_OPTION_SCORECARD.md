@@ -18,7 +18,7 @@ The handoff requires a weighted comparison of current Melodyfire with **A Editor
 | Narrative coherence | 10% | 3 | Regenerative thinking creates a recognizable through-line but does not reliably organize heterogeneous work for different buyers. |
 | Mobile ergonomics | 6% | 2 | Home is legible; observed Work mobile navigation/filter behavior is materially weak. |
 | Accessibility resilience | 4% | 2 | The inspected Work cards are click-handled `div`s, current hash anchors are a known safety concern, and no fresh keyboard/axe/reduced-motion evidence exists. |
-| Technical / performance plausibility | 3% | 3 | The reviewed master snapshot type-checks and builds; large media and complex interactive surfaces require measured budgets. |
+| Technical / performance plausibility | 3% | 3 | Historical type-check and build success was reported without retained command evidence; large media and complex interactive surfaces require measured budgets. Score retained as historical, not fresh validation. |
 | **Weighted total** | **100%** | **2.63 / 5** | Reproducible calculation: `3×.20 + 2×.18 + 4×.15 + 2×.12 + 2×.12 + 3×.10 + 2×.06 + 2×.04 + 3×.03`. |
 
 ## Current baseline interpretation
@@ -58,6 +58,6 @@ An option is scorable only when reviewers receive its exact content inputs, resp
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/03_DESIGN_OPTION_SCORECARD_PROTOCOL.md "Design Option Scorecard Protocol"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "User-supplied v4 planning source"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Design Option Scorecard Protocol — unpublished archive member: 03_DESIGN_OPTION_SCORECARD_PROTOCOL.md"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "User-supplied v4 planning source — unpublished archive member: references_portfolio_priorities.txt"
 [3]: ../EVIDENCE_LOG.md "Verified baseline evidence"

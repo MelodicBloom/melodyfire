@@ -81,5 +81,5 @@ No “GEO hack” or hidden `llms.txt` content is recommended. Human-visible, or
 ## References
 
 [1]: ../EVIDENCE_LOG.md "Inspected route, metadata, and build evidence"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/11_DISCOVERABILITY_SEARCH_CONTENT_REVIEW.md "Discoverability review protocol"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "Route, metadata, and evidence-graph planning source"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Discoverability review protocol — unpublished archive member: 11_DISCOVERABILITY_SEARCH_CONTENT_REVIEW.md"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Route, metadata, and evidence-graph planning source — unpublished archive member: references_portfolio_priorities.txt"

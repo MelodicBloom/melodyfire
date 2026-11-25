@@ -50,5 +50,5 @@ This matrix converts the observed portfolio archive into a public-content decisi
 ## References
 
 [1]: https://melodyfire-studio.vercel.app/#/work "Observed current Work archive"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/06_PROJECT_REFRAMING_MATURITY_TIMELINE_PROTOCOL.md "Project reframing and timeline protocol"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md "Repository authority constraints"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Project reframing and timeline protocol — unpublished archive member: 06_PROJECT_REFRAMING_MATURITY_TIMELINE_PROTOCOL.md"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Repository authority constraints — unpublished archive member: references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md"

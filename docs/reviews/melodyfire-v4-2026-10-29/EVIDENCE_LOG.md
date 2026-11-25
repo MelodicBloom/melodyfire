@@ -22,8 +22,8 @@ The handoff package does not contain a verified Codex current-site baseline, an 
 
 1. [Melodyfire live deployment](https://melodyfire-studio.vercel.app/)
 2. [Canonical GitHub repository](https://github.com/MelodicBloom/melodyfire)
-3. [Handoff: current repository context](/home/ubuntu/melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md)
-4. [Handoff: master review mandate](/home/ubuntu/melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/00_MANUS_MASTER_HANDOFF.md)
+3. [Handoff: current repository context](#unpublished-handoff-sources) — unpublished archive member `references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md`.
+4. [Handoff: master review mandate](#unpublished-handoff-sources) — unpublished archive member `00_MANUS_MASTER_HANDOFF.md`.
 
 ### OBSERVED — live Work route (desktop)
 
@@ -41,8 +41,29 @@ The v4 direction should not add a spatial browser on top of this inventory witho
 
 A 390×844 headless Chromium capture of the live **Home** page shows an effective compact first screen. The navigation presents a readable brand, theme toggle, and visible hamburger control. The hero identifies **Creative Technologist · Regenerative Designer · Philadelphia**, gives the Melodyfire/Jennipher Troup identity, presents a positioning statement and three calls to action. **Explore Work** receives the strongest visual emphasis; **The Doctrine** and **AI Tools** compete as secondary destinations. The hero is visually coherent and legible, although a first-time buyer still receives discipline labels rather than a concise service/proof-oriented statement.
 
-The same capture of the **Work** page shows a different result. The header displays the brand and theme toggle but no visible hamburger control within the 390px frame, leaving a mobile-only visitor without an obvious way to reach navigation. The page hero consumes approximately the top 500px before the filter area begins. At this width, only the **All** chip is visible in the initial filter row; no clear overflow, wrapping, or alternate filter mechanism is shown before the featured card. This is an observed mobile defect requiring functional verification at live route level before any v4 work begins.
+The same capture of the **Work** page shows a different result. The header displays the brand and theme toggle but no visible hamburger control within the 390px frame, leaving a mobile-only visitor without an obvious way to reach navigation. The page hero consumes approximately the top 500px before the filter area begins. At this width, only the **All** chip is visible in the initial filter row; no clear overflow, wrapping, or alternate filter mechanism is shown before the featured card. This is a historical live-only observation, not a proven source-level defect: the deployment commit was not recorded. `App.tsx` renders `Nav` outside the route switch and `Nav.tsx` includes a mobile menu trigger at both the historical source revision and PR revision `2902f17f9f5ed62f31aad751355cd58386474444`. Functional verification on a revision-bound live route remains required.
 
 ### Validity note
 
 The captures establish first-viewport rendering at one common phone width only. They do not prove touch gesture behavior, keyboard behavior, reduced-motion behavior, screen-reader output, or performance metrics. Those remain test requirements rather than verified current-state facts.
+
+## Unpublished handoff sources
+
+The original handoff files cited by these deliverables are not present in this repository at PR revision `2902f17f9f5ed62f31aad751355cd58386474444`. This is a source locator, not a copy or independent verification of source content. The cited members refer to `melodyfire_manus_handoff_v4_2026-08-18(1).zip` (see [recorded archive hashes](PASS-C-RECEIPT.json) and [reconciliation](MELODYFIRE_RECONCILIATION.md)). Authorized readers should request the original archive from the repository owner; no shared archive location has been verified. Reference links resolve here rather than to missing files. Original member names are retained below.
+
+- `00_MANUS_MASTER_HANDOFF.md`
+- `02_BUYER_COMPREHENSION_PROTOCOL.md`
+- `03_DESIGN_OPTION_SCORECARD_PROTOCOL.md`
+- `04_SPATIAL_FIELD_ADVERSARIAL_REVIEW_PROTOCOL.md`
+- `05_NARRATIVE_AND_ECOSYSTEM_REVIEW.md`
+- `06_PROJECT_REFRAMING_MATURITY_TIMELINE_PROTOCOL.md`
+- `07_MOBILE_INTERACTION_DISCOVERABILITY_REVIEW.md`
+- `08_CMS_SCOPE_CHALLENGE.md`
+- `09_AI_GUIDE_CRITIQUE_PROTOCOL.md`
+- `10_CONVERSION_REVENUE_OFFER_REVIEW.md`
+- `11_DISCOVERABILITY_SEARCH_CONTENT_REVIEW.md`
+- `12_MOTION_VISUAL_EFFECTS_GRAMMAR_REVIEW.md`
+- `13_EVIDENCE_PROVENANCE_CLAIM_AUDIT.md`
+- `14_RECOMMENDED_CHANGES_TO_CODEX_SPEC_PROTOCOL.md`
+- `references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md`
+- `references_portfolio_priorities.txt`

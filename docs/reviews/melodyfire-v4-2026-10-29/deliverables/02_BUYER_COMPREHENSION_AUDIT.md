@@ -93,6 +93,6 @@ Before A/B/C designs can be scored, provide an equivalent set of desktop/mobile 
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/02_BUYER_COMPREHENSION_PROTOCOL.md "Buyer Comprehension Protocol"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Buyer Comprehension Protocol — unpublished archive member: 02_BUYER_COMPREHENSION_PROTOCOL.md"
 [2]: ../EVIDENCE_LOG.md "Observed live desktop and mobile baseline"
 [3]: https://melodyfire-studio.vercel.app/#/work "Melodyfire Work route"

@@ -68,4 +68,4 @@ The v4 planning source proposes a responsive experience grammar with verbs such 
 
 [1]: https://melodyfire-studio.vercel.app/ "Live home visual baseline"
 [2]: ../EVIDENCE_LOG.md "Repository and live-site motion observations"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/12_MOTION_VISUAL_EFFECTS_GRAMMAR_REVIEW.md "Motion and effects grammar protocol"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Motion and effects grammar protocol — unpublished archive member: 12_MOTION_VISUAL_EFFECTS_GRAMMAR_REVIEW.md"

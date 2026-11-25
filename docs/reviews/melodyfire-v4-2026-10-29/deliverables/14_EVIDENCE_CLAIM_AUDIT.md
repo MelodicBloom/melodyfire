@@ -9,8 +9,8 @@ A visually convincing project card is not evidence. Every public assertion must 
 | Claim / category | Observed presentation | Classification | Required action |
 |---|---|---|---|
 | Melodyfire live public experience exists at `melodyfire-studio.vercel.app`. | Directly loaded and captured. | **VERIFIED_CURRENT** | Retain as current baseline URL; reconcile against canonical production/domain ledger before using as final v4 authority. |
-| Repository `MelodicBloom/melodyfire`, default `master`, contains React/Vite/TypeScript application. | Public repository inspection and local build. | **VERIFIED_CURRENT** | Retain for current-code evidence; do not infer deployment or database authority. |
-| Master snapshot type-checks and builds locally. | `npm run check` and `npm run build` completed in isolated clone. | **VERIFIED_CURRENT** | State only as local build health at the reviewed commit. |
+| Repository `MelodicBloom/melodyfire`, default `master`, contains React/Vite/TypeScript application. | Source inspection: historical revision `2b3dba8fecb425fb83637518bb304ab7b208c16a` and PR revision `2902f17f9f5ed62f31aad751355cd58386474444` (`package.json`, `client/src/App.tsx`). | **VERIFIED_NEEDS_REFRESH** (source only) | Retain as revision-bound source evidence; do not infer build, deployment or database authority. |
+| Historical master snapshot type-checks and builds locally. | Historical review identifies `2b3dba8fecb425fb83637518bb304ab7b208c16a`, but no retained command logs or exit records substantiate the reported type-check or build. | **UNSUPPORTED** (build result unverified) | No application-build claim; require revision-bound command receipts before upgrading. |
 | PR #3 is a route-safety workstream. | Public PR inspection; open at review time. | **VERIFIED_CURRENT** | Keep separate from redesign; require browser/keyboard/axe/reduced-motion evidence before treating it as complete. |
 | ChromaFlora, AETHER, Neumorphism, other projects exist as current Work cards. | Direct live Work observation. | **VERIFIED_NEEDS_REFRESH** | Validate canonical repo/deployment, contribution, scope, status, media rights, and public proof before flagship claims. |
 | “Live,” “Vercel,” “Deployed,” “Published,” “Active,” “Available” project status labels. | Direct live Work observation. | **VERIFIED_NEEDS_REFRESH** | Convert to human-approved phase records with source/evidence/date. |
@@ -55,6 +55,6 @@ Each public project field should carry: `claimText`, `claimClass`, `sourceRefs`,
 
 ## References
 
-[1]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/13_EVIDENCE_PROVENANCE_CLAIM_AUDIT.md "Evidence and claim audit protocol"
+[1]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Evidence and claim audit protocol — unpublished archive member: 13_EVIDENCE_PROVENANCE_CLAIM_AUDIT.md"
 [2]: ../EVIDENCE_LOG.md "Verified baseline evidence"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md "Authority gaps and repository context"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Authority gaps and repository context — unpublished archive member: references/CURRENT_REPO_CONTEXT_LAST_VERIFIED.md"

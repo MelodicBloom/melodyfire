@@ -76,5 +76,5 @@ Every approved flagship should use the following structure; no detail should be 
 ## References
 
 [1]: https://melodyfire-studio.vercel.app/ "Live Melodyfire home page"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "Working four-family taxonomy"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/05_NARRATIVE_AND_ECOSYSTEM_REVIEW.md "Narrative and Ecosystem Review Protocol"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Working four-family taxonomy — unpublished archive member: references_portfolio_priorities.txt"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Narrative and Ecosystem Review Protocol — unpublished archive member: 05_NARRATIVE_AND_ECOSYSTEM_REVIEW.md"

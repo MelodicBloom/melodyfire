@@ -2,7 +2,11 @@
   "runId": "melodyfire-reconcile-bubble-2026-10-29",
   "timestamp": "2026-10-29T15:52:00-04:00",
   "mode": "read-only analysis and review execution",
-  "sourceArchives": [],
+  "sourceArchives": [
+    "MelodyfireManusHandoffFileDetails.zip",
+    "melodyfire_manus_handoff_v4_2026-08-18(1).zip",
+    "iridlab_bubble_membrane_v0_1.zip"
+  ],
   "melodyfire": {
     "v4ManifestDeclaredFiles": 65,
     "v4ManifestEntries": 65,
@@ -68,8 +72,9 @@
   },
   "artifacts": {
     "reconciliation": "MELODYFIRE_RECONCILIATION.md",
-    "bubbleAnalysis": "IRIDLAB_BUBBLE_ANALYSIS.md",
-    "executedReviewBundle": "melodyfire_review/"
+    "bubbleAnalysis": null,
+    "executedReviewBundle": "deliverables/",
+    "bubbleAnalysisStatus": "UNAVAILABLE_NOT_PUBLISHED"
   },
   "verdict": "RECONCILED_REVIEW_COMPLETE_IMPLEMENTATION_BLOCKED_BUBBLE_MATERIAL_REQUIRES_RENDER_VALIDATION"
 }

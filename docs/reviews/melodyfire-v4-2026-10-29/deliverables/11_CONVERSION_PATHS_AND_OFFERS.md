@@ -64,5 +64,5 @@ No price-band hypothesis is justified by the reviewed evidence. Publish pricing 
 ## References
 
 [1]: https://melodyfire-studio.vercel.app/ "Current home CTAs and routes"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/10_CONVERSION_REVENUE_OFFER_REVIEW.md "Conversion and offer review protocol"
-[3]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/references_portfolio_priorities.txt "Offer hypotheses and canonical record planning"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Conversion and offer review protocol — unpublished archive member: 10_CONVERSION_REVENUE_OFFER_REVIEW.md"
+[3]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Offer hypotheses and canonical record planning — unpublished archive member: references_portfolio_priorities.txt"

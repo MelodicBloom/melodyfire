@@ -10,7 +10,7 @@ Mobile has been assessed as a separate arrival path at **390×844**, using live 
 |---|---|---|
 | Home navigation | Brand, theme control, and hamburger are visible in the tested 390px capture. | **Pass at sampled width.** |
 | Home first screen | Role descriptor, identity, positioning statement, and three CTAs are readable. | **Partial pass.** Professional value remains broad and CTA priorities compete. |
-| Work navigation | Brand and theme control are visible, but no hamburger control appears inside the tested 390px frame. | **Fail.** A direct Work arrival lacks obvious route navigation. |
+| Work navigation | Historical live-only capture (2026-08-20, 390×844): brand and theme control visible, hamburger not visible; deployment commit not recorded. At PR revision `2902f17f9f5ed62f31aad751355cd58386474444`, [`App.tsx`](https://github.com/MelodicBloom/melodyfire/blob/2902f17f9f5ed62f31aad751355cd58386474444/client/src/App.tsx#L47) renders `Nav` outside the route switch, and [`Nav.tsx`](https://github.com/MelodicBloom/melodyfire/blob/2902f17f9f5ed62f31aad751355cd58386474444/client/src/components/Nav.tsx#L140-L155) includes the mobile `Open menu` trigger in `lg:hidden`. | **Live-only observation; source/runtime parity unverified.** Retest direct Work arrival on a revision-bound deployment. |
 | Work filtering | Only “All” is visible at the start of the filter row. | **Fail.** Categories have no visible wrapping/overflow/discovery control at the sampled state. |
 | Work hierarchy | Hero precedes filters and featured card by roughly 500px. | **Partial.** Identity is clear; project retrieval is delayed. |
 | Project details | Current detail uses a modal from a generic project action. | **Partial.** Detail exists but lacks direct, shareable, search-friendly mobile landing. |
@@ -70,5 +70,5 @@ Do not publish a mobile spatial mode until direct path navigation, exact return 
 ## References
 
 [1]: ../EVIDENCE_LOG.md "Desktop and 390×844 mobile evidence log"
-[2]: ../../melodyfire_handoff/melodyfire_manus_handoff_v4_2026-08-18/07_MOBILE_INTERACTION_DISCOVERABILITY_REVIEW.md "Mobile interaction protocol"
+[2]: ../EVIDENCE_LOG.md#unpublished-handoff-sources "Mobile interaction protocol — unpublished archive member: 07_MOBILE_INTERACTION_DISCOVERABILITY_REVIEW.md"
 [3]: https://melodyfire-studio.vercel.app/#/work "Current Work route"
