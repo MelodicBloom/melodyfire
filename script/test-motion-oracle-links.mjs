@@ -10,7 +10,7 @@ if (!motion.includes(`href="${request}"`)) {
 if (!footer.includes('https://www.instagram.com/jennipher.laura/')) {
   throw new Error('Footer Instagram link must target @jennipher.laura.');
 }
-if (footer.includes('https://instagram.com/') || footer.includes('https://www.instagram.com/\"')) {
+if (/https:\/\/(?:www\.)?instagram\.com\/?(?=["'])/.test(footer)) {
   throw new Error('Generic Instagram homepage/placeholder destination remains.');
 }
 console.log('PASS: Motion Oracle request CTA and Instagram destination are revision-bound in source.');
