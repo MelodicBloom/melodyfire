@@ -17,6 +17,16 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, "client", "index.html"),
+        // Standalone fullscreen GPU demo; served with COOP/COEP so SharedArrayBuffer is available.
+        "crystal-tunnel": path.resolve(import.meta.dirname, "client", "crystal-tunnel", "index.html"),
+      },
+    },
+  },
+  worker: {
+    format: "es",
   },
   server: {
     fs: {
