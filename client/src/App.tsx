@@ -6,7 +6,7 @@ import { Footer } from './components/Footer';
 import { Toaster } from './components/ui/toaster';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { useCursorGlow } from './hooks/useCursorGlow';
-import { queueSectionJump } from './components/SectionJump';
+import { queueSectionJump, SectionJump } from './components/SectionJump';
 
 // Pages — lazy loaded for code splitting
 // Named exports (files we created in this build)
@@ -53,8 +53,14 @@ function AppInner() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+      <SectionJump
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-black"
+        targetId="app-content"
+      >
+        Skip to main content
+      </SectionJump>
       <Nav />
-      <main className="flex-1">
+      <main id="app-content" className="flex-1" tabIndex={-1}>
         <Suspense fallback={<PageLoader />}>
           <Switch>
             <Route path="/" component={HomePage} />
