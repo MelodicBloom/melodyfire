@@ -153,10 +153,12 @@ ADMIN_UPDATE=$("${PSQL[@]}" << 'SQL'
 SELECT set_config('request.jwt.claim.sub', '11111111-1111-1111-1111-111111111111', false);
 SET ROLE authenticated;
 SELECT public._try($c$UPDATE public.inquiries SET status = 'read' WHERE message = 'valid omit status'$c$);
+SELECT status FROM public.inquiries WHERE message = 'valid omit status';
 RESET ROLE;
 SQL
 )
-check 'studio admin can update' 'OK' "$(printf '%s\n' "$ADMIN_UPDATE" | tail -n 1)"
+check 'studio admin can update' 'OK' "$(printf '%s\n' "$ADMIN_UPDATE" | tail -n 2 | head -n 1)"
+check 'studio admin update persists' 'read' "$(printf '%s\n' "$ADMIN_UPDATE" | tail -n 1)"
 
 NONADMIN=$("${PSQL[@]}" << 'SQL'
 SELECT set_config('request.jwt.claim.sub', '22222222-2222-2222-2222-222222222222', false);
