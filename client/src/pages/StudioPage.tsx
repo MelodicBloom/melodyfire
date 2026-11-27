@@ -1443,7 +1443,7 @@ function InquiriesPanel({
   toast: ToastFn;
   onCountChange: (n: number) => void;
 }) {
-  const [rows, setRows] = useState<InquiryRow[]>([]);
+  const [rows, setRows] = useState<InquiryRow[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -1460,10 +1460,13 @@ function InquiriesPanel({
     } else {
       const list = (data as InquiryRow[]) || [];
       setRows(list);
-      onCountChange(list.filter((r) => r.status === 'new' || !r.status).length);
     }
     setLoading(false);
-  }, [onCountChange]);
+  }, []);
+
+  useEffect(() => {
+    if (rows) onCountChange(rows.filter((r) => r.status === 'new' || !r.status).length);
+  }, [rows, onCountChange]);
 
   useEffect(() => {
     load();
@@ -1477,11 +1480,7 @@ function InquiriesPanel({
       toast({ title: 'Update failed', description: err.message, variant: 'destructive' });
       return;
     }
-    setRows((prev) => {
-      const next = prev.map((r) => (r.id === id ? { ...r, status } : r));
-      onCountChange(next.filter((r) => r.status === 'new' || !r.status).length);
-      return next;
-    });
+    setRows((prev) => prev?.map((row) => row.id === id ? { ...row, status } : row) ?? null);
     toast({ title: status === 'read' ? 'Marked as read' : 'Archived' });
   };
 
@@ -1504,7 +1503,7 @@ function InquiriesPanel({
         <ListSkeleton count={5} />
       ) : error ? (
         <ErrorState message={error} onRetry={load} />
-      ) : rows.length === 0 ? (
+      ) : !rows?.length ? (
         <EmptyState message="No inquiries yet" />
       ) : (
         <div className="overflow-x-auto rounded-xl border border-[hsl(var(--border))]">
