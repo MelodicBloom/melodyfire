@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -301,14 +301,21 @@ function StudioDashboard() {
   const [activePanel, setActivePanel] = useState<PanelKey>('projects');
   const [unreadInquiries, setUnreadInquiries] = useState(0);
 
+  const panelCountRevision = useRef(0);
+  const publishPanelCount = useCallback((count: number) => {
+    panelCountRevision.current += 1;
+    setUnreadInquiries(count);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
+    const revision = panelCountRevision.current;
     (async () => {
       const { count } = await supabase
         .from('inquiries')
         .select('id', { count: 'exact', head: true })
         .eq('status', 'new');
-      if (!cancelled) setUnreadInquiries(count ?? 0);
+      if (!cancelled && revision === panelCountRevision.current) setUnreadInquiries(count ?? 0);
     })();
     return () => {
       cancelled = true;
@@ -357,7 +364,7 @@ function StudioDashboard() {
           {activePanel === 'blog_posts' && <BlogPostsPanel toast={toast} />}
           {activePanel === 'products' && <ProductsPanel toast={toast} />}
           {activePanel === 'inquiries' && (
-            <InquiriesPanel toast={toast} onCountChange={setUnreadInquiries} />
+            <InquiriesPanel toast={toast} onCountChange={publishPanelCount} />
           )}
         </div>
       </div>
