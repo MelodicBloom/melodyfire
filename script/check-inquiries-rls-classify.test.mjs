@@ -1,5 +1,5 @@
-import { fileURLToPath } from 'node:url';
 #!/usr/bin/env node
+import { fileURLToPath } from 'node:url';
 // Local HTTP fixture for script/check-inquiries-rls.mjs.
 // Never contacts a hosted database. Exit 0 when every case matches.
 import { createServer } from 'node:http';
