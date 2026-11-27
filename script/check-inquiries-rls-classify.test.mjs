@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 #!/usr/bin/env node
 // Local HTTP fixture for script/check-inquiries-rls.mjs.
 // Never contacts a hosted database. Exit 0 when every case matches.
@@ -27,7 +28,7 @@ function listen() {
 
 function runProbe(baseUrl) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, [script.pathname], {
+    const child = spawn(process.execPath, [fileURLToPath(script)], {
       env: {
         ...process.env,
         SUPABASE_URL: baseUrl,
