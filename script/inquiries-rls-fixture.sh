@@ -7,13 +7,15 @@ DB="melodyfire_rls_fixture_$$"
 PASS=0
 FAIL=0
 PSQL=()
+unset PGHOSTADDR PGSERVICE PGSERVICEFILE
+LOCAL_SOCKET=/var/run/postgresql
 
-if sudo -u postgres psql -d postgres -c 'select 1' >/dev/null 2>&1; then
-  PSQL=(sudo -u postgres psql -q -d "$DB" -v ON_ERROR_STOP=1 -At)
-  ADMIN=(sudo -u postgres psql -d postgres -v ON_ERROR_STOP=1)
+if sudo -u postgres psql -h "$LOCAL_SOCKET" -d postgres -c 'select 1' >/dev/null 2>&1; then
+  PSQL=(sudo -u postgres psql -h "$LOCAL_SOCKET" -q -d "$DB" -v ON_ERROR_STOP=1 -At)
+  ADMIN=(sudo -u postgres psql -h "$LOCAL_SOCKET" -d postgres -v ON_ERROR_STOP=1)
 else
-  PSQL=(psql -q -d "$DB" -v ON_ERROR_STOP=1 -At)
-  ADMIN=(psql -d postgres -v ON_ERROR_STOP=1)
+  PSQL=(psql -h "$LOCAL_SOCKET" -q -d "$DB" -v ON_ERROR_STOP=1 -At)
+  ADMIN=(psql -h "$LOCAL_SOCKET" -d postgres -v ON_ERROR_STOP=1)
 fi
 
 cleanup() {
