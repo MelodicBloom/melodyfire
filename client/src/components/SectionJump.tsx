@@ -24,7 +24,7 @@ export function scrollToSection(sectionId: string): boolean {
   const target = document.getElementById(sectionId);
   if (!target) return false;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  target.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
   const hadTabIndex = target.hasAttribute('tabindex');
   if (!hadTabIndex) target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
