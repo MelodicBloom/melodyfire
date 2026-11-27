@@ -78,6 +78,15 @@ export function KaleidoscopePage() {
           </p>
           <div className="flex flex-wrap gap-4 reveal delay-300">
             <a
+              href="https://hyper-kaleidoscope-vj.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90"
+              style={{ background: 'var(--gradient-fire)' }}
+            >
+              Play the live VJ instrument ↗
+            </a>
+            <a
               href="mailto:jennipher@melodicbloom.com"
               className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: 'var(--gradient-fire)' }}
