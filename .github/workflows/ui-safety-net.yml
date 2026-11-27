@@ -24,6 +24,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:routes
+      - run: npm run test:motion-links
       - run: npm run test:rls:classify
       - run: npm run check
       - run: npm run build
