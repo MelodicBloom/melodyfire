@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, ChevronDown, Flame, Sparkles, Globe, Zap, Leaf, Brain, Building } from 'lucide-react';
 import { MandalaCanvas } from '../components/MandalaCanvas';
+import { CrystalTunnel } from '../components/CrystalTunnel';
 import { ProjectCard, Project } from '../components/ProjectCard';
 
 import heroMandalaPng from '../assets/img/hero-mandala.png';
@@ -280,6 +281,43 @@ export function HomePage() {
             >
               About Jennipher
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FEATURED: CRYSTAL TUNNEL (live GPU shader) ===== */}
+      <section className="py-20 bg-[hsl(var(--background))]" aria-labelledby="crystal-tunnel-title">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))] mb-3" data-reveal>
+              <Sparkles size={14} /> Live shader
+            </div>
+            <h2 id="crystal-tunnel-title" className="font-display text-3xl md:text-4xl font-bold mb-3" data-reveal>
+              <span className="gradient-text-primary">Crystal Tunnel</span>
+            </h2>
+            <p className="text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto" data-reveal>
+              40s seamless raymarched GLSL loop rendered live on your GPU: 3D gold gears, refractive sapphire glass, depth of field, light shafts
+            </p>
+          </div>
+          <div className="relative rounded-3xl overflow-hidden border border-[hsl(var(--border))] shadow-[0_0_60px_rgba(124,58,237,0.18)]" data-reveal>
+            <CrystalTunnel className="w-full aspect-video" />
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4" data-reveal>
+            <a
+              href="/crystal-tunnel/"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white"
+              style={{ background: 'var(--gradient-aurora)' }}
+            >
+              Fullscreen demo <ArrowRight size={16} />
+            </a>
+            <a
+              href="https://github.com/MelodicBloom/shader-gallery/pull/55"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-semibold border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:border-[hsl(var(--primary))] transition-all"
+            >
+              Source
+            </a>
           </div>
         </div>
       </section>

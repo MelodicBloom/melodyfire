@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Standalone GPU demo page (must come before the SPA catch-all).
+[[redirects]]
+  from = "/crystal-tunnel"
+  to = "/crystal-tunnel/index.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -21,3 +27,28 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Cross-origin isolation ONLY for the standalone Crystal Tunnel page, so the render worker
+# can share a SharedArrayBuffer with the page. Scoped (not global) because the SPA embeds
+# third-party iframes/images/fonts that COEP would block.
+[[headers]]
+  for = "/crystal-tunnel"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+[[headers]]
+  for = "/crystal-tunnel/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+# Chrome requires a dedicated worker's script to carry a COEP compatible with its
+# isolated owner page, otherwise the worker fails to start.
+[[headers]]
+  for = "/assets/crystalTunnel.worker-*"
+  [headers.values]
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Resource-Policy = "same-origin"
