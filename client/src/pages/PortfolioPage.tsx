@@ -1,4 +1,5 @@
 import { SectionLink } from '@/components/SectionLink';
+import { MaterialProjectMap } from '@/components/MaterialProjectMap';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'wouter';
 import { ExternalLink, Code2 } from 'lucide-react';
@@ -601,6 +602,8 @@ export default function PortfolioPage() {
             </p>
           </div>
         </section>
+
+        <MaterialProjectMap />
 
         {/* Filter Tabs */}
         <section className="px-6 pb-10">
