@@ -13,6 +13,7 @@
     "test:routes": "node script/verify-route-safe-sections.mjs",
     "test:rls": "node script/check-inquiries-rls.mjs",
     "test:rls:classify": "node script/check-inquiries-rls-classify.test.mjs",
+    "test:rls:fixture": "bash script/inquiries-rls-fixture.sh",
     "test:motion-links": "node script/test-motion-oracle-links.mjs"
   },
   "dependencies": {

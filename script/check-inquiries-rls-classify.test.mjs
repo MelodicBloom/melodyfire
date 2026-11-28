@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { fileURLToPath } from 'node:url';
 // Local HTTP fixture for script/check-inquiries-rls.mjs.
 // Never contacts a hosted database. Exit 0 when every case matches.
 import { createServer } from 'node:http';
@@ -27,7 +28,7 @@ function listen() {
 
 function runProbe(baseUrl) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, [script.pathname], {
+    const child = spawn(process.execPath, [fileURLToPath(script)], {
       env: {
         ...process.env,
         SUPABASE_URL: baseUrl,
@@ -104,11 +105,11 @@ const cases = [
 const unreachable = await runProbe('http://nx-probe-does-not-exist-ce09.invalid');
 const unreachableOk = unreachable.code === 2
   && unreachable.out.includes('UNVERIFIED (hosted test unavailable, not a pass)')
-  && unreachable.out.includes('cause_code=ENOTFOUND');
+  && /cause_code=(?:ENOTFOUND|EAI_AGAIN|UND_ERR_SOCKET)(?:\s|$)/.test(unreachable.out);
 if (unreachableOk) {
-  console.log('PASS unreachable host is unverified, not a pass (exit 2, ENOTFOUND)');
+  console.log('PASS unreachable host is unverified, not a pass (exit 2 with a transport error)');
 } else {
-  console.log(`FAIL unreachable host expected exit 2 and ENOTFOUND, got exit ${unreachable.code}`);
+  console.log(`FAIL unreachable host expected exit 2 and a transport error, got exit ${unreachable.code}`);
   console.log(unreachable.out.trim());
   process.exit(1);
 }

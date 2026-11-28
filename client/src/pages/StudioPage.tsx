@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -301,14 +301,21 @@ function StudioDashboard() {
   const [activePanel, setActivePanel] = useState<PanelKey>('projects');
   const [unreadInquiries, setUnreadInquiries] = useState(0);
 
+  const panelCountRevision = useRef(0);
+  const publishPanelCount = useCallback((count: number) => {
+    panelCountRevision.current += 1;
+    setUnreadInquiries(count);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
+    const revision = panelCountRevision.current;
     (async () => {
       const { count } = await supabase
         .from('inquiries')
         .select('id', { count: 'exact', head: true })
-        .eq('status', 'unread');
-      if (!cancelled) setUnreadInquiries(count ?? 0);
+        .eq('status', 'new');
+      if (!cancelled && revision === panelCountRevision.current) setUnreadInquiries(count ?? 0);
     })();
     return () => {
       cancelled = true;
@@ -357,7 +364,7 @@ function StudioDashboard() {
           {activePanel === 'blog_posts' && <BlogPostsPanel toast={toast} />}
           {activePanel === 'products' && <ProductsPanel toast={toast} />}
           {activePanel === 'inquiries' && (
-            <InquiriesPanel toast={toast} onCountChange={setUnreadInquiries} />
+            <InquiriesPanel toast={toast} onCountChange={publishPanelCount} />
           )}
         </div>
       </div>
@@ -1436,7 +1443,7 @@ function InquiriesPanel({
   toast: ToastFn;
   onCountChange: (n: number) => void;
 }) {
-  const [rows, setRows] = useState<InquiryRow[]>([]);
+  const [rows, setRows] = useState<InquiryRow[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -1453,10 +1460,13 @@ function InquiriesPanel({
     } else {
       const list = (data as InquiryRow[]) || [];
       setRows(list);
-      onCountChange(list.filter((r) => r.status === 'unread' || !r.status).length);
     }
     setLoading(false);
-  }, [onCountChange]);
+  }, []);
+
+  useEffect(() => {
+    if (rows) onCountChange(rows.filter((r) => r.status === 'new' || !r.status).length);
+  }, [rows, onCountChange]);
 
   useEffect(() => {
     load();
@@ -1470,11 +1480,7 @@ function InquiriesPanel({
       toast({ title: 'Update failed', description: err.message, variant: 'destructive' });
       return;
     }
-    setRows((prev) => {
-      const next = prev.map((r) => (r.id === id ? { ...r, status } : r));
-      onCountChange(next.filter((r) => r.status === 'unread' || !r.status).length);
-      return next;
-    });
+    setRows((prev) => prev?.map((row) => row.id === id ? { ...row, status } : row) ?? null);
     toast({ title: status === 'read' ? 'Marked as read' : 'Archived' });
   };
 
@@ -1497,7 +1503,7 @@ function InquiriesPanel({
         <ListSkeleton count={5} />
       ) : error ? (
         <ErrorState message={error} onRetry={load} />
-      ) : rows.length === 0 ? (
+      ) : !rows?.length ? (
         <EmptyState message="No inquiries yet" />
       ) : (
         <div className="overflow-x-auto rounded-xl border border-[hsl(var(--border))]">
@@ -1521,7 +1527,7 @@ function InquiriesPanel({
                   <TableCell className="whitespace-nowrap">{row.inquiry_type || '—'}</TableCell>
                   <TableCell className="max-w-xs">{truncate(row.message, 80)}</TableCell>
                   <TableCell>
-                    <Badge variant={statusVariant(row.status)}>{row.status || 'unread'}</Badge>
+                    <Badge variant={statusVariant(row.status)}>{row.status || 'new'}</Badge>
                   </TableCell>
                   <TableCell className="whitespace-nowrap">{formatDate(row.created_at)}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
