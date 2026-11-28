@@ -423,3 +423,14 @@ body {
 
 /* hero-reveal-immediate kept for compat */
 .hero-reveal-immediate { opacity: 1 !important; transform: none !important; }
+
+/* ---- Gallery: iridescent hover sheen + lightbox fade ---- */
+.mf-tilt { will-change: transform; }
+.mf-tilt:hover { box-shadow: 0 18px 50px -12px rgba(124, 58, 237, 0.45); }
+.mf-sheen {
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.18) 0%, rgba(34,211,238,0.10) 22%, rgba(244,63,94,0.08) 40%, transparent 62%);
+  mix-blend-mode: screen;
+}
+@keyframes mf-fade-in { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
+.mf-fade-in { animation: mf-fade-in 260ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .mf-fade-in { animation: none; } }

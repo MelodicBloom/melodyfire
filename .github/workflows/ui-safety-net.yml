@@ -1,0 +1,41 @@
+name: Melodyfire UI Safety Net
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-safety-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:routes
+      - run: npm run test:motion-links
+      - run: npm run test:rls:classify
+      - run: npm run check
+      - run: npm run build
+
+  inquiries-rls:
+    # Exit 0 = pass (locked down); 1 = leak; 2 = unverified, including hosted test unavailable. Non-zero is not a pass.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run test:rls

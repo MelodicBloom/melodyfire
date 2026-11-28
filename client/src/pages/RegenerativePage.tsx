@@ -1,6 +1,7 @@
+import { SectionLink } from '@/components/SectionLink';
 import { useEffect, useState } from 'react';
 import { supabase, getSessionId } from '@/lib/supabase';
-import { SectionJump, consumePendingSectionJump } from '@/components/SectionJump';
+import { consumePendingSectionJump } from '@/components/SectionJump';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
 import processImg from '@assets/img/process.png';
 import restoryingImg from '@assets/img/restorying.png';
@@ -77,9 +78,10 @@ export default function RegenerativePage() {
     setEmailLoading(true);
     const sessionId = getSessionId();
     await supabase.from('inquiries').insert({
-      session_id: sessionId,
-      type: 'regenerative_join',
+      name: 'Regenerative waitlist',
       email,
+      message: `session_id: ${sessionId}`,
+      inquiry_type: 'regenerative_join',
       created_at: new Date().toISOString(),
     });
     setEmailLoading(false);
@@ -136,7 +138,7 @@ export default function RegenerativePage() {
           </p>
           {/* CTAs */}
           <div className="reveal delay-400" style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            <SectionJump targetId="systems-map" style={{
+            <SectionLink targetId="systems-map" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               background: 'linear-gradient(135deg, var(--sg-gold) 0%, #e8cc7a 100%)',
               color: '#0a0e1a', padding: '14px 32px', borderRadius: 8,
@@ -147,8 +149,8 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = ''; }}
             >
               Enter the Portal →
-            </SectionJump>
-            <SectionJump targetId="doctrine" style={{
+            </SectionLink>
+            <SectionLink targetId="doctrine" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               border: '1.5px solid var(--sg-gold)', color: 'var(--sg-gold)',
               padding: '14px 32px', borderRadius: 8,
@@ -159,7 +161,7 @@ export default function RegenerativePage() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
             >
               The Doctrine
-            </SectionJump>
+            </SectionLink>
           </div>
         </div>
 

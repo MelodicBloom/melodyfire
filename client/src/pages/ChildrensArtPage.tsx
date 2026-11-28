@@ -1,6 +1,6 @@
+import { SectionLink } from '@/components/SectionLink';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import { SectionJump } from '@/components/SectionJump';
 import {
   Accordion,
   AccordionContent,
@@ -156,8 +156,8 @@ function CommissionForm() {
       const { error } = await supabase.from('inquiries').insert({
         name: form.name,
         email: form.email,
-        description: form.description,
-        tier: form.tier,
+        // Live prod schema: inquiries.message (no description/tier columns) — see PR #10
+        message: `Tier: ${form.tier}\n\n${form.description}`,
         inquiry_type: 'children_art',
         created_at: new Date().toISOString(),
       });
@@ -358,13 +358,13 @@ export default function ChildrensArtPage() {
             impasto skies, quilled botanicals.
           </p>
           <div className="flex flex-wrap gap-4 mt-8 reveal delay-300">
-            <SectionJump
+            <SectionLink
               targetId="commission"
               className="px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%)' }}
             >
               Commission a Scene
-            </SectionJump>
+            </SectionLink>
             <a
               href="https://docs.google.com/document/d/1WcRLvegKEkkwGIW2adYWUsxu8VC3Cp-yoNlbTdkI4XI/edit"
               target="_blank"
@@ -647,7 +647,7 @@ export default function ChildrensArtPage() {
                   ))}
                 </ul>
 
-                <SectionJump
+                <SectionLink
                   targetId="commission-form"
                   className="block text-center py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
                   style={
@@ -657,7 +657,7 @@ export default function ChildrensArtPage() {
                   }
                 >
                   Get Started
-                </SectionJump>
+                </SectionLink>
               </div>
             ))}
           </div>

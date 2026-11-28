@@ -9,7 +9,11 @@
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
     "check:section-links": "tsx script/check-section-links.ts",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "test:routes": "node script/verify-route-safe-sections.mjs",
+    "test:rls": "node script/check-inquiries-rls.mjs",
+    "test:rls:classify": "node script/check-inquiries-rls-classify.test.mjs",
+    "test:motion-links": "node script/test-motion-oracle-links.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -44,6 +48,7 @@
     "@radix-ui/react-tooltip": "^1.2.0",
     "@supabase/supabase-js": "^2.106.0",
     "@tanstack/react-query": "^5.60.5",
+    "@use-gesture/react": "^10.3.1",
     "better-sqlite3": "^11.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
