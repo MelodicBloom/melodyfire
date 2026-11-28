@@ -6,7 +6,7 @@ Feature **Melodic Bloom — Materials that respond** on Melodyfire's `/#/work` p
 ## Three linked but distinct surfaces
 | Surface | Authority | Public link / evidence | Status |
 | --- | --- | --- | --- |
-| Melodic Bloom — Materials that respond | Source ChatGPT Sites project | Public URL and state-page URLs not yet supplied/verified | Featured as an in-app design site; no fabricated public hyperlink |
+| Melodic Bloom — Materials that respond | Source ChatGPT Sites project | https://melodic-bloom-material-studies.qt-314wink.chatgpt.site/ | Published. The instrument accepts a separate `work` query parameter for each study |
 | Shader Gallery | `MelodicBloom/shader-gallery` | https://melodicbloom.github.io/shader-gallery/docs/ | Public gallery URL inspected; hardware/browser visual QA remains separately gated |
 | Abalone state-driven WebGL2 runtime | `MelodicBloom/shader-gallery/portfolio-runtime` | https://github.com/MelodicBloom/shader-gallery/tree/main/portfolio-runtime | Implementation source present; not claimed as hosted |
 
@@ -21,8 +21,11 @@ This PR cannot edit the in-app Sites project. Its per-material card/link behavio
 6. Distinguish rendered design previews from actual WebGL implementations, and label compile/runtime evidence separately from material accuracy or cross-device acceptance.
 
 ## Review gates (before any merge or deployment)
-- [ ] Confirm public URL for the exact ChatGPT Site, and enumerate each current material/state-page destination.
-- [ ] Inspect site source and compare a before/after map of destinations; no missing/renamed targets.
+- [x] Confirmed the public Site and three state destinations. All three state URLs returned HTTP 200 and the published app parses the `work` parameter.
+  - [Porous](https://melodic-bloom-material-studies.qt-314wink.chatgpt.site/?work=porous)
+  - [Fold](https://melodic-bloom-material-studies.qt-314wink.chatgpt.site/?work=fold)
+  - [Spectral](https://melodic-bloom-material-studies.qt-314wink.chatgpt.site/?work=spectral)
+- [x] Published source reports `porous`, `fold`, and `spectral`. This PR links to those states without editing the published Site.
 - [ ] Test keyboard, pointer, touch (physical device or recorded acceptance), reduced motion, back/reload, and broken-link behavior.
 - [ ] Run `npm run check`, `npm run build`, and `npm run test:routes` for the Melodyfire branch.
 - [ ] Browser-review the `material-project-map` section of `/#/work` and the public gallery from separate clean sessions.

@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
  * a verified public URL, so we feature it without fabricating an external link.
  * This map does not modify, redirect or collapse its material-state page links.
  */
+const MATERIAL_STUDIES_URL = 'https://melodic-bloom-material-studies.qt-314wink.chatgpt.site/';
 const GALLERY_URL = 'https://melodicbloom.github.io/shader-gallery/docs/';
 const GALLERY_SOURCE = 'https://github.com/MelodicBloom/shader-gallery';
 const ABALONE_SOURCE = 'https://github.com/MelodicBloom/shader-gallery/tree/main/portfolio-runtime';
@@ -36,12 +37,14 @@ export function MaterialProjectMap() {
             <p className="mb-3 text-xs uppercase tracking-widest text-violet-300">01 · Interactive design site</p>
             <h3 className="font-display text-xl font-semibold text-white">Melodic Bloom — Materials that respond</h3>
             <p className="mt-3 text-sm leading-relaxed text-white/65">
-              Material explorations with individual interactive state pages. Each material keeps its own destination;
-              the project map is a separate discovery layer, not a replacement for those links.
+              Explore three interactive studies in implicit geometry, repetition, and spectral light.
             </p>
-            <p className="mt-5 text-xs text-white/45">
-              ChatGPT Sites project · public URL and individual state-page destinations awaiting verification
-            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <ExternalAction href={MATERIAL_STUDIES_URL}>Open studies</ExternalAction>
+              <ExternalAction href={MATERIAL_STUDIES_URL + '?work=porous'}>Porous</ExternalAction>
+              <ExternalAction href={MATERIAL_STUDIES_URL + '?work=fold'}>Fold</ExternalAction>
+              <ExternalAction href={MATERIAL_STUDIES_URL + '?work=spectral'}>Spectral</ExternalAction>
+            </div>
           </li>
           <li className="rounded-2xl border border-cyan-400/30 bg-cyan-400/5 p-6">
             <p className="mb-3 text-xs uppercase tracking-widest text-cyan-300">02 · WebGL gallery</p>
@@ -68,8 +71,7 @@ export function MaterialProjectMap() {
           </li>
         </ol>
         <p className="mt-4 text-xs text-white/45">
-          Evidence boundary: public gallery link available; individual material-state URLs, mobile/GPU acceptance
-          and standalone Abalone deployment are not verified here.
+          The Abalone specimen links to its implementation source. Cross-device renderer acceptance is pending.
         </p>
       </div>
     </section>
