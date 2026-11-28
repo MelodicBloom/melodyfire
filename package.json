@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
-    "build": "tsx script/build.ts",
+    "build": "npm run check:section-links && tsx script/build.ts",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
+    "check:section-links": "tsx script/check-section-links.ts",
     "db:push": "drizzle-kit push",
     "test:routes": "node script/verify-route-safe-sections.mjs",
     "test:rls": "node script/check-inquiries-rls.mjs",

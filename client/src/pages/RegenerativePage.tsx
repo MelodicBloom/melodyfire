@@ -1,6 +1,7 @@
 import { SectionLink } from '@/components/SectionLink';
 import { useEffect, useState } from 'react';
 import { supabase, getSessionId } from '@/lib/supabase';
+import { consumePendingSectionJump } from '@/components/SectionJump';
 import solarGrimoireImg from '@assets/img/mf-solar-grimoire.png';
 import processImg from '@assets/img/process.png';
 import restoryingImg from '@assets/img/restorying.png';
@@ -8,6 +9,7 @@ import restoryingImg from '@assets/img/restorying.png';
 // ── Scroll-reveal hook ─────────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
+    consumePendingSectionJump();
     const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('revealed'); } }),
